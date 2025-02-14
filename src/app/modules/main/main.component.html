@@ -1,0 +1,109 @@
+<nz-layout class="w-full h-full">
+  <!-- Sidebar -->
+  <nz-sider
+    nzCollapsible
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+    nzWidth="250px"
+    class="overflow-y-auto h-full overflow-x-hidden transition-all duration-300 ease-in-out"
+    [ngClass]="{ 'w-0': isCollapsed, 'w-64': !isCollapsed }"
+  >
+    <div class="py-4" [ngClass]="{ 'py-2': isCollapsed, 'py-4': !isCollapsed }">
+      <!-- <ng-lottie
+        width="25px"
+        height="50px"
+        [options]="options"
+        (animationCreated)="animationCreated($event)"
+      ></ng-lottie> -->
+      <div class="text-start font-semibold">
+        <span
+          nz-icon
+          nzType="{{ !isCollapsed ? 'left-circle' : 'right-circle' }}"
+          nzTheme="outline"
+          class="text-gray-300 p-2 cursor-pointer hover:bg-gray-700 rounded transition-all"
+          (click)="isCollapsed = !isCollapsed"
+        ></span>
+      </div>
+      <nz-divider
+        [nzText]="isCollapsed ? '403' : 'AOK PONLORK'"
+        class="!text-white !border-white text-center"
+        [nzDashed]="true"
+      ></nz-divider>
+
+      <a
+        routerLink="/"
+        class="flex flex-row gap-2 items-center px-3 justify-center"
+      >
+        <img
+          src="/assets/images/dummy-logo.webp"
+          alt="logo"
+          [ngClass]="{ 'h-36 w-36': !isCollapsed, 'h-12 w-12': isCollapsed }"
+          class="rounded-full object-cover"
+        />
+      </a>
+    </div>
+    <div class="p-2" *ngIf="!isCollapsed">
+      <p
+        class="sidebar-text text-white justify-center text-center"
+        [ngClass]="{ collapsed: isCollapsed }"
+      >
+        Wassailers high did his given sore control. Have uncouth other womans
+        tis pomp for did, could cell ancient times once.
+      </p>
+    </div>
+
+    <nz-divider class="border-white px-2" [nzDashed]="true"></nz-divider>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed !== false ? 'Dashboard' : ''"
+        class="py-2"
+      >
+        <span nz-icon nzType="dashboard" class="mr-3"></span>
+        {{ !isCollapsed ? "Dashboard" : "" }}
+      </li>
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed !== false ? 'Settings' : ''"
+        class="py-2"
+      >
+        <span nz-icon nzType="setting" class="mr-3"></span>
+        {{ !isCollapsed ? "Settings" : "" }}
+      </li>
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed !== false ? 'Projects' : ''"
+        class="py-2"
+      >
+        <span nz-icon nzType="appstore" class="mr-3"></span>
+        {{ !isCollapsed ? "Projects" : "" }}
+      </li>
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed !== false ? 'Contact' : ''"
+        class="py-2"
+      >
+        <span nz-icon nzType="mail" class="mr-3"></span>
+        {{ !isCollapsed ? "Contact" : "" }}
+      </li>
+    </ul>
+  </nz-sider>
+
+  <!-- Main Layout -->
+  <nz-layout>
+    <!-- Content Area -->
+    <nz-content class="overflow-y-auto h-full p-4"> </nz-content>
+
+    <nz-footer class="font-semibold py-4 text-center text-gray-400 bg-gray-900">
+      AOK PONLORK ©{{ currentYear }} | Implemented By PONLORK
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
