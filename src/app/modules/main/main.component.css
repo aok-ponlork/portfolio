@@ -1,0 +1,10 @@
+.ant-menu-item-selected {
+  font-weight: bold; /* Makes text bolder */
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+.ant-menu-item:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    background-color 0.3s ease,
+    box-shadow 0.3s ease-in-out; 
+}

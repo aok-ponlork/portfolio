@@ -1,33 +1,29 @@
-<nz-layout class="w-full h-full">
+<nz-layout class="w-full h-full theme-transition">
   <!-- Sidebar -->
   <nz-sider
     nzCollapsible
     [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null"
     nzWidth="250px"
-    class="overflow-y-auto h-full overflow-x-hidden transition-all duration-300 ease-in-out"
-    [ngClass]="{ 'w-0': isCollapsed, 'w-64': !isCollapsed }"
+    class="overflow-y-auto h-full overflow-x-hidden transition-all duration-300 ease-in-out theme-transition"
+    [ngClass]="[themeBackground]"
   >
     <div class="py-4" [ngClass]="{ 'py-2': isCollapsed, 'py-4': !isCollapsed }">
-      <!-- <ng-lottie
-        width="25px"
-        height="50px"
-        [options]="options"
-        (animationCreated)="animationCreated($event)"
-      ></ng-lottie> -->
       <div class="text-start font-semibold">
         <span
           nz-icon
           nzType="{{ !isCollapsed ? 'left-circle' : 'right-circle' }}"
           nzTheme="outline"
-          class="text-gray-300 p-2 cursor-pointer hover:bg-gray-700 rounded transition-all"
+          class="p-2 cursor-pointer hover:bg-gray-700 rounded transition-all"
+          [ngClass]="[themeText]"
           (click)="isCollapsed = !isCollapsed"
         ></span>
       </div>
       <nz-divider
         [nzText]="isCollapsed ? '403' : 'AOK PONLORK'"
-        class="!text-white !border-white text-center"
+        class="!border-black dark:!border-white text-center"
         [nzDashed]="true"
+        [ngClass]="[themeText]"
       ></nz-divider>
 
       <a
@@ -44,66 +40,90 @@
     </div>
     <div class="p-2" *ngIf="!isCollapsed">
       <p
-        class="sidebar-text text-white justify-center text-center"
-        [ngClass]="{ collapsed: isCollapsed }"
+        class="sidebar-text justify-center text-center theme-transition"
+        [ngClass]="[themeText]"
       >
         Wassailers high did his given sore control. Have uncouth other womans
         tis pomp for did, could cell ancient times once.
       </p>
+      <div class="flex justify-center gap-3 mt-4">
+        <fa-icon
+          *ngFor="let icon of icons"
+          [icon]="['fab', icon]"
+          class="text-2xl cursor-pointer"
+          [ngClass]="[themeText]"
+        ></fa-icon>
+      </div>
     </div>
 
-    <nz-divider class="border-white px-2" [nzDashed]="true"></nz-divider>
-    <ul nz-menu nzTheme="dark" nzMode="inline">
+    <nz-divider
+      class="border-gray-900 dark:border-white px-2"
+      [nzDashed]="true"
+    ></nz-divider>
+    <ul
+      nz-menu
+      [nzTheme]="colorService.isDarkTheme.value ? 'dark' : 'light'"
+      nzMode="inline"
+      [ngClass]="[themeBackground, 'me-1, border-none']"
+    >
       <li
+        *ngFor="let item of menuItems"
+        nzMatchRouter
+        [routerLink]="item.route"
         nz-menu-item
         nz-tooltip
         nzTooltipPlacement="right"
-        [nzTooltipTitle]="isCollapsed !== false ? 'Dashboard' : ''"
-        class="py-2"
+        [nzTooltipTitle]="isCollapsed !== false ? item.tooltip : ''"
+        [ngClass]="[themeText, 'py-2 dark:ant-menu-item-selected']"
       >
-        <span nz-icon nzType="dashboard" class="mr-3"></span>
-        {{ !isCollapsed ? "Dashboard" : "" }}
-      </li>
-      <li
-        nz-menu-item
-        nz-tooltip
-        nzTooltipPlacement="right"
-        [nzTooltipTitle]="isCollapsed !== false ? 'Settings' : ''"
-        class="py-2"
-      >
-        <span nz-icon nzType="setting" class="mr-3"></span>
-        {{ !isCollapsed ? "Settings" : "" }}
-      </li>
-      <li
-        nz-menu-item
-        nz-tooltip
-        nzTooltipPlacement="right"
-        [nzTooltipTitle]="isCollapsed !== false ? 'Projects' : ''"
-        class="py-2"
-      >
-        <span nz-icon nzType="appstore" class="mr-3"></span>
-        {{ !isCollapsed ? "Projects" : "" }}
-      </li>
-      <li
-        nz-menu-item
-        nz-tooltip
-        nzTooltipPlacement="right"
-        [nzTooltipTitle]="isCollapsed !== false ? 'Contact' : ''"
-        class="py-2"
-      >
-        <span nz-icon nzType="mail" class="mr-3"></span>
-        {{ !isCollapsed ? "Contact" : "" }}
+        <fa-icon
+          [icon]="[item.type === 'brand' ? 'fab' : 'fas', item.icon]"
+          [ngClass]="{ 'mr-1': isCollapsed, 'mr-3': !isCollapsed }"
+        ></fa-icon>
+        {{ !isCollapsed ? item.label : "" }}
       </li>
     </ul>
   </nz-sider>
-
   <!-- Main Layout -->
   <nz-layout>
     <!-- Content Area -->
-    <nz-content class="overflow-y-auto h-full p-4"> </nz-content>
+    <nz-content
+      [ngClass]="[
+        themeText,
+        contentBackground,
+        'overflow-y-auto h-full p-4 theme-transition'
+      ]"
+    >
+      <router-outlet></router-outlet>
+    </nz-content>
 
-    <nz-footer class="font-semibold py-4 text-center text-gray-400 bg-gray-900">
+    <nz-footer
+      [ngClass]="[
+        themeText,
+        themeBackground,
+        'font-semibold py-4 text-center theme-transition'
+      ]"
+    >
       AOK PONLORK ©{{ currentYear }} | Implemented By PONLORK
     </nz-footer>
   </nz-layout>
 </nz-layout>
+<button
+  class="w-10 h-10 rounded-full fixed top-4 right-4 flex justify-center items-center shadow-md hover:scale-105 hover:shadow-xl z-50"
+  (click)="toggleTheme()"
+  [nz-tooltip]="'Toggle Theme'"
+  [ngClass]="{
+    'bg-gray-200': !colorService.isDarkTheme.value,
+    'bg-gray-800': colorService.isDarkTheme.value
+  }"
+>
+  <app-lottie
+    [animationName]="
+      colorService.isDarkTheme.value ? 'dark.json' : 'light.json'
+    "
+    width="45px"
+    height="45px"
+    [loop]="true"
+    [loopDelay]="700"
+  ></app-lottie>
+</button>

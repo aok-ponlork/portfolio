@@ -1,0 +1,16 @@
+<nz-breadcrumb>
+  <ng-container *ngFor="let item of breadcrumbItems">
+    <nz-breadcrumb-item *ngIf="item.routerLink; else staticItem">
+      <a [routerLink]="item.routerLink">
+        <span *ngIf="item.icon" nz-icon [nzType]="item.icon"></span>
+        <span>{{ item.label }}</span>
+      </a>
+    </nz-breadcrumb-item>
+    <ng-template #staticItem>
+      <nz-breadcrumb-item>
+        <span>{{ item.label }}</span>
+      </nz-breadcrumb-item>
+    </ng-template>
+  </ng-container>
+</nz-breadcrumb>
+<nz-divider class="my-2"></nz-divider>
