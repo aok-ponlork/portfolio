@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -7,7 +7,7 @@ import { AppConfigs } from '../../configs/app-config';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { CommonModule } from '@angular/common';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { ColorService } from '../../core/services/common/color.service';
+import { UserPreferenceService } from '../../core/services/common/user-preference.service';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { FormsModule } from '@angular/forms';
 import {
@@ -27,9 +27,12 @@ import {
   faNewspaper,
   faUser,
   faHomeUser,
+  faTimes,
+  faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
 import { RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -50,8 +53,11 @@ import { RouterModule } from '@angular/router';
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
   @ViewChild(LottieCoreComponent) lottieComponent!: LottieCoreComponent;
+  isHeaderLayout: boolean = false;
+  settingMenuButton: boolean = false;
+  mobileMenuOpen: boolean = false;
   currentYear: number = new Date().getFullYear();
   isCollapsed = false;
   readonly AppConfigs = AppConfigs;
@@ -93,9 +99,56 @@ export class MainComponent {
       route: 'contact',
     },
   ];
+  constructor(
+    public userPref: UserPreferenceService,
+    public library: FaIconLibrary
+  ) {
+    this.registerIcon();
+    this.isHeaderLayout = userPref.isHeaderView.value;
+  }
+  ngOnInit() {
+    this.userPref.theme.subscribe((isDark) => {
+      document.documentElement.classList.toggle('dark', isDark);
 
-  constructor(public colorService: ColorService, library: FaIconLibrary) {
-    library.addIcons(
+      //Change animatiion on theme switch
+      const newAnimation = this.userPref.isDarkTheme.value
+        ? 'dark.json'
+        : 'light.json';
+      if (this.lottieComponent) {
+        this.lottieComponent.updateAnimation(newAnimation);
+      }
+    });
+  }
+  toggleHeader(): void {
+    this.userPref.toggleLayout();
+    this.isHeaderLayout = this.userPref.isHeaderView.value;
+    this.settingMenuButton = !this.settingMenuButton;
+    this.mobileMenuOpen = false;
+  }
+  toggleTheme(): void {
+    this.userPref.toggleTheme();
+    this.settingMenuButton = !this.settingMenuButton;
+  }
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+  toggleMenu() {
+    this.settingMenuButton = !this.settingMenuButton;
+  }
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+  get themeBackground(): string {
+    return this.userPref.currentColors.background;
+  }
+  get themeText(): string {
+    return this.userPref.currentColors.text;
+  }
+  get contentBackground(): string {
+    return this.userPref.currentColors.contentBackground;
+  }
+  private registerIcon(): void {
+    this.library.addIcons(
       faTelegram,
       faFacebookMessenger,
       faCogs,
@@ -105,41 +158,9 @@ export class MainComponent {
       faNewspaper,
       faUser,
       faHomeUser,
-      faGithub
+      faGithub,
+      faTimes,
+      faBars
     );
-  }
-
-  ngOnInit() {
-    this.colorService.theme.subscribe((isDark) => {
-      document.documentElement.classList.toggle('dark', isDark);
-
-      //Change animatiion on theme switch
-      const newAnimation = this.colorService.isDarkTheme.value
-        ? 'dark.json'
-        : 'light.json';
-      if (this.lottieComponent) {
-        this.lottieComponent.updateAnimation(newAnimation);
-      }
-    });
-  }
-
-  toggleTheme(): void {
-    this.colorService.toggleTheme();
-  }
-
-  toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
-  }
-
-  get themeBackground(): string {
-    return this.colorService.currentColors.background;
-  }
-
-  get themeText(): string {
-    return this.colorService.currentColors.text;
-  }
-
-  get contentBackground(): string {
-    return this.colorService.currentColors.contentBackground;
   }
 }

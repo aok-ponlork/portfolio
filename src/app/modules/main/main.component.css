@@ -5,6 +5,8 @@
 .ant-menu-item:hover {
   transform: scale(1.05);
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-    background-color 0.3s ease,
-    box-shadow 0.3s ease-in-out; 
+    background-color 0.3s ease, box-shadow 0.3s ease-in-out;
+}
+.active {
+  @apply bg-gray-400 dark:bg-gray-600 dark:text-white text-gray-800 font-bold ;
 }

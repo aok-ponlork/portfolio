@@ -1,29 +1,32 @@
 <nz-layout class="w-full h-full theme-transition">
   <!-- Sidebar -->
   <nz-sider
+    *ngIf="!isHeaderLayout"
     nzCollapsible
     [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null"
-    nzWidth="250px"
-    class="overflow-y-auto h-full overflow-x-hidden transition-all duration-300 ease-in-out theme-transition"
+    class="sticky overflow-y-auto h-full overflow-x-hidden transition-all duration-500 ease-in-out"
     [ngClass]="[themeBackground]"
   >
-    <div class="py-4" [ngClass]="{ 'py-2': isCollapsed, 'py-4': !isCollapsed }">
+    <div
+      class="py-4 transition-all duration-500 ease-in-out"
+      [ngClass]="{ 'py-2': isCollapsed, 'py-4': !isCollapsed }"
+    >
       <div class="text-start font-semibold">
         <span
           nz-icon
           nzType="{{ !isCollapsed ? 'left-circle' : 'right-circle' }}"
           nzTheme="outline"
-          class="p-2 cursor-pointer hover:bg-gray-700 rounded transition-all"
+          class="p-2 cursor-pointer hover:scale-110 hover:bg-gray-700 rounded transition-all duration-300"
           [ngClass]="[themeText]"
-          (click)="isCollapsed = !isCollapsed"
+          (click)="toggleSidebar()"
         ></span>
       </div>
       <nz-divider
         [nzText]="isCollapsed ? '403' : 'AOK PONLORK'"
-        class="!border-black dark:!border-white text-center"
+        class="!border-black dark:!border-white text-center transition-opacity duration-500 ease-in-out"
         [nzDashed]="true"
-        [ngClass]="[themeText]"
+        [ngClass]="[themeText, isCollapsed ? 'opacity-50' : 'opacity-100']"
       ></nz-divider>
 
       <a
@@ -33,12 +36,20 @@
         <img
           src="/assets/images/dummy-logo.webp"
           alt="logo"
-          [ngClass]="{ 'h-36 w-36': !isCollapsed, 'h-12 w-12': isCollapsed }"
-          class="rounded-full object-cover"
+          class="rounded-full object-cover transition-all duration-500 ease-in-out"
+          [ngClass]="{
+            'h-36 w-36 opacity-100 scale-100': !isCollapsed,
+            'h-12 w-12 opacity-50 scale-75': isCollapsed
+          }"
         />
       </a>
     </div>
-    <div class="p-2" *ngIf="!isCollapsed">
+
+    <div
+      *ngIf="!isCollapsed"
+      class="p-2 transition-opacity duration-500 ease-in-out"
+      [ngClass]="{ 'opacity-100': !isCollapsed, 'opacity-0': isCollapsed }"
+    >
       <p
         class="sidebar-text justify-center text-center theme-transition"
         [ngClass]="[themeText]"
@@ -50,80 +61,206 @@
         <fa-icon
           *ngFor="let icon of icons"
           [icon]="['fab', icon]"
-          class="text-2xl cursor-pointer"
           [ngClass]="[themeText]"
+          class="text-2xl cursor-pointer transition-all duration-500 ease-in-out"
         ></fa-icon>
       </div>
     </div>
 
     <nz-divider
-      class="border-gray-900 dark:border-white px-2"
+      class="border-gray-900 dark:border-white px-2 transition-all duration-500 ease-in-out"
       [nzDashed]="true"
     ></nz-divider>
+
     <ul
       nz-menu
-      [nzTheme]="colorService.isDarkTheme.value ? 'dark' : 'light'"
       nzMode="inline"
       [ngClass]="[themeBackground, 'me-1, border-none']"
     >
       <li
         *ngFor="let item of menuItems"
-        nzMatchRouter
         [routerLink]="item.route"
         nz-menu-item
+        nzMatchRouter
+        routerLinkActive="active"
         nz-tooltip
         nzTooltipPlacement="right"
         [nzTooltipTitle]="isCollapsed !== false ? item.tooltip : ''"
-        [ngClass]="[themeText, 'py-2 dark:ant-menu-item-selected']"
+        class="py-2 dark:ant-menu-item-selected transition-all duration-500 ease-in-out {{
+          themeText
+        }}"
+        [ngClass]="{
+          'translate-x-0 ': !isCollapsed,
+          '-translate-x-2 ': isCollapsed
+        }"
       >
         <fa-icon
           [icon]="[item.type === 'brand' ? 'fab' : 'fas', item.icon]"
-          [ngClass]="{ 'mr-1': isCollapsed, 'mr-3': !isCollapsed }"
+          class="transition-transform duration-500 ease-in-out"
+          [ngClass]="{
+            themeText,
+            'mr-3 scale-100': !isCollapsed,
+            'mr-1 scale-75': isCollapsed
+          }"
         ></fa-icon>
-        {{ !isCollapsed ? item.label : "" }}
+        <span
+          class="transition-opacity duration-500 ease-in-out"
+          [ngClass]="{ 'opacity-100': !isCollapsed, 'opacity-0': isCollapsed }"
+        >
+          {{ item.label }}
+        </span>
       </li>
     </ul>
   </nz-sider>
+
   <!-- Main Layout -->
   <nz-layout>
+    <!-- Header -->
+    <nz-header
+      *ngIf="isHeaderLayout"
+      [ngClass]="[
+        themeBackground,
+        themeText,
+        'flex flex-col items-center justify-center px-4 py-3 transition-all duration-300 ease-in-out'
+      ]"
+    >
+      <!-- Desktop Menu -->
+      <ul class="hidden md:flex gap-8 cursor-pointer">
+        <li
+          *ngFor="let item of menuItems"
+          routerLinkActive="active px-4"
+          [routerLink]="item.route"
+          class="flex items-center gap-2 transition-transform duration-300 hover:scale-105"
+        >
+          <fa-icon [icon]="['fas', item.icon]"></fa-icon>
+          {{ item.label }}
+        </li>
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button
+        class="md:hidden text-2xl p-2 rounded transition-transform duration-300 hover:scale-110 {{
+          themeText
+        }} self-end ml-auto"
+        (click)="toggleMobileMenu()"
+      >
+        <fa-icon
+          [icon]="mobileMenuOpen ? ['fas', 'times'] : ['fas', 'bars']"
+        ></fa-icon>
+      </button>
+    </nz-header>
+
+    <!-- Mobile Dropdown Menu -->
+    <div
+      class="sm:hidden absolute top-16 left-0 w-full flex flex-col items-center p-4 transition-all duration-300 ease-[cubic-bezier(0.68,-0.55,0.27,1.55)] {{
+        themeBackground
+      }} {{ themeText }}"
+      [ngClass]="{
+        'opacity-100 translate-y-0': mobileMenuOpen,
+        'opacity-0 translate-y-10': !mobileMenuOpen,
+      }"
+    >
+      <ul class="flex flex-col gap-4 w-full text-center" *ngIf="mobileMenuOpen">
+        <li
+          *ngFor="let item of menuItems"
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          class="py-2 w-full hover:bg-gray-300 dark:hover:bg-gray-700 rounded cursor-pointer"
+        >
+          <fa-icon [icon]="['fas', item.icon]"></fa-icon>
+          {{ item.label }}
+        </li>
+      </ul>
+    </div>
+
     <!-- Content Area -->
     <nz-content
       [ngClass]="[
         themeText,
         contentBackground,
-        'overflow-y-auto h-full p-4 theme-transition'
+        '!h-full p-4 theme-transition overflow-y-auto'
       ]"
     >
       <router-outlet></router-outlet>
+      <div class="mt-auto">
+        <nz-divider
+          class="border-gray-900 dark:border-white px-2 transition-all duration-500 ease-in-out"
+          [nzDashed]="true"
+        ></nz-divider>
+        <div [ngClass]="[themeText, 'text-start w-full']">
+          AOK PONLORK ©{{ currentYear }}
+        </div>
+      </div>
     </nz-content>
-
-    <nz-footer
+    <!-- Footer Area-->
+    <!-- <nz-footer
+      *ngIf="isHeaderLayout"
       [ngClass]="[
         themeText,
         themeBackground,
         'font-semibold py-4 text-center theme-transition'
       ]"
+      class="mt-auto"
     >
-      AOK PONLORK ©{{ currentYear }} | Implemented By PONLORK
-    </nz-footer>
+      AOK PONLORK ©{{ currentYear }}
+    </nz-footer> -->
   </nz-layout>
 </nz-layout>
+
+<!-- Floating -->
 <button
-  class="w-10 h-10 rounded-full fixed top-4 right-4 flex justify-center items-center shadow-md hover:scale-105 hover:shadow-xl z-50"
-  (click)="toggleTheme()"
-  [nz-tooltip]="'Toggle Theme'"
+  class="w-12 h-12 rounded-full fixed bottom-10 right-10 flex justify-center items-center shadow-md hover:scale-105 hover:shadow-xl z-50 transition-all"
+  (click)="toggleMenu()"
   [ngClass]="{
-    'bg-gray-200': !colorService.isDarkTheme.value,
-    'bg-gray-800': colorService.isDarkTheme.value
+    'bg-gray-200': !userPref.isDarkTheme.value,
+    'bg-gray-400': userPref.isDarkTheme.value
   }"
 >
-  <app-lottie
-    [animationName]="
-      colorService.isDarkTheme.value ? 'dark.json' : 'light.json'
-    "
-    width="45px"
-    height="45px"
-    [loop]="true"
-    [loopDelay]="700"
-  ></app-lottie>
+  <span nz-icon [nzType]="!settingMenuButton ? 'menu' : 'close'"></span>
 </button>
+<div
+  *ngIf="settingMenuButton"
+  class="fixed bottom-24 right-10 flex flex-col z-40 transition-all"
+  [ngClass]="{
+    'opacity-100': settingMenuButton,
+    'opacity-0': !settingMenuButton,
+    'scale-100': settingMenuButton,
+    'scale-95': !settingMenuButton
+  }"
+>
+  <button
+    class="w-12 h-12 rounded-full flex justify-center items-center shadow-md hover:scale-105 hover:shadow-xl transition-all mb-2"
+    (click)="toggleTheme()"
+    [nz-tooltip]="'Toggle Theme'"
+    [ngClass]="{
+      'bg-gray-200': !userPref.isDarkTheme.value,
+      'bg-gray-400': userPref.isDarkTheme.value
+    }"
+  >
+    <app-lottie
+      [animationName]="userPref.isDarkTheme.value ? 'dark.json' : 'light.json'"
+      width="50px"
+      height="50px"
+      [loop]="true"
+      [loopDelay]="700"
+    ></app-lottie>
+  </button>
+
+  <button
+    class="w-12 h-12 rounded-full flex justify-center items-center shadow-md hover:scale-105 hover:shadow-xl transition-all"
+    [nz-tooltip]="'Toggle Header'"
+    [ngClass]="{
+      'bg-gray-200': !userPref.isDarkTheme.value,
+      'bg-gray-400': userPref.isDarkTheme.value
+    }"
+    (click)="toggleHeader()"
+  >
+    <app-lottie
+      [animationName]="'toggle-header.json'"
+      width="80px"
+      height="80px"
+      [loop]="true"
+      [loopDelay]="700"
+    ></app-lottie>
+  </button>
+</div>

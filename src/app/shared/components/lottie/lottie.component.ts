@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [LottieComponent, CommonModule],
   templateUrl: './lottie.component.html',
-  styleUrl: './lottie.component.css',
+  styleUrls: ['./lottie.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LottieCoreComponent implements OnInit, OnDestroy {
@@ -46,8 +46,8 @@ export class LottieCoreComponent implements OnInit, OnDestroy {
   }
 
   private updateAnimationPath(): void {
+    // Update the signal's value directly
     this.options.set({
-      ...this.options,
       path:
         this.animationFolder + (this.animationName || this.defaultAnimation),
       loop: this.loop,
@@ -56,12 +56,12 @@ export class LottieCoreComponent implements OnInit, OnDestroy {
 
   // Store animation instance and remove event listeners on destroy
   handleAnimation(animation: AnimationItem): void {
-    console.log('Animation created', animation);
+    //console.log('Animation created', animation);
     this.animationInstance = animation;
 
     const onLoopComplete = () => {
       this.loadCount++;
-      if (this.loadCount >= this.loadTimes && this.loadTimes != 1) {
+      if (this.loadCount >= this.loadTimes && this.loadTimes !== 1) {
         animation.stop();
       }
       if (this.loop === true) {
@@ -76,8 +76,6 @@ export class LottieCoreComponent implements OnInit, OnDestroy {
     animation.addEventListener('error', (error: any) =>
       console.debug('Lottie Animation Error:', error)
     );
-    // Store reference to remove later
-    this.animationInstance = animation;
   }
 
   updateAnimation(newAnimationName: string): void {
@@ -89,8 +87,7 @@ export class LottieCoreComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.animationInstance) {
-      this.animationInstance.removeEventListener('loopComplete', () => {});
-      this.animationInstance.removeEventListener('error', () => {});
+      this.animationInstance.destroy(); // Properly destroy the animation instance
     }
   }
 }

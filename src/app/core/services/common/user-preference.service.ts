@@ -5,9 +5,14 @@ import { Colors } from '../../../shared/color';
 @Injectable({
   providedIn: 'root',
 })
-export class ColorService {
+export class UserPreferenceService {
   public isDarkTheme = new BehaviorSubject<boolean>(this.getStoredTheme());
+  public isHeaderView = new BehaviorSubject<boolean>(this.getStoredLayout());
 
+  constructor() {
+    console.log(this.isDarkTheme);
+    console.log(this.isHeaderView);
+  }
   get theme() {
     return this.isDarkTheme.asObservable();
   }
@@ -21,16 +26,24 @@ export class ColorService {
     this.isDarkTheme.next(newTheme);
     this.setTheme(newTheme);
   }
-
+  toggleLayout() {
+    const newLayout = !this.isHeaderView.value;
+    this.isHeaderView.next(newLayout);
+    localStorage.setItem('isHeaderView', newLayout ? 'true' : 'false');
+    console.log(this.isHeaderView);
+  }
   private getStoredTheme(): boolean {
     return localStorage.getItem('theme') === 'dark';
   }
-
+  private getStoredLayout(): boolean {
+    return localStorage.getItem('isHeaderView') === 'true';
+  }
   private setTheme(isDark: boolean) {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     document.documentElement.classList.toggle('dark', isDark);
     // Update the root color based on the theme
     // const selectionColor = isDark ? '#ff8c42' : '#8A2BE2';
     // document.documentElement.style.setProperty('--selection-bg', selectionColor);
+    document.body.classList.toggle('dark-mode', isDark);
   }
 }
