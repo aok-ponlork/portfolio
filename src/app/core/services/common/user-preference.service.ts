@@ -9,10 +9,7 @@ export class UserPreferenceService {
   public isDarkTheme = new BehaviorSubject<boolean>(this.getStoredTheme());
   public isHeaderView = new BehaviorSubject<boolean>(this.getStoredLayout());
 
-  constructor() {
-    console.log(this.isDarkTheme);
-    console.log(this.isHeaderView);
-  }
+  constructor() {}
   get theme() {
     return this.isDarkTheme.asObservable();
   }

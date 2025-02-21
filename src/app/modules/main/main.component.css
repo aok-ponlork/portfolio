@@ -8,5 +8,5 @@
     background-color 0.3s ease, box-shadow 0.3s ease-in-out;
 }
 .active {
-  @apply bg-gray-400 dark:bg-gray-600 dark:text-white text-gray-800 font-bold ;
+  @apply font-bold text-gray-800 bg-gray-300 dark:bg-gray-600 dark:text-white ;
 }

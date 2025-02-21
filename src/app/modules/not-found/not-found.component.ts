@@ -19,20 +19,20 @@ export class NotFoundComponent implements OnInit, OnDestroy {
   constructor(private renderer: Renderer2) {}
   ngOnInit(): void {
     console.log('Not Found Page Loaded');  
-    const layout = document.querySelector('nz-content');
-    if (layout) {
-      this.renderer.removeClass(layout, 'overflow-y-auto');
-      this.renderer.addClass(layout, 'overflow-hidden');
-    }
+    // const layout = document.querySelector('nz-content');
+    // if (layout) {
+    //   this.renderer.removeClass(layout, 'overflow-y-auto');
+    //   this.renderer.addClass(layout, 'overflow-hidden');
+    // }
   }
   
   ngOnDestroy(): void {
     console.log('Not Found Page Destroyed');
-    const layout = document.querySelector('nz-content');
-    if (layout) {
-      this.renderer.removeClass(layout, 'overflow-hidden');
-      this.renderer.addClass(layout, 'overflow-y-auto');
-    }
+    // const layout = document.querySelector('nz-content');
+    // if (layout) {
+    //   this.renderer.removeClass(layout, 'overflow-hidden');
+    //   this.renderer.addClass(layout, 'overflow-y-auto');
+    // }
   }
   
 }

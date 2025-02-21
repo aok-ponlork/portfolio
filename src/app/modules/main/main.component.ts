@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -59,8 +65,10 @@ export class MainComponent implements OnInit {
   settingMenuButton: boolean = false;
   mobileMenuOpen: boolean = false;
   currentYear: number = new Date().getFullYear();
-  isCollapsed = false;
+  isCollapsed: boolean = false;
+  isScrolled: boolean = false;
   readonly AppConfigs = AppConfigs;
+  @ViewChild('contentElement') contentElement!: ElementRef;
   icons = ['telegram', 'facebook-messenger', 'github'];
   menuItems = [
     {
@@ -162,5 +170,10 @@ export class MainComponent implements OnInit {
       faTimes,
       faBars
     );
+  }
+
+  onScroll(event: Event) {
+    const target = event.target as HTMLElement;
+    this.isScrolled = target.scrollTop > 50;
   }
 }

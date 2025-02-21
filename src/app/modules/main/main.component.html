@@ -5,19 +5,19 @@
     nzCollapsible
     [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null"
-    class="sticky overflow-y-auto h-full overflow-x-hidden transition-all duration-500 ease-in-out"
+    class="sticky h-full overflow-x-hidden overflow-y-auto transition-all duration-500 ease-in-out"
     [ngClass]="[themeBackground]"
   >
     <div
       class="py-4 transition-all duration-500 ease-in-out"
       [ngClass]="{ 'py-2': isCollapsed, 'py-4': !isCollapsed }"
     >
-      <div class="text-start font-semibold">
+      <div class="font-semibold text-start">
         <span
           nz-icon
           nzType="{{ !isCollapsed ? 'left-circle' : 'right-circle' }}"
           nzTheme="outline"
-          class="p-2 cursor-pointer hover:scale-110 hover:bg-gray-700 rounded transition-all duration-300"
+          class="p-2 transition-all duration-300 rounded cursor-pointer hover:scale-110 hover:bg-gray-700"
           [ngClass]="[themeText]"
           (click)="toggleSidebar()"
         ></span>
@@ -31,12 +31,12 @@
 
       <a
         routerLink="/"
-        class="flex flex-row gap-2 items-center px-3 justify-center"
+        class="flex flex-row items-center justify-center gap-2 px-3"
       >
         <img
           src="/assets/images/dummy-logo.webp"
           alt="logo"
-          class="rounded-full object-cover transition-all duration-500 ease-in-out"
+          class="object-cover transition-all duration-500 ease-in-out rounded-full"
           [ngClass]="{
             'h-36 w-36 opacity-100 scale-100': !isCollapsed,
             'h-12 w-12 opacity-50 scale-75': isCollapsed
@@ -51,7 +51,7 @@
       [ngClass]="{ 'opacity-100': !isCollapsed, 'opacity-0': isCollapsed }"
     >
       <p
-        class="sidebar-text justify-center text-center theme-transition"
+        class="justify-center text-center sidebar-text theme-transition"
         [ngClass]="[themeText]"
       >
         Wassailers high did his given sore control. Have uncouth other womans
@@ -62,13 +62,13 @@
           *ngFor="let icon of icons"
           [icon]="['fab', icon]"
           [ngClass]="[themeText]"
-          class="text-2xl cursor-pointer transition-all duration-500 ease-in-out"
+          class="text-2xl transition-all duration-500 ease-in-out cursor-pointer"
         ></fa-icon>
       </div>
     </div>
 
     <nz-divider
-      class="border-gray-900 dark:border-white px-2 transition-all duration-500 ease-in-out"
+      class="px-2 transition-all duration-500 ease-in-out border-gray-900 dark:border-white"
       [nzDashed]="true"
     ></nz-divider>
 
@@ -114,18 +114,21 @@
   </nz-sider>
 
   <!-- Main Layout -->
-  <nz-layout>
+  <nz-layout [ngClass]="[contentBackground]">
     <!-- Header -->
     <nz-header
       *ngIf="isHeaderLayout"
       [ngClass]="[
         themeBackground,
         themeText,
-        'flex flex-col items-center justify-center px-4 py-3 transition-all duration-300 ease-in-out'
+        'flex items-center justify-center px-4 py-2 transition-all duration-300 ease-in-out',
+        isScrolled
+          ? ''
+          : 'my-8 mx-20 shadow-xl rounded-md dark:shadow-none shadow-slate-300'
       ]"
     >
       <!-- Desktop Menu -->
-      <ul class="hidden md:flex gap-8 cursor-pointer">
+      <ul class="hidden gap-8 cursor-pointer md:flex">
         <li
           *ngFor="let item of menuItems"
           routerLinkActive="active px-4"
@@ -139,9 +142,9 @@
 
       <!-- Mobile Menu Button -->
       <button
-        class="md:hidden text-2xl p-2 rounded transition-transform duration-300 hover:scale-110 {{
+        class="md:hidden text-xl p-2 rounded transition-transform duration-300 hover:scale-110 {{
           themeText
-        }} self-end ml-auto"
+        }} self-end ml-auto flex-col items-center justify-center"
         (click)="toggleMobileMenu()"
       >
         <fa-icon
@@ -152,20 +155,23 @@
 
     <!-- Mobile Dropdown Menu -->
     <div
-      class="sm:hidden absolute top-16 left-0 w-full flex flex-col items-center p-4 transition-all duration-300 ease-[cubic-bezier(0.68,-0.55,0.27,1.55)] {{
+      class="md:hidden absolute {{
+        isScrolled ? 'top-16' : 'top-24'
+      }} left-0 w-full flex flex-col items-center p-4 transition-all duration-300 ease-[cubic-bezier(0.68,-0.55,0.27,1.55)] {{
         themeBackground
-      }} {{ themeText }}"
+      }} {{ themeText }} z-50"
       [ngClass]="{
         'opacity-100 translate-y-0': mobileMenuOpen,
         'opacity-0 translate-y-10': !mobileMenuOpen,
       }"
     >
-      <ul class="flex flex-col gap-4 w-full text-center" *ngIf="mobileMenuOpen">
+      <ul class="flex flex-col w-full gap-4 text-center" *ngIf="mobileMenuOpen">
         <li
           *ngFor="let item of menuItems"
           [routerLink]="item.route"
           routerLinkActive="active"
-          class="py-2 w-full hover:bg-gray-300 dark:hover:bg-gray-700 rounded cursor-pointer"
+          (click)="mobileMenuOpen = !mobileMenuOpen"
+          class="w-full py-2 rounded cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700"
         >
           <fa-icon [icon]="['fas', item.icon]"></fa-icon>
           {{ item.label }}
@@ -180,11 +186,12 @@
         contentBackground,
         '!h-full p-4 theme-transition overflow-y-auto'
       ]"
+      (scroll)="isHeaderLayout ? onScroll($event) : null"
     >
       <router-outlet></router-outlet>
       <div class="mt-auto">
         <nz-divider
-          class="border-gray-900 dark:border-white px-2 transition-all duration-500 ease-in-out"
+          class="px-2 transition-all duration-500 ease-in-out border-gray-900 dark:border-white"
           [nzDashed]="true"
         ></nz-divider>
         <div [ngClass]="[themeText, 'text-start w-full']">
@@ -209,7 +216,7 @@
 
 <!-- Floating -->
 <button
-  class="w-12 h-12 rounded-full fixed bottom-10 right-10 flex justify-center items-center shadow-md hover:scale-105 hover:shadow-xl z-50 transition-all"
+  class="fixed z-50 flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md bottom-10 right-10 hover:scale-105 hover:shadow-xl"
   (click)="toggleMenu()"
   [ngClass]="{
     'bg-gray-200': !userPref.isDarkTheme.value,
@@ -220,7 +227,7 @@
 </button>
 <div
   *ngIf="settingMenuButton"
-  class="fixed bottom-24 right-10 flex flex-col z-40 transition-all"
+  class="fixed z-40 flex flex-col transition-all bottom-24 right-10"
   [ngClass]="{
     'opacity-100': settingMenuButton,
     'opacity-0': !settingMenuButton,
@@ -229,7 +236,7 @@
   }"
 >
   <button
-    class="w-12 h-12 rounded-full flex justify-center items-center shadow-md hover:scale-105 hover:shadow-xl transition-all mb-2"
+    class="flex items-center justify-center w-12 h-12 mb-2 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
     (click)="toggleTheme()"
     [nz-tooltip]="'Toggle Theme'"
     [ngClass]="{
@@ -247,7 +254,7 @@
   </button>
 
   <button
-    class="w-12 h-12 rounded-full flex justify-center items-center shadow-md hover:scale-105 hover:shadow-xl transition-all"
+    class="flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
     [nz-tooltip]="'Toggle Header'"
     [ngClass]="{
       'bg-gray-200': !userPref.isDarkTheme.value,
