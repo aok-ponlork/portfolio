@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LottieComponent } from './lottie.component';
+import { LottieCoreComponent } from './lottie.component';
 
 describe('LottieComponent', () => {
-  let component: LottieComponent;
-  let fixture: ComponentFixture<LottieComponent>;
+  let component: LottieCoreComponent;
+  let fixture: ComponentFixture<LottieCoreComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LottieComponent]
+      imports: [LottieCoreComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LottieComponent);
+    fixture = TestBed.createComponent(LottieCoreComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

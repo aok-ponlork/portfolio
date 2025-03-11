@@ -7,8 +7,8 @@ import {
   signal,
 } from '@angular/core';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
-import { AnimationItem } from 'lottie-web';
 import { CommonModule } from '@angular/common';
+import { AnimationItem } from 'lottie-web';
 
 @Component({
   selector: 'app-lottie',
@@ -33,7 +33,7 @@ export class LottieCoreComponent implements OnInit, OnDestroy {
   private animationInstance?: AnimationItem;
   shouldLoad = true;
 
-  // WritableSignal for options
+  // Signal for animation options
   options = signal<AnimationOptions>({
     path: '',
     loop: true,
@@ -41,12 +41,17 @@ export class LottieCoreComponent implements OnInit, OnDestroy {
 
   constructor() {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.lazyLoadLottie(); // Load Lottie on Init
     this.updateAnimationPath();
   }
 
+  private async lazyLoadLottie() {
+    const lottie = await import('lottie-web'); // Lazy load Lottie dynamically
+    (window as any).lottie = lottie; // Store in global scope if needed
+  }
+
   private updateAnimationPath(): void {
-    // Update the signal's value directly
     this.options.set({
       path:
         this.animationFolder + (this.animationName || this.defaultAnimation),
@@ -54,9 +59,7 @@ export class LottieCoreComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Store animation instance and remove event listeners on destroy
   handleAnimation(animation: AnimationItem): void {
-    //console.log('Animation created', animation);
     this.animationInstance = animation;
 
     const onLoopComplete = () => {
@@ -87,7 +90,7 @@ export class LottieCoreComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.animationInstance) {
-      this.animationInstance.destroy(); // Properly destroy the animation instance
+      this.animationInstance.destroy();
     }
   }
 }

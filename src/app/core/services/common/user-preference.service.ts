@@ -13,11 +13,24 @@ export class UserPreferenceService {
   get theme() {
     return this.isDarkTheme.asObservable();
   }
-
   get currentColors() {
     return this.isDarkTheme.value ? Colors.dark : Colors.light;
   }
-
+  get themeBackground(): string {
+    return this.currentColors.background;
+  }
+  get themeText(): string {
+    return this.currentColors.text;
+  }
+  get contentBackground(): string {
+    return this.currentColors.secondaryBackground;
+  }
+  get inputColor(): string {
+    return this.currentColors.inputBackground;
+  }
+  get buttonColor(): string {
+    return this.currentColors.buttonBackground;
+  }
   toggleTheme() {
     const newTheme = !this.isDarkTheme.value;
     this.isDarkTheme.next(newTheme);

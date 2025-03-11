@@ -1,1 +1,149 @@
-<p>resume works!</p>
+<div
+  class="!max-w-4xl p-8 mx-auto mt-10 {{ userPref.contentBackground }} {{
+    userPref.themeText
+  }} shadow-xl"
+>
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 mb-6 border-b {{
+      userPref.themeText
+    }}"
+  >
+    <div class="w-full sm:w-auto">
+      <h1
+        class="text-4xl font-bold roboto-bold {{ userPref.themeText }} truncate"
+      >
+        {{ me.name }}
+      </h1>
+      <p class="mt-2 text-sm {{ userPref.themeText }}">
+        <a [href]="'mailto:' + me.email" class="roboto-regular">
+          <fa-icon
+            [icon]="['fas', 'envelope']"
+            class="cursor-pointer"
+          ></fa-icon>
+          &nbsp;{{ me.email }}
+        </a>
+        <span> | </span>
+        <a [href]="me.telegram" target="_blank" class="roboto-regular">
+          <fa-icon
+            [icon]="['fab', 'telegram']"
+            class="cursor-pointer"
+          ></fa-icon>
+          &nbsp;Telegram
+        </a>
+      </p>
+    </div>
+    <div class="w-full mt-4 text-right sm:w-auto sm:mt-0">
+      <p class="text-sm truncate roboto-regular">{{ me.location }}</p>
+    </div>
+  </div>
+
+  <section class="mb-8">
+    <p class="text-sm {{ userPref.themeText }} roboto-regular">
+      {{ me.aboutMe }}
+    </p>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="mb-8">
+    <h2
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+    >
+      Skills & Abilities
+    </h2>
+    <ul class="pl-5 space-y-1 list-disc">
+      <li class="roboto-regular" *ngFor="let item of me.skills">{{ item }}</li>
+    </ul>
+  </section>
+
+  <!-- Education Section -->
+  <section class="mb-8">
+    <h2
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+    >
+      Education
+    </h2>
+    <div class="mb-6" *ngFor="let item of me.education">
+      <p class="text-lg font-bold roboto-bold">
+        {{ item.title }}
+      </p>
+      <p class="text-sm font-semibold roboto-regular">
+        {{ item.content }}
+      </p>
+    </div>
+  </section>
+
+  <!-- Work Experience Section -->
+  <section class="mb-8">
+    <h2
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+    >
+      Work Experience
+    </h2>
+
+    <div class="mb-6" *ngFor="let item of me.experiences">
+      <p class="text-lg roboto-bold {{ userPref.themeText }}">
+        {{ item.title }}
+      </p>
+      <p class="my-2 text-sm roboto-regular">{{ item.date }}</p>
+      <ul class="pl-5 space-y-1 text-sm list-disc">
+        <li class="roboto-regular">
+          {{ item.content }}
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="mb-8">
+    <h2
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+    >
+      Projects
+    </h2>
+    <ul class="pl-5 space-y-2 text-sm list-disc">
+      <li *ngFor="let item of me.projects" class="py-1 roboto-regular">
+        <strong class="roboto-bold">{{ item.title }}</strong
+        >: {{ item.content }}
+      </li>
+    </ul>
+  </section>
+
+  <!-- Certifications Section -->
+  <!-- <section class="mb-8">
+    <h2
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+    >
+      Certifications
+    </h2>
+    <ul class="pl-5 space-y-1 text-sm list-disc">
+      <li>AWS Certified Developer - Associate</li>
+      <li>Certified Scrum Developer (CSD)</li>
+      <li>Microsoft Certified: Azure Developer Associate</li>
+    </ul>
+  </section> -->
+
+  <!-- Additional Skills Section -->
+  <section class="mb-8">
+    <h2
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+    >
+      Additional Skills
+    </h2>
+    <ul class="pl-5 space-y-1 list-disc">
+      <li class="roboto-regular" *ngFor="let item of me.additional">
+        {{ item }}
+      </li>
+    </ul>
+  </section>
+</div>
+
+<!-- Print Button -->
+<!-- <div class="flex justify-center mt-8 no-print">
+  <button
+    onclick="window.print()"
+    class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+  >
+    Print / Save as PDF
+  </button>
+</div> -->

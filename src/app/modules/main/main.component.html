@@ -5,7 +5,9 @@
     nzCollapsible
     [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null"
-    class="sticky h-full overflow-x-hidden overflow-y-auto transition-all duration-500 ease-in-out"
+    class="sticky h-full overflow-x-hidden overflow-y-auto transition-all duration-500 ease-in-out {{
+      !isCollapsed ? '!min-w-60' : ''
+    }}"
     [ngClass]="[themeBackground]"
   >
     <div
@@ -33,15 +35,11 @@
         routerLink="/"
         class="flex flex-row items-center justify-center gap-2 px-3"
       >
-        <img
-          src="/assets/images/dummy-logo.webp"
-          alt="logo"
-          class="object-cover transition-all duration-500 ease-in-out rounded-full"
-          [ngClass]="{
-            'h-36 w-36 opacity-100 scale-100': !isCollapsed,
-            'h-12 w-12 opacity-50 scale-75': isCollapsed
-          }"
-        />
+        <app-lottie
+          animationName="logo.json"
+          [width]="'w-full max-w-md md:max-w-full'"
+          [height]="'h-auto md:h-full'"
+        ></app-lottie>
       </a>
     </div>
 
@@ -54,9 +52,11 @@
         class="justify-center text-center sidebar-text theme-transition"
         [ngClass]="[themeText]"
       >
-        Wassailers high did his given sore control. Have uncouth other womans
-        tis pomp for did, could cell ancient times once.
+        A man on a journey to understand that four-letter word, starting with
+        "L" like his name, but ending with "E." The puzzle that never stops
+        unfolding.
       </p>
+
       <div class="flex justify-center gap-3 mt-4">
         <fa-icon
           *ngFor="let icon of icons"
@@ -184,11 +184,14 @@
       [ngClass]="[
         themeText,
         contentBackground,
-        '!h-full p-4 theme-transition overflow-y-auto'
+        '!h-full p-4 theme-transition overflow-y-auto flex flex-col'
       ]"
       (scroll)="isHeaderLayout ? onScroll($event) : null"
     >
-      <router-outlet></router-outlet>
+      <div class="flex flex-col flex-grow w-full">
+        <router-outlet></router-outlet>
+      </div>
+
       <div class="mt-auto">
         <nz-divider
           class="px-2 transition-all duration-500 ease-in-out border-gray-900 dark:border-white"
@@ -199,18 +202,6 @@
         </div>
       </div>
     </nz-content>
-    <!-- Footer Area-->
-    <!-- <nz-footer
-      *ngIf="isHeaderLayout"
-      [ngClass]="[
-        themeText,
-        themeBackground,
-        'font-semibold py-4 text-center theme-transition'
-      ]"
-      class="mt-auto"
-    >
-      AOK PONLORK ©{{ currentYear }}
-    </nz-footer> -->
   </nz-layout>
 </nz-layout>
 
@@ -220,7 +211,7 @@
   (click)="toggleMenu()"
   [ngClass]="{
     'bg-gray-200': !userPref.isDarkTheme.value,
-    'bg-gray-400': userPref.isDarkTheme.value
+    'bg-gray-300': userPref.isDarkTheme.value
   }"
 >
   <span nz-icon [nzType]="!settingMenuButton ? 'menu' : 'close'"></span>
@@ -238,14 +229,19 @@
   <button
     class="flex items-center justify-center w-12 h-12 mb-2 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
     (click)="toggleTheme()"
-    [nz-tooltip]="'Toggle Theme'"
+    [nz-tooltip]="
+      !userPref.isDarkTheme.value
+        ? 'Switch to dark theme'
+        : 'Switch to light theme'
+    "
     [ngClass]="{
       'bg-gray-200': !userPref.isDarkTheme.value,
-      'bg-gray-400': userPref.isDarkTheme.value
+      'bg-gray-300': userPref.isDarkTheme.value
     }"
   >
     <app-lottie
-      [animationName]="userPref.isDarkTheme.value ? 'dark.json' : 'light.json'"
+      #themeAnimation
+      [animationName]="!userPref.isDarkTheme.value ? 'dark.json' : 'light.json'"
       width="50px"
       height="50px"
       [loop]="true"
@@ -258,7 +254,7 @@
     [nz-tooltip]="'Toggle Header'"
     [ngClass]="{
       'bg-gray-200': !userPref.isDarkTheme.value,
-      'bg-gray-400': userPref.isDarkTheme.value
+      'bg-gray-300': userPref.isDarkTheme.value
     }"
     (click)="toggleHeader()"
   >

@@ -1,1 +1,101 @@
-<p>contact works!</p>
+<nz-spin [nzSpinning]="isLoading">
+  <div class="flex flex-col w-full px-4 min-h-fit md:flex-row">
+    <!-- Contact Form Section -->
+    <div
+      class="flex flex-col w-full p-8 md:flex-1 md:min-h-screen md:items-center md:justify-center md:flex"
+    >
+      <h2
+        class="py-2 mb-4 text-2xl font-bold text-center {{
+          userPref.themeText
+        }}"
+      >
+        Contact
+      </h2>
+
+      <form
+        [formGroup]="frmGroup"
+        (ngSubmit)="onSubmit()"
+        class="w-full max-w-md mx-auto"
+      >
+        <div class="flex flex-col justify-between gap-2 md:flex-row">
+          <!-- Name Field -->
+          <nz-form-item class="flex-1">
+            <nz-form-label [nzFor]="'name'" class="hidden md:block" nzRequired>
+              <span class="{{ userPref.themeText }}"> Name </span>
+            </nz-form-label>
+            <nz-form-control>
+              <input
+                nz-input
+                id="name"
+                formControlName="name"
+                placeholder="Your Name"
+                required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 {{
+                  userPref.inputColor
+                }} {{ userPref.themeText }}"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Email Field -->
+          <nz-form-item class="flex-1">
+            <nz-form-label [nzFor]="'email'" class="hidden md:block" nzRequired>
+              <span class="{{ userPref.themeText }}"> Email </span>
+            </nz-form-label>
+            <nz-form-control>
+              <input
+                nz-input
+                id="email"
+                formControlName="email"
+                type="email"
+                placeholder="Your Email"
+                required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 {{
+                  userPref.inputColor
+                }} {{ userPref.themeText }}"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <!-- Message Field -->
+        <nz-form-item>
+          <nz-form-control>
+            <textarea
+              nz-input
+              id="message"
+              formControlName="message"
+              placeholder="Your Message"
+              rows="6"
+              required
+              class="w-full p-2 border-gray-300 rounded-lg min-w-12 focus:ring-2 focus:ring-blue-500 {{
+                userPref.inputColor
+              }} {{ userPref.themeText }}"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="mt-4 text-center">
+          <button
+            nz-button
+            nzType="primary"
+            type="submit"
+            [disabled]="!frmGroup.valid"
+            class="w-full border sm:w-1/2"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lottie Animation Section -->
+    <div class="flex items-center justify-center flex-1 min-h-[200px]">
+      <app-lottie
+        [animationName]="'floating-labtop.json'"
+        [width]="'w-full'"
+        [height]="'h-auto'"
+      ></app-lottie>
+    </div>
+  </div>
+</nz-spin>

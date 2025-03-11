@@ -1,7 +1,5 @@
 import {
   Component,
-  ElementRef,
-  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -35,6 +33,7 @@ import {
   faHomeUser,
   faTimes,
   faBars,
+  faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
 import { RouterModule } from '@angular/router';
@@ -60,7 +59,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './main.component.css',
 })
 export class MainComponent implements OnInit {
-  @ViewChild(LottieCoreComponent) lottieComponent!: LottieCoreComponent;
+  @ViewChild('themeAnimation') lottieComponent!: LottieCoreComponent;
   isHeaderLayout: boolean = false;
   settingMenuButton: boolean = false;
   mobileMenuOpen: boolean = false;
@@ -68,7 +67,6 @@ export class MainComponent implements OnInit {
   isCollapsed: boolean = false;
   isScrolled: boolean = false;
   readonly AppConfigs = AppConfigs;
-  @ViewChild('contentElement') contentElement!: ElementRef;
   icons = ['telegram', 'facebook-messenger', 'github'];
   menuItems = [
     {
@@ -117,11 +115,10 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.userPref.theme.subscribe((isDark) => {
       document.documentElement.classList.toggle('dark', isDark);
-
       //Change animatiion on theme switch
       const newAnimation = this.userPref.isDarkTheme.value
-        ? 'dark.json'
-        : 'light.json';
+        ? 'light.json'
+        : 'dark.json';
       if (this.lottieComponent) {
         this.lottieComponent.updateAnimation(newAnimation);
       }
@@ -168,7 +165,8 @@ export class MainComponent implements OnInit {
       faHomeUser,
       faGithub,
       faTimes,
-      faBars
+      faBars,
+      faEnvelope
     );
   }
 
