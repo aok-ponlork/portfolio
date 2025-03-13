@@ -3,15 +3,28 @@ import { UserModel } from '../../core/models/user.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { UserPreferenceService } from '../../core/services/common/user-preference.service';
-
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { AosService } from '../../core/services/common/aos.service';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { environment } from '../../../environments/env.development';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-resume',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule],
+  imports: [
+    FontAwesomeModule,
+    CommonModule,
+    NzToolTipModule,
+    NzModalModule,
+    NzInputModule,
+  ],
   templateUrl: './resume.component.html',
   styleUrl: './resume.component.css',
 })
 export class ResumeComponent implements OnInit {
+  url = environment.baseUrl + 'app/resume';
   me: UserModel = {
     aboutMe: `As a recent graduate with a year of hands-on professional experience and a degree sponsored by PSE, I’m enthusiastic about contributing to dynamic teams and further honing my web development skills. With a strong foundation in web development, I’m eager to apply my expertise and passion for technology to deliver impactful, real-world solutions. I’m excited to collaborate on innovative projects that push the boundaries of web development.`,
     name: 'AOK PONLORK',
@@ -96,6 +109,98 @@ export class ResumeComponent implements OnInit {
       },
     ],
   };
-  constructor(public userPref: UserPreferenceService) {}
-  ngOnInit(): void {}
+  shareModalVisible: boolean = false;
+  isFullScreen: boolean = false;
+  constructor(
+    public userPref: UserPreferenceService,
+    public aosService: AosService,
+    private clipboard: Clipboard,
+    private message: NzMessageService
+  ) {}
+  ngOnInit(): void {
+    this.isFullScreen = false;
+    this.aosService.updateAosOptions({ once: true });
+  }
+  toggleFullScreen() {
+    const elem = document.getElementById('main-container') as HTMLElement;
+    if (!document.fullscreenElement) {
+      this.isFullScreen = true;
+      // Enter fullscreen
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if ((elem as any).webkitRequestFullscreen) {
+        // Safari
+        (elem as any).webkitRequestFullscreen();
+      } else if ((elem as any).mozRequestFullScreen) {
+        // Firefox
+        (elem as any).mozRequestFullScreen();
+      } else if ((elem as any).msRequestFullscreen) {
+        // IE/Edge
+        (elem as any).msRequestFullscreen();
+      }
+    } else {
+      this.isFullScreen = false;
+      // Exit fullscreen
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        // Safari
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).mozCancelFullScreen) {
+        // Firefox
+        (document as any).mozCancelFullScreen();
+      } else if ((document as any).msExitFullscreen) {
+        // IE/Edge
+        (document as any).msExitFullscreen();
+      }
+      // Reset overflow after exiting fullscreen
+    }
+  }
+  disable: boolean = false;
+  playOrPauseAos() {
+    this.disable = !this.disable;
+    this.aosService.updateAosOptions({ once: !this.disable });
+  }
+
+  shareResume(platform: string) {
+    const resumeUrl = encodeURIComponent('https://your-website.com/resume');
+    const description = encodeURIComponent(
+      'Here’s my professional resume, take a look!'
+    );
+
+    let shareUrl = '';
+
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${resumeUrl}`;
+        break;
+      case 'telegram':
+        shareUrl = `https://t.me/share/url?url=${resumeUrl}&text=${description}`;
+        break;
+      case 'email':
+        shareUrl = `mailto:?subject=My Resume&body=${resumeUrl}`;
+        break;
+      // Add more cases for other platforms like WhatsApp, Pinterest, etc.
+      default:
+        return;
+    }
+
+    // Open the share dialog in a new window
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+  }
+  showModal(): void {
+    this.shareModalVisible = true;
+  }
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.shareModalVisible = false;
+  }
+
+  copyToClipboard(text: string): void {
+    if (this.clipboard.copy(text)) {
+      this.message.success('Text copied to clipboard!');
+    } else {
+      this.message.error('Failed to copy text.');
+    }
+  }
 }

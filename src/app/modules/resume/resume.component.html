@@ -1,17 +1,17 @@
 <div
-  class="!max-w-4xl p-8 mx-auto mt-10 {{ userPref.contentBackground }} {{
-    userPref.themeText
-  }} shadow-xl"
+  class="resume-container !max-w-4xl p-8 mx-auto mt-10 relative {{
+    userPref.contentBackground
+  }} { userPref.themeText } shadow-xl"
 >
   <!-- Header -->
   <div
-    class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 mb-6 border-b {{
-      userPref.themeText
-    }}"
+    class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 mb-6 border-b { userPref.themeText }"
   >
     <div class="w-full sm:w-auto">
       <h1
         class="text-4xl font-bold roboto-bold {{ userPref.themeText }} truncate"
+        data-aos="zoom-in"
+        data-aos-duration="1000"
       >
         {{ me.name }}
       </h1>
@@ -38,56 +38,78 @@
     </div>
   </div>
 
-  <section class="mb-8">
+  <section class="mb-8" data-aos="fade-up" data-aos-duration="1000">
     <p class="text-sm {{ userPref.themeText }} roboto-regular">
       {{ me.aboutMe }}
     </p>
   </section>
 
   <!-- Skills Section -->
-  <section class="mb-8">
+  <section class="mb-8" data-aos="fade-up" data-aos-duration="1000">
     <h2
       class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
     >
       Skills & Abilities
     </h2>
     <ul class="pl-5 space-y-1 list-disc">
-      <li class="roboto-regular" *ngFor="let item of me.skills">{{ item }}</li>
+      <li
+        class="roboto-regular"
+        *ngFor="let item of me.skills"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        {{ item }}
+      </li>
     </ul>
   </section>
 
   <!-- Education Section -->
-  <section class="mb-8">
+  <section class="mb-8" data-aos="fade-up" data-aos-duration="1000">
     <h2
       class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
     >
       Education
     </h2>
-    <div class="mb-6" *ngFor="let item of me.education">
-      <p class="text-lg font-bold roboto-bold">
-        {{ item.title }}
-      </p>
-      <p class="text-sm font-semibold roboto-regular">
-        {{ item.content }}
-      </p>
+    <div
+      class="mb-6"
+      *ngFor="let item of me.education"
+      data-aos="fade-up"
+      data-aos-duration="1000"
+    >
+      <p class="text-lg font-bold roboto-bold">{{ item.title }}</p>
+      <p class="text-sm font-semibold roboto-regular">{{ item.content }}</p>
     </div>
   </section>
 
   <!-- Work Experience Section -->
-  <section class="mb-8">
+  <section class="mb-8" data-aos="fade-up" data-aos-duration="1000">
     <h2
       class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
     >
       Work Experience
     </h2>
-
-    <div class="mb-6" *ngFor="let item of me.experiences">
-      <p class="text-lg roboto-bold {{ userPref.themeText }}">
+    <div
+      class="mb-6"
+      *ngFor="let item of me.experiences"
+      data-aos="fade-up"
+      data-aos-duration="1000"
+    >
+      <p
+        class="text-lg roboto-bold {{ userPref.themeText }}"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
         {{ item.title }}
       </p>
-      <p class="my-2 text-sm roboto-regular">{{ item.date }}</p>
+      <p
+        class="my-2 text-sm roboto-regular"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        {{ item.date }}
+      </p>
       <ul class="pl-5 space-y-1 text-sm list-disc">
-        <li class="roboto-regular">
+        <li class="roboto-regular" data-aos="fade-up" data-aos-duration="1000">
           {{ item.content }}
         </li>
       </ul>
@@ -95,55 +117,154 @@
   </section>
 
   <!-- Projects Section -->
-  <section class="mb-8">
+  <section class="mb-8" data-aos="fade-up" data-aos-duration="1000">
     <h2
       class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
     >
       Projects
     </h2>
     <ul class="pl-5 space-y-2 text-sm list-disc">
-      <li *ngFor="let item of me.projects" class="py-1 roboto-regular">
+      <li
+        *ngFor="let item of me.projects"
+        class="py-1 roboto-regular"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
         <strong class="roboto-bold">{{ item.title }}</strong
         >: {{ item.content }}
       </li>
     </ul>
   </section>
 
-  <!-- Certifications Section -->
-  <!-- <section class="mb-8">
-    <h2
-      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
-    >
-      Certifications
-    </h2>
-    <ul class="pl-5 space-y-1 text-sm list-disc">
-      <li>AWS Certified Developer - Associate</li>
-      <li>Certified Scrum Developer (CSD)</li>
-      <li>Microsoft Certified: Azure Developer Associate</li>
-    </ul>
-  </section> -->
-
   <!-- Additional Skills Section -->
-  <section class="mb-8">
+  <section class="mb-16" data-aos="fade-up" data-aos-duration="1000">
     <h2
       class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
     >
       Additional Skills
     </h2>
     <ul class="pl-5 space-y-1 list-disc">
-      <li class="roboto-regular" *ngFor="let item of me.additional">
+      <li
+        class="roboto-regular"
+        *ngFor="let item of me.additional"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
         {{ item }}
       </li>
     </ul>
   </section>
+  <footer
+    class="absolute bottom-0 left-0 w-full py-4 text-white transition-opacity duration-300 {{
+      userPref.themeBackground
+    }} opacity-60 hover:opacity-100 hover:bg-gray-300 group"
+  >
+    <div
+      data-aos="fade-right"
+      data-aos-duration="1000"
+      class="flex items-center justify-between px-6 space-x-6 transition-opacity duration-300 opacity-15 group-hover:opacity-100"
+    >
+      <!-- Full Screen Button -->
+      <button
+        class="p-2 {{ userPref.themeText }} flex items-center space-x-2"
+        nz-tooltip="Toggle Full Screen"
+        (click)="toggleFullScreen()"
+      >
+        <fa-icon
+          [icon]="['fas', !isFullScreen ? 'expand' : 'compress']"
+        ></fa-icon>
+        <span class="text-sm">{{
+          !isFullScreen ? "Full Screen" : "Exit full screen"
+        }}</span>
+      </button>
+      <!-- Full Screen Button -->
+      <button
+        class="p-2 {{ userPref.themeText }} flex items-center space-x-2"
+        (click)="showModal()"
+      >
+        <fa-icon [icon]="['fas', 'share']"></fa-icon>
+        <span class="text-sm">Share</span>
+      </button>
+
+      <!-- Toggle Animation Button -->
+      <button
+        class="p-2 {{ userPref.themeText }} flex items-center space-x-2"
+        (click)="playOrPauseAos()"
+      >
+        <fa-icon [icon]="['fas', disable ? 'pause' : 'play']"></fa-icon>
+        <span class="text-sm">{{
+          disable ? "Pause Animation (on scroll)" : "Play Animation (on scroll)"
+        }}</span>
+      </button>
+    </div>
+  </footer>
 </div>
 
-<!-- Print Button -->
-<!-- <div class="flex justify-center mt-8 no-print">
-  <button
-    onclick="window.print()"
-    class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
-  >
-    Print / Save as PDF
-  </button>
-</div> -->
+<nz-modal
+  [(nzVisible)]="shareModalVisible"
+  [nzMaskClosable]="true"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="null"
+  [nzCentered]="true"
+>
+  <ng-container *nzModalContent>
+    <div class="share-content">
+      <!-- Share Buttons -->
+      <div class="flex justify-center mt-4 space-x-4 share-buttons">
+        <!-- E-mail Share Button -->
+        <button
+          nz-button
+          nz-size="large"
+          (click)="shareResume('email')"
+          class="w-16 h-16 mr-2 text-white transition duration-300 bg-blue-500 rounded-full hover:bg-blue-600"
+        >
+          <fa-icon
+            [icon]="['fas', 'envelope']"
+            class="cursor-pointer fa-2x"
+          ></fa-icon>
+        </button>
+
+        <!-- Facebook Share Button -->
+        <button
+          nz-button
+          nz-size="large"
+          (click)="shareResume('facebook')"
+          class="w-16 h-16 mr-2 text-white transition duration-300 bg-blue-500 rounded-full hover:bg-blue-600"
+        >
+          <fa-icon
+            [icon]="['fab', 'facebook']"
+            class="cursor-pointer fa-2x"
+          ></fa-icon>
+        </button>
+
+        <!-- Telegram Share Button -->
+        <button
+          nz-button
+          nz-size="large"
+          (click)="shareResume('telegram')"
+          class="w-16 h-16 mr-2 text-white transition duration-300 bg-blue-500 rounded-full hover:bg-blue-600"
+        >
+          <fa-icon
+            [icon]="['fab', 'telegram']"
+            class="cursor-pointer fa-2x"
+          ></fa-icon>
+        </button>
+
+        <!-- Add more buttons for other platforms here -->
+      </div>
+
+      <!-- Copy to Clipboard -->
+      <div class="flex items-center justify-center p-4 mt-4">
+        <nz-input-group [nzAddOnAfter]="inputButton">
+          <input type="text" nz-input placeholder="url" [value]="url" />
+        </nz-input-group>
+
+        <ng-template #inputButton>
+          <span class="cursor-pointer" (click)="copyToClipboard(url)"
+            >Copy</span
+          >
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

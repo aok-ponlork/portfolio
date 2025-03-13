@@ -18,5 +18,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class AboutMeComponent implements OnInit {
   constructor(public userPref: UserPreferenceService) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+   
+  }
 }

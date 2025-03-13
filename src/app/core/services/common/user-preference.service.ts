@@ -8,6 +8,9 @@ import { Colors } from '../../../shared/color';
 export class UserPreferenceService {
   public isDarkTheme = new BehaviorSubject<boolean>(this.getStoredTheme());
   public isHeaderView = new BehaviorSubject<boolean>(this.getStoredLayout());
+  public isMouseGlowingEffect = new BehaviorSubject<boolean>(
+    this.getStoreMouseGlowing()
+  );
 
   constructor() {}
   get theme() {
@@ -40,13 +43,20 @@ export class UserPreferenceService {
     const newLayout = !this.isHeaderView.value;
     this.isHeaderView.next(newLayout);
     localStorage.setItem('isHeaderView', newLayout ? 'true' : 'false');
-    console.log(this.isHeaderView);
+  }
+  toggleMouseGlowing() {
+    const value = !this.isMouseGlowingEffect.value;
+    this.isMouseGlowingEffect.next(value);
+    localStorage.setItem('isMouseGlowingEffect', value ? 'true' : 'false');
   }
   private getStoredTheme(): boolean {
     return localStorage.getItem('theme') === 'dark';
   }
   private getStoredLayout(): boolean {
     return localStorage.getItem('isHeaderView') === 'true';
+  }
+  private getStoreMouseGlowing(): boolean {
+    return localStorage.getItem('isMouseGlowingEffect') === 'true';
   }
   private setTheme(isDark: boolean) {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');

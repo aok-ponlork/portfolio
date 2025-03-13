@@ -8,5 +8,37 @@
     background-color 0.3s ease, box-shadow 0.3s ease-in-out;
 }
 .active {
-  @apply font-bold text-gray-800 bg-gray-300 dark:bg-gray-600 dark:text-white ;
+  @apply font-bold text-gray-800 bg-gray-300 dark:bg-gray-600 dark:text-white;
+}
+
+.mouse-spotlight {
+  position: fixed;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(
+    circle,
+    rgba(60, 60, 255, 0.22) 0%,
+    /* Soft blue glow at the center */ rgba(0, 0, 0, 0) 70%
+      /* Fading out to black */
+  );
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  border-radius: 50%; /* Ensures it stays circular */
+  animation: wave 1.5s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: translate(-50%, -50%) scale(1); /* Start at normal size */
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2); /* Grow bigger */
+    opacity: 0.8; /* Fade slightly */
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1); /* Return to normal size */
+    opacity: 1;
+  }
 }

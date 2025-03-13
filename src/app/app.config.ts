@@ -14,7 +14,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient } from '@angular/common/http';
 import player from 'lottie-web';
 import { provideLottieOptions } from 'ngx-lottie';
-
+import 'aos/dist/aos.css'; 
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {

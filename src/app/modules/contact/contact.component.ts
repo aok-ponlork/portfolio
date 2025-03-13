@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -27,7 +30,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     ReactiveFormsModule,
     FormsModule,
     NzSpinModule,
-    NzIconModule
+    NzIconModule,
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
@@ -35,12 +38,14 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 export class ContactComponent implements OnInit {
   frmGroup!: UntypedFormGroup;
   isLoading: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     public userPref: UserPreferenceService,
     private message: ActionMessageService,
     private http: HttpService
   ) {}
+
   ngOnInit(): void {
     this.frmGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -48,14 +53,17 @@ export class ContactComponent implements OnInit {
       message: ['', Validators.required],
     });
   }
+
   onSubmit(): void {
     this.isLoading = true;
     const model = this.frmGroup.value;
-    const url = (this.http.thirdPartySerive = environment.formSpreeUrl);
+    const url = environment.formSpreeUrl;
     this.http.post(url, model).subscribe({
       next: (rs: any) => {
         if (rs.ok) {
-          this.message.handleSuccess("Your message has been sent successfully!");
+          this.message.handleSuccess(
+            'Your message has been sent successfully!'
+          );
           this.frmGroup.reset();
         }
       },

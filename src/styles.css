@@ -56,8 +56,15 @@
 * {
   font-family: "Space Mono", monospace;
 }
+html,
 body {
-  overflow-y: hidden;
+  overflow-y: hidden; /* Disable scrolling for body */
+}
+
+nz-content {
+  overflow-y: auto; /* Enable scroll within the content */
+  height: 100vh; /* Make sure content takes up full viewport height */
+  position: relative; /* Ensure scroll area behaves correctly */
 }
 /* styles.css or styles.scss */
 .theme-transition {

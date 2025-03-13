@@ -181,12 +181,13 @@
 
     <!-- Content Area -->
     <nz-content
+      id="main-container"
       [ngClass]="[
         themeText,
         contentBackground,
-        '!h-full p-4 theme-transition overflow-y-auto flex flex-col'
+        '!h-full p-4 theme-transition overflow-y-scroll flex flex-col'
       ]"
-      (scroll)="isHeaderLayout ? onScroll($event) : null"
+      (scroll)="isHeaderLayout ? onScroll($event) : refreshAos()"
     >
       <div class="flex flex-col flex-grow w-full">
         <router-outlet></router-outlet>
@@ -226,8 +227,42 @@
     'scale-95': !settingMenuButton
   }"
 >
+  <!-- Header layout button -->
   <button
     class="flex items-center justify-center w-12 h-12 mb-2 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
+    [nz-tooltip]="'Toggle Header'"
+    [ngClass]="{
+      'bg-gray-200': !userPref.isDarkTheme.value,
+      'bg-gray-300': userPref.isDarkTheme.value
+    }"
+    (click)="toggleHeader()"
+  >
+    <app-lottie
+      [animationName]="'toggle-header.json'"
+      width="80px"
+      height="80px"
+      [loop]="true"
+      [loopDelay]="700"
+    ></app-lottie>
+  </button>
+  <!-- Mouse glowing button -->
+  <button
+    class="flex items-center justify-center w-12 h-12 mb-2 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
+    [nz-tooltip]="'Toggle Mouse Glowing Effect'"
+    [ngClass]="{
+      'bg-gray-200': !userPref.isDarkTheme.value,
+      'bg-gray-300': userPref.isDarkTheme.value
+    }"
+    (click)="toggleMosueGlowingEffect()"
+  >
+    <fa-icon
+      [icon]="['fas', 'mouse']"
+      class="{{ userPref.themeText }}"
+    ></fa-icon>
+  </button>
+  <!-- Theme button -->
+  <button
+    class="flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
     (click)="toggleTheme()"
     [nz-tooltip]="
       !userPref.isDarkTheme.value
@@ -248,22 +283,29 @@
       [loopDelay]="700"
     ></app-lottie>
   </button>
-
-  <button
-    class="flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
-    [nz-tooltip]="'Toggle Header'"
-    [ngClass]="{
-      'bg-gray-200': !userPref.isDarkTheme.value,
-      'bg-gray-300': userPref.isDarkTheme.value
-    }"
-    (click)="toggleHeader()"
-  >
-    <app-lottie
-      [animationName]="'toggle-header.json'"
-      width="80px"
-      height="80px"
-      [loop]="true"
-      [loopDelay]="700"
-    ></app-lottie>
-  </button>
 </div>
+<!-- <button
+  class="fixed z-50 flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md top-10 right-10 hover:scale-105 hover:shadow-xl"
+  nz-button
+  nz-popover
+  nzPopoverTitle="Title"
+  [nzPopoverContent]="contentTemplate"
+  nzPopoverPlacement="topLeft"
+>
+  TL
+</button>
+<ng-template #contentTemplate>
+  <div>
+    <p>Content</p>
+    <p>Content</p>
+  </div>
+</ng-template> -->
+<div
+  class="mouse-spotlight"
+  *ngIf="
+    isMouseMoving &&
+    userPref.isDarkTheme.value &&
+    userPref.isMouseGlowingEffect.value
+  "
+></div>
+

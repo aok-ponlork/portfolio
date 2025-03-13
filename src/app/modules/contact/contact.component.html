@@ -81,7 +81,7 @@
             nzType="primary"
             type="submit"
             [disabled]="!frmGroup.valid"
-            class="w-full border sm:w-1/2"
+            class="!w-full border sm:w-1/2"
           >
             Submit
           </button>
@@ -97,5 +97,12 @@
         [height]="'h-auto'"
       ></app-lottie>
     </div>
+  </div>
+  <div
+    class="py-8 mx-4 mt-6 text-center bg-gray-100 rounded-lg shadow-sm dark:bg-gray-800"
+  >
+    <blockquote class="text-lg italic {{ userPref.themeText }}">
+      "The best way to predict the future is to create it." — Peter Drucker
+    </blockquote>
   </div>
 </nz-spin>
