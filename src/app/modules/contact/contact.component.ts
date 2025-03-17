@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -67,11 +64,14 @@ export class ContactComponent implements OnInit {
           this.frmGroup.reset();
         }
       },
-      error: (error: any) => {
-        console.log(error);
+      error: (_error: any) => {
+        this.message.handleWarning(
+          'Something went wrong! please try again letter.'
+        );
         this.isLoading = false;
       },
       complete: () => {
+        this.frmGroup.reset();
         this.isLoading = false;
       },
     });

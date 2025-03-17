@@ -32,7 +32,7 @@
       ></nz-divider>
 
       <a
-        routerLink="/"
+        routerLink="/app/about-me"
         class="flex flex-row items-center justify-center gap-2 px-3"
       >
         <app-lottie
@@ -48,14 +48,13 @@
       class="p-2 transition-opacity duration-500 ease-in-out"
       [ngClass]="{ 'opacity-100': !isCollapsed, 'opacity-0': isCollapsed }"
     >
-      <p
-        class="justify-center text-center sidebar-text theme-transition"
-        [ngClass]="[themeText]"
+      <blockquote
+        class="justify-center mb-2 text-center theme-transition"
+        [ngClass]="themeText"
       >
-        A man on a journey to understand that four-letter word, starting with
-        "L" like his name, but ending with "E." The puzzle that never stops
-        unfolding.
-      </p>
+        The code you cringe at today is the proof of how far you'll go tomorrow.
+        Keep going!
+      </blockquote>
 
       <div class="flex justify-center gap-3 mt-4">
         <fa-icon
@@ -124,7 +123,7 @@
         'flex items-center justify-center px-4 py-2 transition-all duration-300 ease-in-out',
         isScrolled
           ? ''
-          : 'my-8 mx-20 shadow-xl rounded-md dark:shadow-none shadow-slate-300'
+          : 'my-8 mx-20 shadow-xl dark:shadow-none shadow-slate-300'
       ]"
     >
       <!-- Desktop Menu -->
@@ -195,11 +194,35 @@
 
       <div class="mt-auto">
         <nz-divider
-          class="px-2 transition-all duration-500 ease-in-out border-gray-900 dark:border-white"
+          class="!w-full transition-all duration-500 ease-in-out border-gray-900 dark:border-white"
           [nzDashed]="true"
         ></nz-divider>
-        <div [ngClass]="[themeText, 'text-start w-full']">
-          AOK PONLORK ©{{ currentYear }}
+        <div class="flex justify-between">
+          <div [ngClass]="[themeText]">AOK PONLORK ©{{ currentYear }}</div>
+
+          <!-- Mouse Glowing Effect Toggle Button -->
+          <button
+            [nz-tooltip]="'Only visible in dark mode'"
+            [ngClass]="[themeText]"
+            (click)="toggleMosueGlowingEffect()"
+          >
+            <fa-icon
+              [icon]="[
+                'fas',
+                userPref.isMouseGlowingEffect.value
+                  ? 'wand-magic-sparkles'
+                  : 'wand-magic'
+              ]"
+              class="transition-all duration-200"
+            ></fa-icon>
+            <span class="text-sm font-medium">
+              {{
+                userPref.isMouseGlowingEffect.value
+                  ? "Disable Light Effect"
+                  : "Enable Light Effect"
+              }}
+            </span>
+          </button>
         </div>
       </div>
     </nz-content>
@@ -208,7 +231,7 @@
 
 <!-- Floating -->
 <button
-  class="fixed z-50 flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md bottom-10 right-10 hover:scale-105 hover:shadow-xl"
+  class="fixed z-50 flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md bottom-14 right-10 hover:scale-105 hover:shadow-xl"
   (click)="toggleMenu()"
   [ngClass]="{
     'bg-gray-200': !userPref.isDarkTheme.value,
@@ -219,7 +242,7 @@
 </button>
 <div
   *ngIf="settingMenuButton"
-  class="fixed z-40 flex flex-col transition-all bottom-24 right-10"
+  class="fixed z-40 flex flex-col transition-all bottom-28 right-10"
   [ngClass]="{
     'opacity-100': settingMenuButton,
     'opacity-0': !settingMenuButton,
@@ -244,21 +267,6 @@
       [loop]="true"
       [loopDelay]="700"
     ></app-lottie>
-  </button>
-  <!-- Mouse glowing button -->
-  <button
-    class="flex items-center justify-center w-12 h-12 mb-2 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
-    [nz-tooltip]="'Toggle Mouse Glowing Effect'"
-    [ngClass]="{
-      'bg-gray-200': !userPref.isDarkTheme.value,
-      'bg-gray-300': userPref.isDarkTheme.value
-    }"
-    (click)="toggleMosueGlowingEffect()"
-  >
-    <fa-icon
-      [icon]="['fas', 'mouse']"
-      class="{{ userPref.themeText }}"
-    ></fa-icon>
   </button>
   <!-- Theme button -->
   <button
@@ -308,4 +316,3 @@
     userPref.isMouseGlowingEffect.value
   "
 ></div>
-

@@ -1,8 +1,9 @@
-<div class="!w-full min-h-screen p-8">
-  <div class="flex flex-col justify-between gap-8 md:flex-row">
-    <!-- Text Section -->
+<div class="!w-full min-h-screen p-4" id="page-container">
+  <section
+    class="relative flex flex-col justify-between gap-8 p-8 transition duration-500 ease-in-out bg-transparent md:flex-row"
+  >
     <div class="flex flex-col justify-start w-full md:w-1/2">
-      <h1 class="mb-2 text-3xl font-bold {{ userPref.themeText }}">
+      <h1 class="mb-2 text-3xl font-bold {{ userPref.themeText }} ">
         Aok Ponlork
       </h1>
       <p class="py-4 text-xl font-bold">Tech Enthusiast (Frontend & Backend)</p>
@@ -12,19 +13,19 @@
         complex problems and writing about software development on my
         <span
           [routerLink]="'/app/blog'"
-          class="font-bold text-blue-600 cursor-pointer"
+          class="font-bold text-blue-400 cursor-pointer"
           >blog.</span
         >
         Curious about my work? Check out my
         <span
           [routerLink]="'/app/portfolio'"
-          class="font-bold text-blue-600 cursor-pointer"
+          class="font-bold text-blue-400 cursor-pointer"
           >portfolio</span
         >
         and
         <span
           [routerLink]="'/app/resume'"
-          class="font-bold text-blue-600 cursor-pointer"
+          class="font-bold text-blue-400 cursor-pointer"
           >resume</span
         >
         to see what I bring to the table.
@@ -50,8 +51,6 @@
         </button>
       </div>
     </div>
-
-    <!-- Animation Section -->
     <div class="flex justify-center w-full mt-4 md:w-1/2 md:mt-0 ps-5">
       <app-lottie
         data-aos="fade-down-right"
@@ -60,5 +59,99 @@
         [height]="'350px'"
       ></app-lottie>
     </div>
-  </div>
+  </section>
+  <section
+    class="relative flex flex-col justify-between gap-8 p-8 transition duration-500 ease-in-out bg-transparent opacity-100 md:flex-row"
+  >
+    <div class="container px-6 mx-auto">
+      <h2 class="mb-8 text-3xl font-bold text-start {{ userPref.themeText }}">
+        What I Do
+      </h2>
+      <p
+        class="justify-start text-base mb-12 font-semibold {{
+          userPref.themeText
+        }}"
+      >
+        I have experience building software using various tools and
+        technologies. Below is an overview of my technical skill sets and the
+        tools I frequently use.
+      </p>
+      <div
+        class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+        id="skill-section"
+      >
+        <!-- Skill Lists -->
+        <div
+          class="flex flex-col items-center p-6 text-center transition duration-300 ease-in-out {{
+            userPref.contentBackground
+          }} shadow-sm rounded-md opacity-100 dark:hover:bg-slate-800/50 hover:bg-slate-100/65 hover:rounded-md dark:bg-gray-700 hover:shadow-md hover:cursor-crosshair"
+          *ngFor="let item of skills"
+          data-aos="zoom-in-up"
+          data-aos-duration="1000"
+          data-aos-delay="200"
+          style="transition: all 0.3s ease-in-out"
+        >
+          <fa-icon
+            [icon]="[item.iconType, item.icon]"
+            *ngIf="item.icon && item.iconType && item.iconType !== 'ant-icon'"
+            class="mb-1 text-4xl"
+          ></fa-icon>
+          <span
+            class="mb-1 text-4xl"
+            nz-icon
+            [nzType]="item.icon"
+            *ngIf="item.iconType === 'ant-icon'"
+          ></span>
+          <h3 class="text-xl font-semibold {{ userPref.themeText }}">
+            {{ item.title }}
+          </h3>
+          <p class="mt-2 {{ userPref.themeText }}">
+            {{ item.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section
+    class="relative flex flex-col justify-between gap-8 p-8 transition duration-500 ease-in-out bg-transparent md:flex-row"
+  >
+    <div class="container px-6 mx-auto">
+      <h2 class="mb-8 text-3xl font-bold text-start {{ userPref.themeText }}">
+        Skills & Technologies I Use
+      </h2>
+      <p
+        class="justify-start text-base mb-12 font-semibold {{
+          userPref.themeText
+        }}"
+      >
+        Here's a breakdown of the tools and technologies I work with to build
+        efficient, scalable, and high-performing applications.
+      </p>
+      <nz-collapse [nzGhost]="true">
+        <nz-collapse-panel
+          data-aos="fade-down-right"
+          data-aos-duration="1000"
+          *ngFor="let item of additionalSkills"
+          [nzHeader]="item.title"
+          [nzActive]="false"
+        >
+          <div
+            class="flex flex-col items-center p-6 text-center transition duration-500 ease-in-out sm:items-start dark:hover:bg-slate-800/50 hover:bg-slate-200/65 hover:shadow-sm hover:rounded-md"
+          >
+            <fa-icon
+              *ngIf="item.icon && item.iconType"
+              [icon]="[item.iconType, item.icon]"
+              class="text-2xl mb-2 {{ userPref.themeText }}"
+            ></fa-icon>
+            <h3 class="text-xl font-semibold {{ userPref.themeText }}">
+              {{ item.title }}
+            </h3>
+            <p class="mt-2 mb-4 {{ userPref.themeText }}">
+              {{ item.description }}
+            </p>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
+  </section>
 </div>

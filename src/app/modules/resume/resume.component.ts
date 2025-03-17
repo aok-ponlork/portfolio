@@ -33,11 +33,11 @@ export class ResumeComponent implements OnInit {
     telegram: 'https://t.me/aok_ponlork',
     skills: [
       'Programming Languages: PHP, C#, JavaScript, TypeScript, SQL, Python, Java, Dart',
-      'Web Development: Angular, React, Node.js, HTML, CSS, Tailwind CSS, Laravel, .NET, Flutter',
+      'Web Development: Angular, Node.js, HTML, CSS, Tailwind CSS, Laravel, .NET, Flutter',
       'Database Management: MySQL, PostgreSQL, MongoDB, SQL Server, Firebase Firestore, SQLite',
       'Version Control: Git, GitHub',
       'DevOps & CI/CD: Jenkins, Docker, CI/CD Pipelines',
-      'Cloud Services: AWS, Azure, Google Cloud',
+      'Cloud Services: AWS, Azure, Google Cloud (CAP)',
       'API Development: RESTful APIs, GraphQL',
       'Tools & Services: Firebase, FCM',
     ],
@@ -156,10 +156,10 @@ export class ResumeComponent implements OnInit {
       // Reset overflow after exiting fullscreen
     }
   }
-  disable: boolean = false;
+  isDisableAos: boolean = false;
   playOrPauseAos() {
-    this.disable = !this.disable;
-    this.aosService.updateAosOptions({ once: !this.disable });
+    this.isDisableAos = !this.isDisableAos;
+    this.aosService.updateAosOptions({ once: !this.isDisableAos });
   }
 
   shareResume(platform: string) {
@@ -180,13 +180,13 @@ export class ResumeComponent implements OnInit {
       case 'email':
         shareUrl = `mailto:?subject=My Resume&body=${resumeUrl}`;
         break;
-      // Add more cases for other platforms like WhatsApp, Pinterest, etc.
+      // Add more cases for other platforms.
       default:
         return;
     }
 
     // Open the share dialog in a new window
-    window.open(shareUrl, '_blank', 'width=600,height=400');
+    window.open(shareUrl, '_blank');
   }
   showModal(): void {
     this.shareModalVisible = true;

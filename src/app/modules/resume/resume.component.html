@@ -137,7 +137,7 @@
   </section>
 
   <!-- Additional Skills Section -->
-  <section class="mb-16" data-aos="fade-up" data-aos-duration="1000">
+  <section class="mb-20" data-aos="fade-up" data-aos-duration="1000">
     <h2
       class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
     >
@@ -155,45 +155,47 @@
     </ul>
   </section>
   <footer
-    class="absolute bottom-0 left-0 w-full py-4 text-white transition-opacity duration-300 {{
+    class="absolute bottom-0 left-0 w-full py-4 px-4 transition-opacity duration-300 {{
       userPref.themeBackground
-    }} opacity-60 hover:opacity-100 hover:bg-gray-300 group"
+    }} opacity-25 hover:opacity-100 hover:bg-gray-300 group"
   >
     <div
       data-aos="fade-right"
       data-aos-duration="1000"
-      class="flex items-center justify-between px-6 space-x-6 transition-opacity duration-300 opacity-15 group-hover:opacity-100"
+      class="flex flex-wrap items-center justify-center gap-4 transition-opacity duration-300 md:justify-between opacity-15 group-hover:opacity-100"
     >
       <!-- Full Screen Button -->
       <button
         class="p-2 {{ userPref.themeText }} flex items-center space-x-2"
-        nz-tooltip="Toggle Full Screen"
+        nz-tooltip="Toggle full screen"
         (click)="toggleFullScreen()"
       >
         <fa-icon
           [icon]="['fas', !isFullScreen ? 'expand' : 'compress']"
         ></fa-icon>
-        <span class="text-sm">{{
-          !isFullScreen ? "Full Screen" : "Exit full screen"
+        <span class="hidden text-sm md:inline">{{
+          !isFullScreen ? "Full screen" : "Exit full screen"
         }}</span>
       </button>
-      <!-- Full Screen Button -->
+
+      <!-- Share Button -->
       <button
         class="p-2 {{ userPref.themeText }} flex items-center space-x-2"
         (click)="showModal()"
       >
         <fa-icon [icon]="['fas', 'share']"></fa-icon>
-        <span class="text-sm">Share</span>
+        <span class="hidden text-sm md:inline">Share</span>
       </button>
 
       <!-- Toggle Animation Button -->
       <button
+        nz-tooltip="On scroll animation"
         class="p-2 {{ userPref.themeText }} flex items-center space-x-2"
         (click)="playOrPauseAos()"
       >
-        <fa-icon [icon]="['fas', disable ? 'pause' : 'play']"></fa-icon>
-        <span class="text-sm">{{
-          disable ? "Pause Animation (on scroll)" : "Play Animation (on scroll)"
+        <fa-icon [icon]="['fas', isDisableAos ? 'pause' : 'play']"></fa-icon>
+        <span class="hidden text-sm md:inline">{{
+          isDisableAos ? "Pause Animation" : "Play Animation"
         }}</span>
       </button>
     </div>

@@ -1,0 +1,53 @@
+/* Section hover state */
+section:hover h1,
+section:hover span,
+section:hover button {
+  color: #38b2ac; /* light green */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+section h1,
+section span,
+section button {
+  transition: color 0.3s ease, transform 0.3s ease;
+  transform: scale(1);
+}
+
+section:hover div h2,
+section:hover div #skill-section div h3,
+section:hover div #skill-section div fa-icon {
+  color: #38b2ac; /* Light green color */
+  transition: color 0.3s ease;
+}
+
+section div #skill-section div:hover {
+  scale: 1.02;
+  transition: color 0.3s ease;
+}
+
+section div h2,
+section div #skill-section div h3,
+section div #skill-section div fa-icon {
+  transition: color 0.3s ease, transform 0.3s ease;
+  transform: scale(1);
+}
+
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+
+::ng-deep .ant-collapse-header,
+.ant-collapse-header-text {
+  color: #1f2937 !important; /* Default text color */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+::ng-deep .dark .ant-collapse-header,
+.ant-collapse-header-text {
+  color: #ffffff !important; /* Default text color in dark mode */
+}
+
+::ng-deep .ant-collapse-header:hover,
+::ng-deep .ant-collapse-header-text:hover {
+  color: #38b2ac !important; /* Change to a blue color on hover (light mode) */
+}

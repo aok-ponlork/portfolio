@@ -18,39 +18,12 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { UserPreferenceService } from '../../core/services/common/user-preference.service';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { FormsModule } from '@angular/forms';
-import {
-  FaIconLibrary,
-  FontAwesomeModule,
-} from '@fortawesome/angular-fontawesome';
-import {
-  faTelegram,
-  faFacebookMessenger,
-  faGithub,
-  faFacebook
-} from '@fortawesome/free-brands-svg-icons';
-import {
-  faLaptopCode,
-  faCogs,
-  faFileAlt,
-  faAddressBook,
-  faNewspaper,
-  faUser,
-  faHomeUser,
-  faTimes,
-  faBars,
-  faEnvelope,
-  faComputerMouse,
-  faExpand,
-  faPrint,
-  faCompress,
-  faPlay,
-  faPause,
-  faShare,
-} from '@fortawesome/free-solid-svg-icons';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
 import { RouterModule } from '@angular/router';
 import Aos from 'aos';
 import { AosService } from '../../core/services/common/aos.service';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { FontAwesomeShareModule } from '../../shared/modules/font-awesome.module';
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -65,12 +38,23 @@ import { AosService } from '../../core/services/common/aos.service';
     NzDividerModule,
     NzSwitchModule,
     FormsModule,
-    FontAwesomeModule,
     LottieCoreComponent,
     NzPopoverModule,
+    FontAwesomeShareModule,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
+  animations: [
+    trigger('pageAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)' }),
+        animate('500ms ease-out', style({ transform: 'translateX(0)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in', style({ transform: 'translateX(-100%)' })),
+      ]),
+    ]),
+  ],
 })
 export class MainComponent implements OnInit {
   @ViewChild('themeAnimation') lottieComponent!: LottieCoreComponent;
@@ -121,20 +105,21 @@ export class MainComponent implements OnInit {
       route: 'contact',
     },
   ];
+
   constructor(
     public userPref: UserPreferenceService,
-    public library: FaIconLibrary,
     private renderer: Renderer2,
     private el: ElementRef,
     private aosService: AosService
   ) {
-    this.registerIcon();
     this.isHeaderLayout = userPref.isHeaderView.value;
   }
+
   ngOnInit() {
+    // Subscribe to theme changes and update page style accordingly
     this.userPref.theme.subscribe((isDark) => {
       document.documentElement.classList.toggle('dark', isDark);
-      //Change animatiion on theme switch
+      // Update Lottie animation based on the theme
       const newAnimation = this.userPref.isDarkTheme.value
         ? 'light.json'
         : 'dark.json';
@@ -142,74 +127,73 @@ export class MainComponent implements OnInit {
         this.lottieComponent.updateAnimation(newAnimation);
       }
     });
+
+    // Add mouse event listeners only once to avoid multiple subscriptions
     if (!this.listenersAdded) {
       document.addEventListener('mousemove', this.onMouseMove.bind(this));
       document.addEventListener('mouseleave', this.onMouseLeave.bind(this));
       this.listenersAdded = true;
     }
   }
+
   toggleMosueGlowingEffect(): void {
+    // Toggle mouse glowing effect and reset mouse movement status
     this.userPref.toggleMouseGlowing();
     this.isMouseMoving = false;
   }
+
   toggleHeader(): void {
+    // Toggle header layout and the state of the settings menu button
     this.userPref.toggleLayout();
     this.isHeaderLayout = this.userPref.isHeaderView.value;
     this.settingMenuButton = !this.settingMenuButton;
     this.mobileMenuOpen = false;
   }
+
   toggleTheme(): void {
+    // Toggle between light and dark theme and update settings button state
     this.userPref.toggleTheme();
     this.settingMenuButton = !this.settingMenuButton;
   }
+
   toggleSidebar() {
+    // Toggle sidebar collapse state
     this.isCollapsed = !this.isCollapsed;
   }
+
   toggleMenu() {
+    // Toggle the state of the menu button
     this.settingMenuButton = !this.settingMenuButton;
   }
+
   toggleMobileMenu(): void {
+    // Toggle the state of the mobile menu
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
+
   get themeBackground(): string {
+    // Get the background color based on the current theme
     return this.userPref.currentColors.background;
   }
+
   get themeText(): string {
+    // Get the text color based on the current theme
     return this.userPref.currentColors.text;
   }
+
   get contentBackground(): string {
+    // Get the content background color based on the current theme
     return this.userPref.currentColors.contentBackground;
   }
-  private registerIcon(): void {
-    this.library.addIcons(
-      faTelegram,
-      faFacebookMessenger,
-      faCogs,
-      faLaptopCode,
-      faFileAlt,
-      faAddressBook,
-      faNewspaper,
-      faUser,
-      faHomeUser,
-      faGithub,
-      faTimes,
-      faBars,
-      faEnvelope,
-      faComputerMouse,
-      faExpand,
-      faPrint,
-      faCompress,
-      faPlay,
-      faPause,
-      faShare,
-      faFacebook
-    );
-  }
+
+  // Handle scroll event for adding effects when scrolling
   onScroll(event: Event) {
     const target = event.target as HTMLElement;
+    // Update the scroll state based on the scroll position
     this.isScrolled = target.scrollTop > 50;
-    Aos.refresh();
+    Aos.refresh(); // Refresh animations triggered by scroll
   }
+
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent): void {
     if (this.isMouseMoving === false) {
@@ -217,18 +201,60 @@ export class MainComponent implements OnInit {
         this.isMouseMoving = true;
       }, 10);
     }
+
     const spotlight = this.el.nativeElement.querySelector('.mouse-spotlight');
+
     if (spotlight && this.userPref.isMouseGlowingEffect) {
       const x = event.clientX;
       const y = event.clientY;
+
+      // Update position of the spotlight based on mouse movement
       this.renderer.setStyle(spotlight, 'top', `${y}px`);
       this.renderer.setStyle(spotlight, 'left', `${x}px`);
     }
   }
+
+  // Handle mouse click event to create ripple effect if enabled
+  @HostListener('click', ['$event'])
+  onClick(event: MouseEvent): void {
+    if (
+      this.userPref.isMouseGlowingEffect.value &&
+      this.userPref.isDarkTheme.value
+    ) {
+      const ripple = this.renderer.createElement('div');
+      ripple.classList.add('mouse-ripple');
+
+      // Set position of the ripple at mouse location
+      const x = event.clientX;
+      const y = event.clientY;
+
+      this.renderer.setStyle(ripple, 'top', `${y - 25}px`); // Center the ripple
+      this.renderer.setStyle(ripple, 'left', `${x - 25}px`); // Center the ripple
+
+      // Append the ripple element to the container
+      this.el.nativeElement.appendChild(ripple);
+
+      // Remove the ripple after the animation ends
+      setTimeout(() => {
+        this.renderer.removeChild(this.el.nativeElement, ripple);
+      }, 600);
+    }
+  }
+
+  // Handle mouse leave event to reset mouse movement status
   onMouseLeave() {
     this.isMouseMoving = false;
   }
+
+  // Refresh AOS animations when needed
   refreshAos(): void {
     Aos.refresh();
+  }
+
+  // Control AOS animations (enable/disable once effect)
+  disable: boolean = false;
+  playOrPauseAos() {
+    this.disable = !this.disable;
+    this.aosService.updateAosOptions({ once: !this.disable });
   }
 }

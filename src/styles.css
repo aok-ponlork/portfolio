@@ -58,7 +58,7 @@
 }
 html,
 body {
-  overflow-y: hidden; /* Disable scrolling for body */
+  overflow: hidden;
 }
 
 nz-content {
