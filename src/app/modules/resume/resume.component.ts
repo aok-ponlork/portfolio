@@ -10,6 +10,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { environment } from '../../../environments/env.development';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-resume',
   standalone: true,
@@ -19,6 +21,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     NzToolTipModule,
     NzModalModule,
     NzInputModule,
+    NzButtonModule,
+    RouterModule,
   ],
   templateUrl: './resume.component.html',
   styleUrl: './resume.component.css',

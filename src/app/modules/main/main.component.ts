@@ -22,7 +22,6 @@ import { LottieCoreComponent } from '../../shared/components/lottie/lottie.compo
 import { RouterModule } from '@angular/router';
 import Aos from 'aos';
 import { AosService } from '../../core/services/common/aos.service';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { FontAwesomeShareModule } from '../../shared/modules/font-awesome.module';
 @Component({
   selector: 'app-main',
@@ -44,17 +43,6 @@ import { FontAwesomeShareModule } from '../../shared/modules/font-awesome.module
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
-  animations: [
-    trigger('pageAnimation', [
-      transition(':enter', [
-        style({ transform: 'translateX(100%)' }),
-        animate('500ms ease-out', style({ transform: 'translateX(0)' })),
-      ]),
-      transition(':leave', [
-        animate('500ms ease-in', style({ transform: 'translateX(-100%)' })),
-      ]),
-    ]),
-  ],
 })
 export class MainComponent implements OnInit {
   @ViewChild('themeAnimation') lottieComponent!: LottieCoreComponent;
@@ -221,7 +209,7 @@ export class MainComponent implements OnInit {
       this.userPref.isMouseGlowingEffect.value &&
       this.userPref.isDarkTheme.value
     ) {
-      const ripple = this.renderer.createElement('div');
+      const ripple = this.renderer.createElement('span');
       ripple.classList.add('mouse-ripple');
 
       // Set position of the ripple at mouse location

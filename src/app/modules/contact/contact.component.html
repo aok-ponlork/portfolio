@@ -1,28 +1,25 @@
 <nz-spin [nzSpinning]="isLoading" id="particles-container">
-  <div class="flex flex-col w-full px-4 min-h-fit md:flex-row">
+  <div
+    class="flex flex-col w-full px-4 min-h-fit md:flex-row"
+    [ngClass]="userPref.themeText"
+  >
     <!-- Contact Form Section -->
     <div
-      class="flex flex-col w-full p-8 md:flex-1 md:min-h-screen md:items-center md:justify-center md:flex"
+      class="flex flex-col w-full p-8 md:flex-1 md:min-h-screen md:items-center md:justify-center"
     >
-      <h2
-        class="py-2 mb-4 text-2xl font-bold text-center {{
-          userPref.themeText
-        }}"
-      >
-        Contact
-      </h2>
+      <h2 class="py-2 mb-4 text-2xl font-bold text-center">Contact</h2>
 
       <form
         [formGroup]="frmGroup"
         (ngSubmit)="onSubmit()"
         class="w-full max-w-md mx-auto"
       >
-        <div class="flex flex-col justify-between gap-2 md:flex-row">
+        <div class="flex flex-col gap-2 md:flex-row">
           <!-- Name Field -->
           <nz-form-item class="flex-1">
-            <nz-form-label [nzFor]="'name'" class="hidden md:block" nzRequired>
-              <span class="{{ userPref.themeText }}"> Name </span>
-            </nz-form-label>
+            <nz-form-label [nzFor]="'name'" class="hidden md:block" nzRequired
+              >Name</nz-form-label
+            >
             <nz-form-control>
               <input
                 nz-input
@@ -30,18 +27,17 @@
                 formControlName="name"
                 placeholder="Your Name"
                 required
-                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 {{
-                  userPref.inputColor
-                }} {{ userPref.themeText }}"
+                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                [ngClass]="userPref.inputColor"
               />
             </nz-form-control>
           </nz-form-item>
 
           <!-- Email Field -->
           <nz-form-item class="flex-1">
-            <nz-form-label [nzFor]="'email'" class="hidden md:block" nzRequired>
-              <span class="{{ userPref.themeText }}"> Email </span>
-            </nz-form-label>
+            <nz-form-label [nzFor]="'email'" class="hidden md:block" nzRequired
+              >Email</nz-form-label
+            >
             <nz-form-control>
               <input
                 nz-input
@@ -50,9 +46,8 @@
                 type="email"
                 placeholder="Your Email"
                 required
-                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 {{
-                  userPref.inputColor
-                }} {{ userPref.themeText }}"
+                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                [ngClass]="userPref.inputColor"
               />
             </nz-form-control>
           </nz-form-item>
@@ -68,27 +63,27 @@
               placeholder="Your Message"
               rows="6"
               required
-              class="w-full p-2 border-gray-300 rounded-lg min-w-12 focus:ring-2 focus:ring-blue-500 {{
-                userPref.inputColor
-              }} {{ userPref.themeText }}"
+              class="w-full p-2 border rounded-lg min-w-12 focus:ring-2 focus:ring-blue-500"
+              [ngClass]="userPref.inputColor"
             ></textarea>
           </nz-form-control>
         </nz-form-item>
 
+        <!-- Submit Button -->
         <div class="mt-4 text-center">
           <button
             nz-button
             nzType="primary"
             type="submit"
-            [disabled]="!frmGroup.valid"
-            class="!w-full border sm:w-1/2"
+            [disabled]="!frmGroup.valid || isLoading"
+            class="!w-full sm:w-1/2 border"
           >
-            Submit
+            <nz-spin *ngIf="isLoading"></nz-spin>
+            <span *ngIf="!isLoading">Submit</span>
           </button>
         </div>
       </form>
     </div>
-
     <!-- Lottie Animation Section -->
     <div class="flex items-center justify-center flex-1 min-h-[200px]">
       <app-lottie
@@ -98,11 +93,24 @@
       ></app-lottie>
     </div>
   </div>
+  <!-- Quote Section -->
   <div
-    class="py-8 mx-4 mt-6 text-center bg-gray-100 rounded-lg shadow-sm dark:bg-gray-800"
+    class="py-8 mx-4 mt-6 text-center rounded-lg shadow-sm {{
+      userPref.themeBackground
+    }}"
   >
-    <blockquote class="text-lg italic {{ userPref.themeText }} p-4 sm:p-1">
+    <blockquote class="p-4 text-lg italic sm:p-1">
       "The best way to predict the future is to create it." — Peter Drucker
     </blockquote>
   </div>
+  <button
+    [routerLink]="'/app/about-me'"
+    nz-button
+    [nzSize]="'large'"
+    [nzType]="'link'"
+    class="flex items-center gap-2 px-5 mt-4 font-medium rounded-lg shadow-sm hover:scale-105 hover:shadow-md"
+  >
+    <fa-icon [icon]="['fas', 'step-forward']"></fa-icon>
+    <span class="transition-opacity duration-300">Home</span>
+  </button>
 </nz-spin>

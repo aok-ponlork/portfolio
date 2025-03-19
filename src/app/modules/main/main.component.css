@@ -1,14 +1,19 @@
 .ant-menu-item-selected {
-  font-weight: bold; /* Makes text bolder */
+  font-weight: bold;
   transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
+
+.ant-menu-item {
+  @apply transition-all duration-300 ease-in-out;
+}
+
 .ant-menu-item:hover {
   transform: scale(1.05);
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-    background-color 0.3s ease, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 .active {
-  @apply font-bold text-gray-800 bg-gray-300 dark:bg-gray-600 dark:text-white;
+  @apply font-bold text-gray-800 transition-all duration-300 ease-in-out bg-gray-300 dark:bg-gray-600 dark:text-white;
 }
 
 .mouse-spotlight {
@@ -58,7 +63,7 @@
     opacity: 1;
   }
   100% {
-    transform: scale(4);
+    transform: scale(3);
     opacity: 0;
   }
 }

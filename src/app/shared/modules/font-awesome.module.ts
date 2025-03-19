@@ -39,7 +39,13 @@ import {
   faWind,
   faPaperPlane,
   faKey,
-  faPlug
+  faPlug,
+  faStepForward,
+  faPlusCircle,
+  faBriefcase,
+  faGraduationCap,
+  faMapMarkedAlt,
+  faMapMarker
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -83,7 +89,13 @@ export class FontAwesomeShareModule {
       faPaperPlane,
       faLaravel,
       faKey,
-      faPlug
+      faPlug,
+      faStepForward,
+      faPlusCircle,
+      faBriefcase,
+      faGraduationCap,
+      faMapMarkedAlt,
+      faMapMarker
     );
   }
 }

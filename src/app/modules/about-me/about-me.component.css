@@ -20,11 +20,6 @@ section:hover div #skill-section div fa-icon {
   transition: color 0.3s ease;
 }
 
-section div #skill-section div:hover {
-  scale: 1.02;
-  transition: color 0.3s ease;
-}
-
 section div h2,
 section div #skill-section div h3,
 section div #skill-section div fa-icon {
@@ -36,18 +31,145 @@ section div #skill-section div fa-icon {
   opacity: 0.5 !important;
 }
 
-::ng-deep .ant-collapse-header,
-.ant-collapse-header-text {
-  color: #1f2937 !important; /* Default text color */
-  transition: color 0.3s ease; /* Smooth transition for color change */
+/* City nights text effect From code pen*/
+@keyframes lights {
+  0% {
+    color: hsl(230, 40%, 80%);
+    text-shadow: 0 0 1em hsla(320, 100%, 50%, 0.2),
+      0 0 0.125em hsla(320, 100%, 60%, 0.3),
+      -1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+      1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+  }
+
+  30% {
+    color: hsl(230, 80%, 90%);
+    text-shadow: 0 0 1em hsla(320, 100%, 50%, 0.5),
+      0 0 0.125em hsla(320, 100%, 60%, 0.5),
+      -0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
+      0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+  }
+
+  40% {
+    color: hsl(230, 100%, 95%);
+    text-shadow: 0 0 1em hsla(320, 100%, 50%, 0.5),
+      0 0 0.125em hsla(320, 100%, 90%, 0.5),
+      -0.25em -0.125em 0.125em hsla(40, 100%, 60%, 0.2),
+      0.25em 0.125em 0.125em hsla(200, 100%, 60%, 0.4);
+  }
+
+  70% {
+    color: hsl(230, 80%, 90%);
+    text-shadow: 0 0 1em hsla(320, 100%, 50%, 0.5),
+      0 0 0.125em hsla(320, 100%, 60%, 0.5),
+      0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
+      -0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+  }
+
+  100% {
+    color: hsl(230, 40%, 80%);
+    text-shadow: 0 0 1em hsla(320, 100%, 50%, 0.2),
+      0 0 0.125em hsla(320, 100%, 60%, 0.3),
+      1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+      -1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+  }
 }
 
-::ng-deep .dark .ant-collapse-header,
-.ant-collapse-header-text {
-  color: #ffffff !important; /* Default text color in dark mode */
+.name-element {
+  animation: lights 5s 750ms linear infinite;
 }
 
-::ng-deep .ant-collapse-header:hover,
-::ng-deep .ant-collapse-header-text:hover {
-  color: #38b2ac !important; /* Change to a blue color on hover (light mode) */
+/* Typewriter effect */
+.typewriter-text {
+  display: inline-block;
+  border-right: 3px solid;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: rgba(37, 99, 235, 0.7);
+  }
+}
+
+/* Collapse panel styles */
+::ng-deep .ant-collapse {
+  background: transparent;
+  border: none;
+}
+
+::ng-deep .ant-collapse-header {
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  background-color: rgba(
+    238,
+    242,
+    255,
+    0.6
+  ) !important; /* indigo-50 with opacity */
+}
+
+::ng-deep .dark .ant-collapse-header {
+  background-color: rgba(
+    31,
+    41,
+    55,
+    0.5
+  ) !important; /* gray-800 with opacity */
+}
+::ng-deep .dark .ant-collapse-header-text {
+  color: whitesmoke !important;
+}
+
+::ng-deep .ant-collapse-header:hover {
+  background-color: rgba(
+    224,
+    231,
+    255,
+    0.9
+  ) !important; /* indigo-100 with opacity */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+::ng-deep .dark .ant-collapse-header:hover {
+  background-color: rgba(
+    55,
+    65,
+    81,
+    0.9
+  ) !important; /* gray-700 with opacity */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 2px 4px -1px rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep .ant-collapse-header-text,
+::ng-deep .ant-collapse-header {
+  color: inherit !important;
+  width: 100%;
+}
+
+::ng-deep .ant-collapse-content {
+  background: transparent !important;
+  border: none !important;
+}
+
+::ng-deep .ant-collapse-content-box {
+  padding: 0 !important;
 }

@@ -5,36 +5,51 @@
 >
   <!-- Header -->
   <div
-    class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 mb-6 border-b { userPref.themeText }"
+    class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 mb-6 border-b {{
+      userPref.themeText
+    }} border-opacity-30"
   >
     <div class="w-full sm:w-auto">
       <h1
         class="text-4xl font-bold roboto-bold {{ userPref.themeText }} truncate"
         data-aos="zoom-in"
-        data-aos-duration="1000"
+        data-aos-duration="800"
       >
         {{ me.name }}
       </h1>
-      <p class="mt-2 text-sm {{ userPref.themeText }}">
-        <a [href]="'mailto:' + me.email" class="roboto-regular">
+      <p
+        class="mt-2 text-sm {{
+          userPref.themeText
+        }} flex flex-wrap items-center gap-4"
+      >
+        <a
+          [href]="'mailto:' + me.email"
+          class="flex items-center transition-all duration-300 roboto-regular hover:underline"
+        >
           <fa-icon
             [icon]="['fas', 'envelope']"
-            class="cursor-pointer"
+            class="mr-1 cursor-pointer"
           ></fa-icon>
-          &nbsp;{{ me.email }}
+          {{ me.email }}
         </a>
-        <span> | </span>
-        <a [href]="me.telegram" target="_blank" class="roboto-regular">
+        <a
+          [href]="me.telegram"
+          target="_blank"
+          class="flex items-center transition-all duration-300 roboto-regular hover:underline"
+        >
           <fa-icon
             [icon]="['fab', 'telegram']"
-            class="cursor-pointer"
+            class="mr-1 cursor-pointer"
           ></fa-icon>
-          &nbsp;Telegram
+          Telegram
         </a>
       </p>
     </div>
     <div class="w-full mt-4 text-right sm:w-auto sm:mt-0">
-      <p class="text-sm truncate roboto-regular">{{ me.location }}</p>
+      <p class="flex items-center justify-end text-sm roboto-regular">
+        <fa-icon [icon]="['fas', 'map-marker']" class="mr-1"></fa-icon>
+        {{ me.location }}
+      </p>
     </div>
   </div>
 
@@ -64,55 +79,85 @@
   </section>
 
   <!-- Education Section -->
-  <section class="mb-8" data-aos="fade-up" data-aos-duration="1000">
+  <section class="mb-8" data-aos="fade-up" data-aos-duration="800">
     <h2
-      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{
+        userPref.themeText
+      }} flex items-center"
     >
+      <fa-icon [icon]="['fas', 'graduation-cap']" class="mr-2"></fa-icon>
       Education
     </h2>
     <div
-      class="mb-6"
-      *ngFor="let item of me.education"
-      data-aos="fade-up"
-      data-aos-duration="1000"
+      class="flex mb-6"
+      *ngFor="let item of me.education; let i = index"
+      [attr.data-aos]="'fade-up'"
+      [attr.data-aos-delay]="i * 200"
+      data-aos-duration="800"
     >
-      <p class="text-lg font-bold roboto-bold">{{ item.title }}</p>
-      <p class="text-sm font-semibold roboto-regular">{{ item.content }}</p>
+      <div class="flex-shrink-0 mr-4">
+        <div
+          class="w-0.5 h-full {{ userPref.themeBackground }} opacity-50 ml-1.5"
+        ></div>
+      </div>
+      <div>
+        <p class="text-lg font-bold roboto-bold {{ userPref.themeText }}">
+          {{ item.title }}
+        </p>
+        <p class="text-sm font-semibold roboto-regular opacity-80">
+          {{ item.content }}
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- Work Experience Section -->
-  <section class="mb-8" data-aos="fade-up" data-aos-duration="1000">
+  <section class="mb-8" data-aos="fade-up" data-aos-duration="800">
     <h2
-      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{
+        userPref.themeText
+      }} flex items-center"
     >
+      <fa-icon [icon]="['fas', 'briefcase']" class="mr-2"></fa-icon>
       Work Experience
     </h2>
     <div
-      class="mb-6"
-      *ngFor="let item of me.experiences"
-      data-aos="fade-up"
-      data-aos-duration="1000"
+      class="relative mb-6"
+      *ngFor="let item of me.experiences; let i = index"
+      [attr.data-aos]="'fade-up'"
+      [attr.data-aos-delay]="i * 100"
+      data-aos-duration="800"
     >
-      <p
-        class="text-lg roboto-bold {{ userPref.themeText }}"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-      >
-        {{ item.title }}
-      </p>
-      <p
-        class="my-2 text-sm roboto-regular"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-      >
-        {{ item.date }}
-      </p>
-      <ul class="pl-5 space-y-1 text-sm list-disc">
-        <li class="roboto-regular" data-aos="fade-up" data-aos-duration="1000">
-          {{ item.content }}
-        </li>
-      </ul>
+      <div class="flex">
+        <div class="flex-shrink-0 mr-4">
+          <div
+            class="w-0.5 h-full {{
+              userPref.themeBackground
+            }} opacity-50 ml-1.5"
+            *ngIf="i < me.experiences.length"
+          ></div>
+        </div>
+        <div class="flex-grow">
+          <div
+            class="flex flex-col sm:flex-row sm:justify-between sm:items-center"
+          >
+            <p class="text-lg roboto-bold {{ userPref.themeText }}">
+              {{ item.title }}
+            </p>
+            <p
+              class="text-sm italic opacity-75 roboto-regular"
+              *ngIf="item.date"
+            >
+              {{ item.date }}
+            </p>
+          </div>
+          <div class="pl-0 mt-2">
+            <p class="text-sm leading-relaxed roboto-regular">
+              {{ item.content }}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -137,23 +182,28 @@
   </section>
 
   <!-- Additional Skills Section -->
-  <section class="mb-20" data-aos="fade-up" data-aos-duration="1000">
+  <section class="mb-20" data-aos="fade-up" data-aos-duration="800">
     <h2
-      class="pb-2 mb-4 text-2xl roboto-bold border-b {{ userPref.themeText }}"
+      class="pb-2 mb-4 text-2xl roboto-bold border-b {{
+        userPref.themeText
+      }} flex items-center"
     >
+      <fa-icon [icon]="['fas', 'plus-circle']" class="mr-2"></fa-icon>
       Additional Skills
     </h2>
-    <ul class="pl-5 space-y-1 list-disc">
-      <li
-        class="roboto-regular"
-        *ngFor="let item of me.additional"
-        data-aos="fade-up"
-        data-aos-duration="1000"
+    <div class="flex flex-wrap gap-2">
+      <div
+        *ngFor="let item of me.additional; let i = index"
+        class="px-3 py-1 text-sm rounded-full bg-slate-300/50 dark:bg-slate-400/50 bg-opacity-20 roboto-regular"
+        [attr.data-aos]="'zoom-in'"
+        [attr.data-aos-delay]="i * 50"
+        data-aos-duration="600"
       >
         {{ item }}
-      </li>
-    </ul>
+      </div>
+    </div>
   </section>
+
   <footer
     class="absolute bottom-0 left-0 w-full py-4 px-4 transition-opacity duration-300 {{
       userPref.themeBackground
@@ -201,7 +251,16 @@
     </div>
   </footer>
 </div>
-
+<button
+  [routerLink]="'/app/blogs'"
+  nz-button
+  [nzSize]="'large'"
+  [nzType]="'link'"
+  class="flex items-center gap-2 px-5 mt-4 font-medium rounded-lg shadow-sm hover:scale-105 hover:shadow-md"
+>
+  <fa-icon [icon]="['fas', 'step-forward']"></fa-icon>
+  <span class="transition-opacity duration-300">View Blogs</span>
+</button>
 <nz-modal
   [(nzVisible)]="shareModalVisible"
   [nzMaskClosable]="true"

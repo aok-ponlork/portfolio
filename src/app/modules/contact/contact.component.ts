@@ -16,6 +16,9 @@ import { HttpService } from '../../core/services/http.service';
 import { environment } from '../../../environments/env.development';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -28,6 +31,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     FormsModule,
     NzSpinModule,
     NzIconModule,
+    CommonModule,
+    RouterModule,
+    FontAwesomeModule
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
@@ -55,7 +61,8 @@ export class ContactComponent implements OnInit {
     this.isLoading = true;
     const model = this.frmGroup.value;
     const url = environment.formSpreeUrl;
-    this.http.post(url, model).subscribe({
+    this.http.thirdPartySerive = url;
+    this.http.post('', model).subscribe({
       next: (rs: any) => {
         if (rs.ok) {
           this.message.handleSuccess(

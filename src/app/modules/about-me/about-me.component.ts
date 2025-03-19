@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { UserPreferenceService } from '../../core/services/common/user-preference.service';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -13,6 +7,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+interface Skill {
+  title: string;
+  description: string;
+  icon: string;
+  iconType: string;
+  iconColor: string;
+  category: string;
+  projects?: { name: string; url: string }[];
+}
 @Component({
   selector: 'app-about-me',
   standalone: true,
@@ -24,149 +28,188 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
     CommonModule,
     NzIconModule,
     NzCollapseModule,
+    NzTagModule,
   ],
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.css',
 })
 export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
-  private elements: NodeListOf<HTMLElement> | null = null;
   skills = [
     {
       icon: 'code',
       iconType: 'fas',
       title: '.NET',
       description:
-        'I build robust, scalable back-end services using .NET Core with REST API patterns for high-performance applications.',
+        'Experienced in building scalable back-end services and APIs with .NET Core, focusing on performance and maintainability.',
+      color: '#512BD4', // .NET color
     },
     {
       icon: 'angular',
       title: 'Angular',
       iconType: 'fab',
       description:
-        'I create dynamic, scalable single-page applications with Angular, focusing on performance and modular design.',
+        'Developing high-performance SPAs with Angular, using modular architecture and best practices for scalability.',
+      color: '#DD0031', // Angular color
     },
     {
       icon: 'flutter',
       iconType: 'fab',
       title: 'Flutter',
       description:
-        'I develop cross-platform mobile applications with Flutter, delivering native-like performance on both Android and iOS.',
+        'Building smooth, responsive cross-platform mobile apps with Flutter, ensuring a native-like experience on both iOS and Android.',
+      color: '#02569B', // Flutter color
     },
     {
       icon: 'css3',
       iconType: 'fab',
       title: 'Tailwind CSS',
       description:
-        'I use Tailwind CSS to build fast, responsive, and customizable UI components with a utility-first approach.',
+        'Crafting modern, responsive UIs with Tailwind CSS, leveraging its utility-first approach for clean and efficient styling.',
+      color: '#06B6D4', // Tailwind color
     },
     {
       icon: 'ant-design',
       iconType: 'ant-icon',
       title: 'Ant Design',
       description:
-        'I leverage Ant Design to create clean, professional-looking UI components with a focus on user experience.',
+        'Creating polished, Experienced with UIs Ant Design, focusing on consistency, accessibility, and user experience.',
+      color: '#1890FF', // Ant Design color
     },
     {
       icon: 'database',
       iconType: 'ant-icon',
       title: 'Databases',
       description:
-        'I design and manage relational and NoSQL databases, including PostgreSQL, MongoDB, and SQL. Additionally, I work with real-time databases like Firebase to ensure scalable and efficient data storage.',
+        'Proficient in PostgreSQL, MongoDB, and SQL, optimizing data structures for efficiency and scalability. Also experienced in Firebase for real-time applications.',
+      color: '#336791', // PostgreSQL color
     },
   ];
-  additionalSkills = [
+
+  selectedCategory: string = 'All';
+  skillCategories: string[] = ['All', 'Backend', 'DevOps', 'API', 'Security'];
+  techStack = [
+    {
+      name: 'Angular',
+      icon: 'angular',
+      iconType: 'fab',
+      colorClass: 'text-red-500',
+    },
+    {
+      name: 'Laravel',
+      icon: 'laravel',
+      iconType: 'fab',
+      colorClass: 'text-red-600',
+    },
+    {
+      name: 'Node.js',
+      icon: 'node',
+      iconType: 'fab',
+      colorClass: 'text-green-600',
+    },
+    {
+      name: 'Docker',
+      icon: 'docker',
+      iconType: 'fab',
+      colorClass: 'text-blue-600 dark:text-blue-400',
+    },
+    {
+      name: 'GraphQL',
+      icon: 'plug',
+      iconType: 'fas',
+      colorClass: 'text-pink-500',
+    },
+  ];
+  additionalSkills: Skill[] = [
     {
       title: 'Laravel',
       description:
-        'I build robust and scalable backend applications using the Laravel framework.',
+        'Building scalable and maintainable backend applications with Laravel, leveraging its powerful ecosystem.',
       icon: 'laravel',
-      iconType: 'fab', // You can use FontAwesome icons for this
+      iconType: 'fab',
+      category: 'Backend',
+      projects: [
+        { name: 'CRM System', url: '/projects/crm' },
+        { name: 'E-commerce API', url: '/projects/ecommerce' },
+      ],
+      iconColor: 'text-red-600',
     },
     {
       title: 'Node.js',
       description:
-        'I work with Node.js to create fast and efficient server-side applications.',
+        'Developing high-performance, event-driven backend applications with Node.js.',
       icon: 'node',
       iconType: 'fab',
+      category: 'Backend',
+      projects: [
+        { name: 'Real-time Dashboard', url: '/projects/dashboard' },
+        { name: 'Chat Application', url: '/projects/chat' },
+      ],
+      iconColor: 'text-green-600',
     },
     {
-      title: 'Firebase Cloud Messaging',
+      title: 'FCM',
       description:
-        'I implement real-time messaging and push notifications using Firebase Cloud Messaging.',
+        'Implementing real-time messaging and push notifications with Firebase Cloud Messaging.',
       icon: 'paper-plane',
       iconType: 'fas',
+      category: 'API',
+      projects: [
+        { name: 'Mobile Notifications', url: '/projects/notifications' },
+      ],
+      iconColor: '',
     },
     {
       title: 'GraphQL',
       description:
-        'I use GraphQL to fetch data in a more flexible and efficient way compared to REST.',
+        'Fetching and managing data efficiently with GraphQL, enabling flexible API queries.',
       icon: 'plug',
       iconType: 'fas',
+      category: 'API',
+      projects: [{ name: 'Content Management API', url: '/projects/cms' }],
+      iconColor: 'text-pink-500',
     },
     {
-      title: 'JWT Authentication',
+      title: 'JWT Auth',
       description:
-        'I implement secure authentication mechanisms using JSON Web Tokens (JWT).',
+        'Implementing secure and stateless authentication using JSON Web Tokens (JWT).',
       icon: 'key',
       iconType: 'fas',
+      category: 'Security',
+      projects: [
+        { name: 'Authentication System', url: '/projects/auth' },
+        { name: 'User Management', url: '/projects/users' },
+      ],
+      iconColor: 'text-blue-400',
     },
     {
       title: 'Docker',
       description:
-        'I use Docker to containerize applications for better portability and consistency across environments.',
+        'Containerizing applications with Docker to ensure consistency and easy deployment across environments.',
       icon: 'docker',
       iconType: 'fab',
+      category: 'DevOps',
+      projects: [
+        { name: 'Microservices Architecture', url: '/projects/microservices' },
+      ],
+      iconColor: 'text-blue-600 dark:text-blue-400',
     },
-    // Add more skills as needed
   ];
-  constructor(
-    public userPref: UserPreferenceService,
-    private renderer: Renderer2
-  ) {}
+
+  constructor(public userPref: UserPreferenceService) {}
   ngOnInit(): void {}
-  ngAfterViewInit(): void {
-    this.elements = document.querySelectorAll(
-      '#page-container section #skill-section div'
+  ngAfterViewInit(): void {}
+  ngOnDestroy(): void {}
+  //Tech filter
+  get filteredSkills(): Skill[] {
+    if (this.selectedCategory === 'All') {
+      return this.additionalSkills;
+    }
+    return this.additionalSkills.filter(
+      (skill) => skill.category === this.selectedCategory
     );
-    if (this.elements) {
-      this.elements.forEach((element) => {
-        // Add event listeners using Renderer2 to ensure it's safe for Angular
-        this.renderer.listen(element, 'mouseenter', () =>
-          this.onMouseEnter(element)
-        );
-        this.renderer.listen(element, 'mouseleave', () => this.onMouseLeave());
-      });
-    }
-  }
-  ngOnDestroy(): void {
-    if (this.elements) {
-      this.elements.forEach((element) => {
-        this.renderer.listen(element, 'mouseenter', () =>
-          this.onMouseEnter(element)
-        );
-        this.renderer.listen(element, 'mouseleave', () => this.onMouseLeave());
-        console.log(element);
-      });
-    }
-  }
-  private onMouseEnter(element: HTMLElement): void {
-    if (this.elements) {
-      this.elements.forEach((otherElement) => {
-        if (otherElement !== element) {
-          otherElement.classList.add('opacity-50');
-        }
-      });
-    }
-    // Keep hovered element at full opacity
-    element.classList.remove('opacity-50');
   }
 
-  private onMouseLeave(): void {
-    if (this.elements) {
-      this.elements.forEach((otherElement) => {
-        // Reset opacity
-        otherElement.classList.remove('opacity-50');
-      });
-    }
+  selectCategory(category: string): void {
+    this.selectedCategory = category;
   }
 }

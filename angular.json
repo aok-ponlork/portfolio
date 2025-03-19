@@ -32,7 +32,8 @@
             "styles": [
               "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/styles.css",
-              "node_modules/aos/dist/aos.css"
+              "node_modules/aos/dist/aos.css",
+              "node_modules/tailwindcss/tailwind.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
@@ -55,8 +56,8 @@
                 }
               ],
               "outputHashing": "all",
-              "optimization": true,   
-              "sourceMap": false,     
+              "optimization": true,
+              "sourceMap": false,
               "extractLicenses": true
             },
             "development": {
