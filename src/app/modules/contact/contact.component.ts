@@ -20,23 +20,22 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @Component({
-  selector: 'app-contact',
-  standalone: true,
-  imports: [
-    LottieCoreComponent,
-    NzFormModule,
-    NzInputModule,
-    NzButtonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NzSpinModule,
-    NzIconModule,
-    CommonModule,
-    RouterModule,
-    FontAwesomeModule
-  ],
-  templateUrl: './contact.component.html',
-  styleUrl: './contact.component.css',
+    selector: 'app-contact',
+    imports: [
+        LottieCoreComponent,
+        NzFormModule,
+        NzInputModule,
+        NzButtonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NzSpinModule,
+        NzIconModule,
+        CommonModule,
+        RouterModule,
+        FontAwesomeModule
+    ],
+    templateUrl: './contact.component.html',
+    styleUrl: './contact.component.css'
 })
 export class ContactComponent implements OnInit {
   frmGroup!: UntypedFormGroup;

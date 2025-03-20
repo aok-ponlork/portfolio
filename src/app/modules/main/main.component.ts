@@ -24,25 +24,24 @@ import Aos from 'aos';
 import { AosService } from '../../core/services/common/aos.service';
 import { FontAwesomeShareModule } from '../../shared/modules/font-awesome.module';
 @Component({
-  selector: 'app-main',
-  standalone: true,
-  imports: [
-    RouterModule,
-    NzLayoutModule,
-    NzIconModule,
-    NzMenuModule,
-    NzBreadCrumbModule,
-    NzToolTipModule,
-    CommonModule,
-    NzDividerModule,
-    NzSwitchModule,
-    FormsModule,
-    LottieCoreComponent,
-    NzPopoverModule,
-    FontAwesomeShareModule,
-  ],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.css',
+    selector: 'app-main',
+    imports: [
+        RouterModule,
+        NzLayoutModule,
+        NzIconModule,
+        NzMenuModule,
+        NzBreadCrumbModule,
+        NzToolTipModule,
+        CommonModule,
+        NzDividerModule,
+        NzSwitchModule,
+        FormsModule,
+        LottieCoreComponent,
+        NzPopoverModule,
+        FontAwesomeShareModule,
+    ],
+    templateUrl: './main.component.html',
+    styleUrl: './main.component.css'
 })
 export class MainComponent implements OnInit {
   @ViewChild('themeAnimation') lottieComponent!: LottieCoreComponent;

@@ -18,20 +18,19 @@ interface Skill {
   projects?: { name: string; url: string }[];
 }
 @Component({
-  selector: 'app-about-me',
-  standalone: true,
-  imports: [
-    LottieCoreComponent,
-    NzButtonModule,
-    FontAwesomeModule,
-    RouterModule,
-    CommonModule,
-    NzIconModule,
-    NzCollapseModule,
-    NzTagModule,
-  ],
-  templateUrl: './about-me.component.html',
-  styleUrl: './about-me.component.css',
+    selector: 'app-about-me',
+    imports: [
+        LottieCoreComponent,
+        NzButtonModule,
+        FontAwesomeModule,
+        RouterModule,
+        CommonModule,
+        NzIconModule,
+        NzCollapseModule,
+        NzTagModule,
+    ],
+    templateUrl: './about-me.component.html',
+    styleUrl: './about-me.component.css'
 })
 export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
   skills = [

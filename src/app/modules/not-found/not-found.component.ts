@@ -9,11 +9,10 @@ import { LottieCoreComponent } from '../../shared/components/lottie/lottie.compo
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-not-found',
-  standalone: true,
-  imports: [LottieCoreComponent, RouterModule],
-  templateUrl: './not-found.component.html',
-  styleUrl: './not-found.component.css',
+    selector: 'app-not-found',
+    imports: [LottieCoreComponent, RouterModule],
+    templateUrl: './not-found.component.html',
+    styleUrl: './not-found.component.css'
 })
 export class NotFoundComponent implements OnInit, OnDestroy {
   constructor(private renderer: Renderer2) {}

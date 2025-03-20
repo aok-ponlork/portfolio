@@ -13,19 +13,18 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { RouterModule } from '@angular/router';
 @Component({
-  selector: 'app-resume',
-  standalone: true,
-  imports: [
-    FontAwesomeModule,
-    CommonModule,
-    NzToolTipModule,
-    NzModalModule,
-    NzInputModule,
-    NzButtonModule,
-    RouterModule,
-  ],
-  templateUrl: './resume.component.html',
-  styleUrl: './resume.component.css',
+    selector: 'app-resume',
+    imports: [
+        FontAwesomeModule,
+        CommonModule,
+        NzToolTipModule,
+        NzModalModule,
+        NzInputModule,
+        NzButtonModule,
+        RouterModule,
+    ],
+    templateUrl: './resume.component.html',
+    styleUrl: './resume.component.css'
 })
 export class ResumeComponent implements OnInit {
   url = environment.baseUrl + 'app/resume';
