@@ -1,0 +1,353 @@
+/* student-card.component.css */
+:host {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cable-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.cable {
+  stroke-linecap: round;
+}
+
+.card-container {
+  position: absolute;
+  width: 300px;
+  height: 480px;
+  perspective: 1000px;
+  cursor: grab;
+  pointer-events: auto;
+  transform: translate(0, 0);
+  z-index: 20;
+}
+
+.card-container:active {
+  cursor: grabbing;
+}
+
+.lanyard-hole {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+}
+
+.hole-outer {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ddd;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hole-inner {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #555;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  will-change: transform;
+  background-color: white;
+}
+
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.front {
+  background-color: white;
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.back {
+  background-color: #f8f8f8;
+  transform: rotateY(180deg);
+}
+
+/* Front Card Content Styling */
+.student-id-content {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.university-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #1a5276;
+}
+
+.university-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1a5276;
+  margin: 0;
+}
+
+.university-logo {
+  width: 40px;
+  height: 40px;
+  background-color: #1a5276;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.student-details {
+  display: flex;
+  padding: 20px 0;
+  flex: 1;
+}
+
+.student-photo {
+  width: 120px;
+  height: 150px;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+
+.student-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.student-info {
+  margin-left: 15px;
+  flex: 1;
+}
+
+.student-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.student-id,
+.student-program,
+.student-year {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.card-footer {
+  margin-top: auto;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+
+.barcode {
+  width: 100%;
+  height: 40px;
+  background-color: #f8f8f8;
+  margin-bottom: 10px;
+}
+
+.barcode img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.expiry-date {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+}
+
+/* Back Card Content Styling */
+.back-content {
+  padding: 30px 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.back-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1a5276;
+  margin: 0 0 20px 0;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.info-section {
+  flex: 1;
+}
+
+.info-label {
+  font-weight: bold;
+  margin: 10px 0 3px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.info-value {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 14px;
+}
+
+.access-privileges {
+  margin-top: 20px;
+}
+
+.privilege-header {
+  font-weight: bold;
+  margin: 0 0 5px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.privilege-list {
+  list-style-type: none;
+  padding-left: 15px;
+  margin: 0;
+}
+
+.privilege-list li {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+  position: relative;
+}
+
+.privilege-list li:before {
+  content: "•";
+  position: absolute;
+  left: -15px;
+  color: #1a5276;
+}
+
+.policy-section {
+  margin-top: auto;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+
+.policy-text {
+  font-size: 11px;
+  color: #777;
+  margin: 5px 0;
+  text-align: center;
+}
+
+/* Adding card material effects */
+.face::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.2) 15%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  pointer-events: none;
+  border-radius: 15px;
+}
+
+/* Subtle plastic texturing effect */
+.face::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='%23FFFFFF' fill-opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+  border-radius: 15px;
+}
+
+/* Animation effects for realistic card movement */
+@keyframes swingEffect {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+
+.card-container:active .card {
+  transition: transform 0.1s;
+}
+
+/* Adding animation for initial dropping effect */
+@keyframes dropIn {
+  0% {
+    transform: translateY(-100vh);
+  }
+  60% {
+    transform: translateY(10vh);
+  }
+  80% {
+    transform: translateY(-5vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,101 @@
+<!-- student-card.component.html -->
+<div class="card-wrapper">
+  <!-- SVG for the cable -->
+  <svg
+    class="cable-svg"
+    width="100%"
+    height="100%"
+    viewBox="0 0 1000 1000"
+    preserveAspectRatio="none"
+  >
+    <path
+      #cable
+      class="cable"
+      d="M 500 10 Q 500 100 500 200"
+      stroke="#333"
+      stroke-width="3"
+      fill="none"
+    ></path>
+    <circle cx="500" cy="10" r="5" fill="#555" />
+    <!-- Anchor point -->
+  </svg>
+
+  <!-- Card container with physics controls -->
+  <div
+    #cardContainer
+    class="card-container"
+    (mousedown)="onDragStart($event)"
+    (touchstart)="onDragStart($event)"
+  >
+    <!-- Card lanyard attachment point -->
+    <div class="lanyard-hole">
+      <div class="hole-outer"></div>
+      <div class="hole-inner"></div>
+    </div>
+
+    <!-- The actual card with flip animation -->
+    <div #cardElement class="card" [@flipState]="flip" (click)="toggleFlip()">
+      <!-- Front face of the card -->
+      <div class="face front">
+        <div class="student-id-content">
+          <div class="university-header">
+            <h2 class="university-name">UNIVERSITY OF EXAMPLE</h2>
+            <div class="university-logo">UE</div>
+          </div>
+
+          <div class="student-details">
+            <div class="student-photo">
+              <img src="/api/placeholder/120/150" alt="Student Photo" />
+            </div>
+            <div class="student-info">
+              <h3 class="student-name">JOHN DOE</h3>
+              <p class="student-id">ID: 12345678</p>
+              <p class="student-program">Computer Science</p>
+              <p class="student-year">Class of 2025</p>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="barcode">
+              <img src="/api/placeholder/200/40" alt="Barcode" />
+            </div>
+            <p class="expiry-date">Expires: 12/31/2025</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back face of the card -->
+      <div class="face back">
+        <div class="back-content">
+          <h3 class="back-header">STUDENT INFORMATION</h3>
+
+          <div class="info-section">
+            <p class="info-label">Emergency Contact:</p>
+            <p class="info-value">(555) 123-4567</p>
+
+            <p class="info-label">Student Services:</p>
+            <p class="info-value">(555) 987-6543</p>
+
+            <div class="access-privileges">
+              <p class="privilege-header">Access Privileges:</p>
+              <ul class="privilege-list">
+                <li>Main Library</li>
+                <li>Student Center</li>
+                <li>Science Building</li>
+                <li>Athletic Facilities</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="policy-section">
+            <p class="policy-text">
+              This card is property of University of Example. If found, please
+              return to Student Services Office.
+            </p>
+            <p class="policy-text">Card replacement fee: $25</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
