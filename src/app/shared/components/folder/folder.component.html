@@ -1,0 +1,27 @@
+<div [style]="{ transform: 'scale(' + size + ')' }" [class]="className">
+  <div
+    class="folder"
+    [class.open]="open"
+    [style]="getCssVariables()"
+    (click)="toggleFolder()"
+  >
+    <div class="folder__back">
+      <div
+        *ngFor="let item of papers; let i = index"
+        class="paper paper-{{ i + 1 }}"
+        (mousemove)="onPaperMouseMove($event, i)"
+        (mouseleave)="onPaperMouseLeave(i)"
+        [style]="open ? getPaperStyle(i) : {}"
+        [routerLink]="item?.link ? item?.link : null"
+      >
+        <p
+          class="flex items-center justify-center p-2 font-semibold text-gray-900/50 text-ellipsis"
+        >
+          {{ item?.description }}
+        </p>
+      </div>
+      <div class="folder__front"></div>
+      <div class="folder__front right"></div>
+    </div>
+  </div>
+</div>

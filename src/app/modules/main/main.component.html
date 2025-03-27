@@ -241,19 +241,17 @@
   <span nz-icon [nzType]="!settingMenuButton ? 'menu' : 'close'"></span>
 </button>
 <div
-  *ngIf="settingMenuButton"
-  class="fixed z-40 flex flex-col transition-all bottom-28 right-10"
-  [ngClass]="{
-    'opacity-100': settingMenuButton,
-    'opacity-0': !settingMenuButton,
-    'scale-100': settingMenuButton,
-    'scale-95': !settingMenuButton
-  }"
+  class="fixed z-40 flex flex-col transition-all duration-300 bottom-28 right-10"
+  [class.opacity-100]="settingMenuButton"
+  [class.opacity-0]="!settingMenuButton"
+  [class.scale-100]="settingMenuButton"
+  [class.scale-95]="!settingMenuButton"
+  [hidden]="!settingMenuButton"
 >
   <!-- Header layout button -->
   <button
     class="flex items-center justify-center w-12 h-12 mb-2 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
-    [nz-tooltip]="'Toggle Header'"
+    [nz-tooltip]="settingMenuButton ? 'Toggle Header' : ''"
     [ngClass]="{
       'bg-gray-200': !userPref.isDarkTheme.value,
       'bg-gray-300': userPref.isDarkTheme.value
@@ -268,12 +266,14 @@
       [loopDelay]="700"
     ></app-lottie>
   </button>
-  <!-- Theme button -->
+  <!-- Theme Button -->
   <button
     class="flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md hover:scale-105 hover:shadow-xl"
     (click)="toggleTheme()"
     [nz-tooltip]="
-      !userPref.isDarkTheme.value
+      !settingMenuButton
+        ? ''
+        : !userPref.isDarkTheme.value
         ? 'Switch to dark theme'
         : 'Switch to light theme'
     "
@@ -292,6 +292,7 @@
     ></app-lottie>
   </button>
 </div>
+
 <!-- <button
   class="fixed z-50 flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md top-10 right-10 hover:scale-105 hover:shadow-xl"
   nz-button

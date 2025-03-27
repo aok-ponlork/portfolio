@@ -84,15 +84,20 @@ section div #skill-section div fa-icon {
   border-right: 3px solid;
   overflow: hidden;
   white-space: nowrap;
-  animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+  margin: 0;
+  letter-spacing: 0.1em;
+  animation: typing 3s steps(30, end) forwards,
+    blink-caret 0.75s step-end infinite;
+  border-right: 3px solid currentColor;
+  max-width: 0;
 }
 
 @keyframes typing {
   from {
-    width: 0;
+    max-width: 0;
   }
   to {
-    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -102,10 +107,9 @@ section div #skill-section div fa-icon {
     border-color: transparent;
   }
   50% {
-    border-color: rgba(37, 99, 235, 0.7);
+    border-color: currentColor;
   }
 }
-
 /* Collapse panel styles */
 ::ng-deep .ant-collapse {
   background: transparent;
