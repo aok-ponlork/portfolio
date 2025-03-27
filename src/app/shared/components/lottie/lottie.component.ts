@@ -11,11 +11,12 @@ import { CommonModule } from '@angular/common';
 import { AnimationItem } from 'lottie-web';
 
 @Component({
-    selector: 'app-lottie',
-    imports: [LottieComponent, CommonModule],
-    templateUrl: './lottie.component.html',
-    styleUrls: ['./lottie.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'app-lottie',
+  imports: [LottieComponent, CommonModule],
+  templateUrl: './lottie.component.html',
+  styleUrls: ['./lottie.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LottieCoreComponent implements OnInit, OnDestroy {
   private readonly animationFolder = '/assets/animations/';

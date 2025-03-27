@@ -320,15 +320,24 @@
       </nz-collapse>
     </div>
   </section>
-  <!--Button to Portfolio -->
-  <button
-    [routerLink]="'/app/portfolio'"
-    nz-button
-    [nzSize]="'large'"
-    [nzType]="'link'"
-    class="flex items-center gap-2 px-5 font-medium rounded-lg shadow-sm hover:scale-105 hover:shadow-md"
-  >
-    <fa-icon [icon]="['fas', 'step-forward']"></fa-icon>
-    <span class="transition-opacity duration-300">View Portfolio</span>
-  </button>
+  <div class="flex flex-col items-center w-full px-6 mb-10">
+    <h2
+      class="text-xl font-bold mb-28 hover:cursor-pointer transform transition duration-300 hover:text-[#38b2ac] dark:hover:text-[#38b2ac]"
+      [ngClass]="userPref.themeText"
+    >
+      Check out my last works&nbsp;
+      <span
+        class="cursor-help"
+        nz-icon
+        [nzType]="'info-circle'"
+        nz-tooltip="Click on the folder"
+      ></span>
+    </h2>
+    <app-folder
+      [color]="userPref.isDarkTheme.value ? '#00d8ff' : '#007aff'"
+      [size]="2"
+      [items]="papers"
+      [className]="''"
+    ></app-folder>
+  </div>
 </div>

@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { FolderComponent } from '../../shared/components/folder/folder.component';
 interface Skill {
   title: string;
   description: string;
@@ -17,20 +18,26 @@ interface Skill {
   category: string;
   projects?: { name: string; url: string }[];
 }
+interface Paper {
+  description: string;
+  link: string;
+}
 @Component({
-    selector: 'app-about-me',
-    imports: [
-        LottieCoreComponent,
-        NzButtonModule,
-        FontAwesomeModule,
-        RouterModule,
-        CommonModule,
-        NzIconModule,
-        NzCollapseModule,
-        NzTagModule,
-    ],
-    templateUrl: './about-me.component.html',
-    styleUrl: './about-me.component.css'
+  standalone: true,
+  selector: 'app-about-me',
+  imports: [
+    LottieCoreComponent,
+    NzButtonModule,
+    FontAwesomeModule,
+    RouterModule,
+    CommonModule,
+    NzIconModule,
+    NzCollapseModule,
+    NzTagModule,
+    FolderComponent,
+  ],
+  templateUrl: './about-me.component.html',
+  styleUrl: './about-me.component.css',
 })
 export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
   skills = [
@@ -193,7 +200,23 @@ export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
       iconColor: 'text-blue-600 dark:text-blue-400',
     },
   ];
-
+  papers: Paper[] = [
+    {
+      description:
+        'A comprehensive guide to getting started with Angular development.',
+      link: 'https://angular.io/guide/overview',
+    },
+    {
+      description:
+        'Deep dive into Angular component design and best practices.',
+      link: 'https://angular.io/guide/component-overview',
+    },
+    {
+      description:
+        'Exploring state management techniques in Angular applications.',
+      link: 'https://ngrx.io/guide/store',
+    },
+  ];
   constructor(public userPref: UserPreferenceService) {}
   ngOnInit(): void {}
   ngAfterViewInit(): void {}
