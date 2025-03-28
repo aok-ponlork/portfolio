@@ -9,6 +9,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { FolderComponent } from '../../shared/components/folder/folder.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 interface Skill {
   title: string;
   description: string;
@@ -35,6 +36,7 @@ interface Paper {
     NzCollapseModule,
     NzTagModule,
     FolderComponent,
+    NzToolTipModule,
   ],
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.css',
@@ -200,7 +202,41 @@ export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
       iconColor: 'text-blue-600 dark:text-blue-400',
     },
   ];
-  papers: Paper[] = [
+  folder1: Paper[] = [
+    {
+      description:
+        'A comprehensive guide to getting started with Angular development.',
+      link: 'https://angular.io/guide/overview',
+    },
+    {
+      description:
+        'Deep dive into Angular component design and best practices.',
+      link: 'https://angular.io/guide/component-overview',
+    },
+    {
+      description:
+        'Exploring state management techniques in Angular applications.',
+      link: 'https://ngrx.io/guide/store',
+    },
+  ];
+  folder2: Paper[] = [
+    {
+      description:
+        'A comprehensive guide to getting started with Angular development.',
+      link: 'https://angular.io/guide/overview',
+    },
+    {
+      description:
+        'Deep dive into Angular component design and best practices.',
+      link: 'https://angular.io/guide/component-overview',
+    },
+    {
+      description:
+        'Exploring state management techniques in Angular applications.',
+      link: 'https://ngrx.io/guide/store',
+    },
+  ];
+  folder3: Paper[] = [
     {
       description:
         'A comprehensive guide to getting started with Angular development.',

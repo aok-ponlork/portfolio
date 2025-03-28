@@ -54,9 +54,10 @@
   </div>
 
   <section class="mb-8" data-aos="fade-up" data-aos-duration="1000">
-    <p class="text-sm {{ userPref.themeText }} roboto-regular">
-      {{ me.aboutMe }}
-    </p>
+    <p
+      class="text-sm {{ userPref.themeText }} roboto-regular"
+      [innerHTML]="me.aboutMe"
+    ></p>
   </section>
 
   <!-- Skills Section -->
