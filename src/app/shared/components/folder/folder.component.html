@@ -8,7 +8,7 @@
     <div class="folder__back">
       <div
         *ngFor="let item of papers; let i = index"
-        class="paper paper-{{ i + 1 }}"
+        class="paper paper-{{ i + 1 }} !shadow-md"
         (mousemove)="onPaperMouseMove($event, i)"
         (mouseleave)="onPaperMouseLeave(i)"
         [style]="open ? getPaperStyle(i) : {}"

@@ -18,13 +18,15 @@ export class FolderComponent {
   @Input() size = 1;
   @Input() items: Paper[] = [];
   @Input() className = '';
+  @Input() itemCount: number = 3;
 
-  maxItems = 3;
+  maxItems = 0;
   open = false;
   papers: (Paper | null)[] = [];
   paperOffsets: { x: number; y: number }[] = [];
 
   ngOnInit() {
+    this.maxItems = this.itemCount;
     // Prepare papers array
     this.papers = this.items.slice(0, this.maxItems);
     while (this.papers.length < this.maxItems) {

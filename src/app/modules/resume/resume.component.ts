@@ -30,7 +30,7 @@ import { RouterModule } from '@angular/router';
 export class ResumeComponent implements OnInit {
   url = environment.baseUrl + 'app/resume';
   me: UserModel = {
-    aboutMe: `As a recent graduate with a year of hands-on professional experience and a degree sponsored by PSE, I’m enthusiastic about contributing to dynamic teams and further honing my web development skills. With a strong foundation in web development, I’m eager to apply my expertise and passion for technology to deliver impactful, real-world solutions. I’m excited to collaborate on innovative projects that push the boundaries of web development.`,
+    aboutMe: `A results-driven web developer with a degree from <a class="font-bold roboto-bold" href="https://www.setecu.com/" target="_blank" >SETEC INSTITUTE</a> and over 18 months of hands-on professional experience, sponsored by <a class="font-bold roboto-bold" href="https://www.pse.ngo/" target="_blank" >PSE</a>, I specialize in crafting high-performance web solutions that blend technical expertise with innovation. Passionate about building impactful digital experiences, I thrive on solving complex challenges and driving technological advancement.`,
     name: 'AOK PONLORK',
     email: 'aok4ponlork@gmail.com',
     location: 'Phnom Penh, Cambodia',
@@ -92,7 +92,7 @@ export class ResumeComponent implements OnInit {
           'Developed a Flutter-based appointment booking and CMS app with real-time push notifications via FCM, enabling seamless communication between users and admins.',
       },
       {
-        title: 'Full-Stack Development Across Web & Mobile',
+        title: 'Development Across Web & Mobile',
         content:
           'Worked across Angular, .NET APIs, and Flutter to create dynamic applications with real-time notifications (FCM) and integrated ABA Payway for secure transactions.',
       },
