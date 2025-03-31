@@ -1,1 +1,41 @@
-<p>portfolio works!</p>
+<section class="px-4 py-8">
+  <div class="container mx-auto">
+    <h2 class="mb-2 text-3xl font-bold text-center {{ userPref.themeText }}">
+      My Projects
+    </h2>
+    <p class="mb-10 text-center {{ userPref.themeText }}">
+      Check out some of my recent work
+    </p>
+
+    <!-- Filter buttons -->
+    <div class="flex flex-wrap justify-center gap-2 mb-10">
+      <button
+        *ngFor="let tech of techFilters"
+        (click)="filterProjects(tech)"
+        [class.bg-slate-600]="activeFilter === tech"
+        [class.text-white]="activeFilter === tech"
+        class="px-4 py-2 text-sm font-medium {{
+          userPref.themeText
+        }} transition duration-300  rounded-md shadow-md hover:scale-x-105"
+      >
+        {{ tech }}
+      </button>
+    </div>
+
+    <!-- Projects grid -->
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <app-project-card
+        *ngFor="let project of filteredProjects"
+        [project]="project"
+      >
+      </app-project-card>
+    </div>
+
+    <!-- No projects message -->
+    <div *ngIf="filteredProjects.length === 0" class="py-10 text-center">
+      <p class="text-gray-600 dark:text-gray-300">
+        No projects found with the selected filter.
+      </p>
+    </div>
+  </div>
+</section>

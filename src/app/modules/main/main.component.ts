@@ -184,12 +184,14 @@ export class MainComponent implements OnInit {
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent): void {
+    if (!this.userPref.isDarkTheme.value || !this.userPref.isMouseGlowingEffect.value) {
+      return;
+    }
     if (this.isMouseMoving === false) {
       setTimeout(() => {
         this.isMouseMoving = true;
       }, 10);
     }
-
     const spotlight = this.el.nativeElement.querySelector('.mouse-spotlight');
 
     if (spotlight && this.userPref.isMouseGlowingEffect) {
