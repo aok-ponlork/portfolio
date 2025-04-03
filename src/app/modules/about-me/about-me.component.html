@@ -68,7 +68,7 @@
           class="px-3 py-1 text-xs font-medium rounded-full bg-indigo-50 dark:bg-gray-800 {{
             userPref.themeText
           }} 
-                    hover:bg-indigo-100 dark:hover:bg-gray-700 transition-colors cursor-cell"
+        hover:bg-indigo-100 dark:hover:bg-gray-700 transition-colors cursor-cell"
         >
           <fa-icon
             [icon]="[tech.iconType, tech.icon]"
@@ -80,7 +80,7 @@
 
       <!-- CTA Buttons  -->
       <div
-        class="flex flex-col justify-start gap-4 mt-2 sm:flex-row"
+        class="flex flex-col justify-start gap-4 mt-4 sm:flex-row"
         data-aos="fade-right"
         data-aos-delay="200"
       >
@@ -88,22 +88,27 @@
           [routerLink]="'/app/portfolio'"
           [nzSize]="'large'"
           nz-button
-          class="relative group px-6 rounded-md border-2 hover:bg-indigo-50 dark:hover:bg-gray-800 transition-all duration-300 hover:translate-y-[-2px]"
+          class="relative group px-6 rounded-lg border-2 border-indigo-500 dark:border-indigo-400 bg-white dark:bg-gray-900 hover:bg-indigo-100 dark:hover:bg-gray-800 transition-all duration-300 ease-out hover:shadow-md hover:translate-y-[-3px] focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-700"
         >
-          <span class="relative items-center justify-center hidden sm:block">
-            <fa-icon [icon]="['fas', 'laptop-code']"></fa-icon>
-            &nbsp;View Portfolio
+          <span
+            class="relative flex items-center justify-center text-indigo-700 dark:text-indigo-300"
+          >
+            <fa-icon [icon]="['fas', 'laptop-code']" class="mr-2"></fa-icon>
+            View Portfolio
           </span>
         </button>
+
         <button
           [routerLink]="'/app/resume'"
           [nzSize]="'large'"
           nz-button
-          class="relative group px-6 rounded-md border-2 hover:bg-indigo-50 dark:hover:bg-gray-800 transition-all duration-300 hover:translate-y-[-2px]"
+          class="relative group px-6 rounded-lg border-2 border-indigo-500 dark:border-indigo-400 bg-white dark:bg-gray-900 hover:bg-indigo-100 dark:hover:bg-gray-800 transition-all duration-300 ease-out hover:shadow-md hover:translate-y-[-3px] focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-700"
         >
-          <span class="relative flex items-center justify-center">
-            <fa-icon [icon]="['fas', 'file-alt']"></fa-icon>
-            &nbsp;View Resume
+          <span
+            class="relative flex items-center justify-center text-indigo-700 dark:text-indigo-300"
+          >
+            <fa-icon [icon]="['fas', 'file-alt']" class="mr-2"></fa-icon>
+            View Resume
           </span>
         </button>
       </div>
@@ -125,16 +130,16 @@
   >
     <div class="container px-6 mx-auto">
       <h2 class="mb-8 text-3xl font-bold text-start {{ userPref.themeText }}">
-        What I Do
+        Currently Focused On
       </h2>
       <p
         class="justify-start text-base mb-12 font-semibold {{
           userPref.themeText
         }}"
       >
-        I have experience building software using various tools and
-        technologies. Below is an overview of my technical skill sets and the
-        tools I frequently use.
+        I am currently focused on building software using a range of modern
+        tools and technologies. Below is an overview of my technical skill sets
+        and the tools I frequently use.
       </p>
       <div
         class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
@@ -199,11 +204,12 @@
       <div class="flex flex-wrap gap-3 mb-8">
         <button
           *ngFor="let category of skillCategories"
-          class="px-4 py-2 text-sm font-medium transition-all rounded-full {{
-            userPref.themeText
-          }} bg-gray-300/50 dark:hover:bg-gray-800/20"
+          class="px-4 py-2 text-sm font-medium transition-all rounded-full 
+                {{ userPref.themeText }} bg-gray-300/50 dark:bg-gray-800/30
+                hover:shadow-sm hover:translate-y-[-1px]"
           [ngClass]="{
-            'bg-gray-300/50 dark:bg-gray-800/20': selectedCategory === category
+            'bg-gray-400/50 dark:bg-gray-900/50 shadow-md':
+              selectedCategory === category
           }"
           (click)="selectCategory(category)"
         >
@@ -215,7 +221,7 @@
       <div class="hidden gap-6 mb-10 md:grid md:grid-cols-2 lg:grid-cols-3">
         <div
           *ngFor="let item of filteredSkills"
-          class="p-5 transition duration-300 rounded-lg dark:hover:bg-slate-800/50 hover:bg-slate-100/65 hover:shadow-md hover:translate-y-[-2px]"
+          class="p-5 transition duration-300 rounded-lg dark:hover:bg-slate-800/50 hover:bg-slate-100/65 hover:shadow-md hover:translate-y-[-2px] hover:cursor-crosshair"
           data-aos="fade-up"
           data-aos-duration="800"
           style="transition: all 0.3s ease-in-out"
@@ -240,18 +246,8 @@
             {{ item.description }}
           </p>
 
-          <!-- Skill progress -->
-          <div class="mt-3">
-            <div class="w-full h-2 bg-gray-200 rounded-full dark:bg-gray-700">
-              <div
-                class="h-2 bg-blue-400 rounded-full dark:bg-blue-300"
-                [style.width.%]="100"
-              ></div>
-            </div>
-          </div>
-
           <!-- Projects tags -->
-          <div *ngIf="item.projects?.length" class="mt-4">
+          <!-- <div *ngIf="item.projects?.length" class="mt-4">
             <h4 class="mb-2 text-xs font-medium {{ userPref.themeText }}">
               Related Projects:
             </h4>
@@ -263,30 +259,39 @@
                 {{ project.name }}
               </nz-tag>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
       <!-- Collapsible panels for mobile -->
-      <nz-collapse [nzGhost]="true" class="md:hidden">
+      <nz-collapse
+        [nzGhost]="true"
+        class="w-full md:hidden"
+        [nzExpandIconPosition]="'end'"
+        [nzAccordion]="true"
+      >
         <nz-collapse-panel
-          *ngFor="let item of filteredSkills"
+          *ngFor="let item of filteredSkills; let i = index"
           [nzHeader]="panelHeader"
           [nzActive]="false"
-          class="mb-3"
+          [nzShowArrow]="true"
+          class="mb-3 transition-shadow duration-300 rounded-lg shadow-sm hover:shadow-md {{
+            userPref.themeText
+          }}"
           data-aos="fade-up"
           data-aos-duration="800"
         >
           <ng-template #panelHeader>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 py-2">
               <div
-                class="flex items-center justify-center w-8 h-8 {{
-                  item.iconColor
-                }}"
+                class="flex items-center justify-center w-10 h-10 transition-transform duration-300 ease-in-out rounded-full dark:bg-gray-700/50 bg-slate-200/50"
+                [class.shadow-md]="userPref.isDarkTheme.value"
               >
                 <fa-icon
                   [icon]="[item.iconType, item.icon]"
-                  class="text-lg"
+                  class="text-lg {{ item.iconColor }}"
+                  [fixedWidth]="true"
+                  [title]="item.title + ' icon'"
                 ></fa-icon>
               </div>
               <span class="text-base font-medium">{{ item.title }}</span>
@@ -294,25 +299,34 @@
           </ng-template>
 
           <div
-            class="flex flex-col p-4 -mt-2 transition duration-300 ease-in-out"
+            class="flex flex-col p-4 transition duration-300 ease-in-out border-t border-gray-100 dark:border-gray-700"
           >
             <div class="mb-2">
-              <p class="text-sm {{ userPref.themeText }}">
+              <p class="text-sm {{ userPref.themeText }} leading-relaxed">
                 {{ item.description }}
               </p>
             </div>
+
             <!-- Projects using this technology -->
             <div *ngIf="item.projects?.length" class="mt-4">
-              <h4 class="mb-2 text-xs font-medium {{ userPref.themeText }}">
+              <h4 class="mb-2 text-xs font-semibold {{ userPref.themeText }}">
                 Related Projects:
               </h4>
               <div class="flex flex-wrap gap-2">
-                <nz-tag
+                <a
                   *ngFor="let project of item.projects"
-                  [nzColor]="userPref.isDarkTheme.value ? '#3b82f6' : 'purple'"
+                  [routerLink]="['/projects', project.url]"
+                  class="cursor-pointer"
                 >
-                  {{ project.name }}
-                </nz-tag>
+                  <nz-tag
+                    [nzColor]="
+                      userPref.isDarkTheme.value ? '#3b82f6' : 'purple'
+                    "
+                    class="transition-all duration-300 hover:opacity-80"
+                  >
+                    {{ project.name }}
+                  </nz-tag>
+                </a>
               </div>
             </div>
           </div>
@@ -320,12 +334,12 @@
       </nz-collapse>
     </div>
   </section>
-  <div class="flex flex-col items-center w-full px-6 mb-10">
+  <div class="flex flex-col items-center w-full px-4 mb-10 sm:px-6">
     <h2
-      class="text-xl font-bold mb-28 hover:cursor-pointer transform transition duration-300 hover:text-[#38b2ac] dark:hover:text-[#38b2ac]"
+      class="text-xl font-bold mb-12 sm:mb-16 md:mb-20 hover:cursor-pointer transform transition duration-300 hover:text-[#38b2ac] dark:hover:text-[#38b2ac]"
       [ngClass]="userPref.themeText"
     >
-      Check out my last works&nbsp;
+      Recent Work & Current Learning&nbsp;
       <span
         class="cursor-help"
         nz-icon
@@ -335,9 +349,9 @@
     </h2>
 
     <div
-      class="flex flex-col items-center justify-center max-w-full sm:flex-row sm:gap-64"
+      class="grid w-full max-w-6xl grid-cols-1 gap-16 md:grid-cols-3 md:gap-64"
     >
-      <!-- Work folder -->
+      <!-- Learning folder -->
       <div
         class="flex flex-col items-center"
         data-aos="fade-right"
@@ -345,15 +359,20 @@
       >
         <app-folder
           [color]="userPref.isDarkTheme.value ? '#00d8ff' : '#007aff'"
-          [size]="2"
+          [size]="getSizeBasedOnScreen()"
           [items]="folder1"
-          [className]="'mb-2 mt-20 sm:mb-0 sm:mt-10'"
+          [className]="'mb-2 mt-24  md:mb-0 md:mt-12'"
         ></app-folder>
         <br />
         <br />
-        <p class="text-lg font-semibold text-gray-700/80 dark:text-gray-300/80">
-          Works
-        </p>
+        <div class="flex items-center space-x-2">
+          <fa-icon [icon]="['fas', 'book-open']" class="text-lg"></fa-icon>
+          <p
+            class="text-lg font-semibold text-gray-700/80 dark:text-gray-300/80"
+          >
+            Learn
+          </p>
+        </div>
       </div>
 
       <!-- Write folder -->
@@ -364,15 +383,20 @@
       >
         <app-folder
           [color]="userPref.isDarkTheme.value ? '#00d8ff' : '#007aff'"
-          [size]="2"
+          [size]="getSizeBasedOnScreen()"
           [items]="folder2"
-          [className]="'mb-2 mt-44 sm:mb-0 sm:mt-10'"
+          [className]="'mb-2 mt-24  md:mb-0 md:mt-12'"
         ></app-folder>
         <br />
         <br />
-        <p class="text-lg font-semibold text-gray-700/80 dark:text-gray-300/80">
-          Writes
-        </p>
+        <div class="flex items-center space-x-2">
+          <fa-icon [icon]="['fas', 'pen']" class="text-lg"></fa-icon>
+          <p
+            class="text-lg font-semibold text-gray-700/80 dark:text-gray-300/80"
+          >
+            Writes
+          </p>
+        </div>
       </div>
 
       <!-- Work folder -->
@@ -383,16 +407,48 @@
       >
         <app-folder
           [color]="userPref.isDarkTheme.value ? '#00d8ff' : '#007aff'"
-          [size]="2"
+          [size]="getSizeBasedOnScreen()"
           [items]="folder3"
-          [className]="'mb-2 mt-44 sm:mb-0 sm:mt-10'"
+          [className]="'mb-2 mt-24  md:mb-0 md:mt-12'"
         ></app-folder>
         <br />
         <br />
-        <p class="text-lg font-semibold text-gray-700/80 dark:text-gray-300/80">
-          Works
-        </p>
+        <div class="flex items-center space-x-2">
+          <fa-icon [icon]="['fas', 'briefcase']" class="text-lg"></fa-icon>
+          <p
+            class="text-lg font-semibold text-gray-700/80 dark:text-gray-300/80"
+          >
+            Works
+          </p>
+        </div>
       </div>
     </div>
   </div>
+  <div class="flex flex-row items-start w-full">
+    <button
+      nz-button
+      [nzType]="'text'"
+      class="{{ userPref.themeText }}"
+      (click)="showModal()"
+    >
+      One of the worst days of my life, and I got hard-r'd by a chatbot.
+    </button>
+  </div>
 </div>
+
+<nz-modal
+  [nzWidth]="'60%'"
+  [(nzVisible)]="vodModalVisible"
+  [nzMaskClosable]="true"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="null"
+>
+  <ng-container *nzModalContent>
+    <div class="!w-full">
+      <video width="100%" controls>
+        <source src="assets/videos/gpt-bugs.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </ng-container>
+</nz-modal>

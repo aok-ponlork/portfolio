@@ -8,7 +8,7 @@ import { UserPreferenceService } from '../../core/services/common/user-preferenc
 @Component({
   standalone: true,
   selector: 'app-portfolio',
-  imports: [],
+  imports: [ProjectCardComponent, CommonModule],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.css',
 })

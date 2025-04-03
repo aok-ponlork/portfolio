@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 interface Paper {
   description: string;
@@ -9,7 +10,7 @@ interface Paper {
 @Component({
   selector: 'app-folder',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NzIconModule],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.css',
 })

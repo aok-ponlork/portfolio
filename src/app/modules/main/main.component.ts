@@ -51,7 +51,7 @@ export class MainComponent implements OnInit {
   settingMenuButton: boolean = false;
   mobileMenuOpen: boolean = false;
   currentYear: number = new Date().getFullYear();
-  isCollapsed: boolean = false;
+  isCollapsed: boolean = true;
   isScrolled: boolean = false;
   private listenersAdded = false;
   readonly AppConfigs = AppConfigs;
@@ -99,9 +99,7 @@ export class MainComponent implements OnInit {
     private renderer: Renderer2,
     private el: ElementRef,
     private aosService: AosService
-  ) {
-    this.isHeaderLayout = userPref.isHeaderView.value;
-  }
+  ) {}
 
   ngOnInit() {
     // Subscribe to theme changes and update page style accordingly
@@ -122,6 +120,8 @@ export class MainComponent implements OnInit {
       document.addEventListener('mouseleave', this.onMouseLeave.bind(this));
       this.listenersAdded = true;
     }
+
+    this.isHeaderLayout = this.userPref.isHeaderView.value;
   }
 
   toggleMosueGlowingEffect(): void {
@@ -184,7 +184,10 @@ export class MainComponent implements OnInit {
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent): void {
-    if (!this.userPref.isDarkTheme.value || !this.userPref.isMouseGlowingEffect.value) {
+    if (
+      !this.userPref.isDarkTheme.value ||
+      !this.userPref.isMouseGlowingEffect.value
+    ) {
       return;
     }
     if (this.isMouseMoving === false) {

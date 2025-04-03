@@ -7,11 +7,13 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { AosService } from '../../core/services/common/aos.service';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { environment } from '../../../environments/env.development';
+import { environment } from '../../../environments/env';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { RouterModule } from '@angular/router';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 @Component({
   selector: 'app-resume',
   imports: [
@@ -22,6 +24,9 @@ import { RouterModule } from '@angular/router';
     NzInputModule,
     NzButtonModule,
     RouterModule,
+    NzTagModule,
+    NzButtonModule,
+    NzIconModule,
   ],
   standalone: true,
   templateUrl: './resume.component.html',
@@ -46,12 +51,26 @@ export class ResumeComponent implements OnInit {
       'Tools & Services: Firebase, FCM',
     ],
     additional: [
-      'Mikrotik Router Configuration',
-      'Ubuntu Server Setup',
-      'Windows Configuration',
-      'Microsoft Office Suite',
-      'Adobe Tools (Basic Video and Graphic Design Proficiency)',
-      'Communication and Problem-Solving Abilities',
+      { title: 'Mikrotik Router Configuration', isProcessing: false },
+      { title: 'Ubuntu Server Setup', isProcessing: false },
+      { title: 'Windows Configuration', isProcessing: false },
+      { title: 'Microsoft Office Suite', isProcessing: false },
+      {
+        title: 'Adobe Tools (Basic Video and Graphic Design Proficiency)',
+        isProcessing: false,
+      },
+      {
+        title: 'Communication and Problem-Solving Abilities',
+        isProcessing: false,
+      },
+      {
+        title: 'Jenkins, CI/CD',
+        isProcessing: true,
+      },
+      {
+        title: 'Kubernetes',
+        isProcessing: true,
+      },
     ],
     education: [
       {
@@ -126,6 +145,8 @@ export class ResumeComponent implements OnInit {
     this.aosService.updateAosOptions({ once: true });
   }
   toggleFullScreen() {
+    // const elem = document.getElementById('element-name') as HTMLElement;
+    // elem.classList.add('overflow-y-auto');
     const elem = document.getElementById('main-container') as HTMLElement;
     if (!document.fullscreenElement) {
       this.isFullScreen = true;
@@ -167,7 +188,7 @@ export class ResumeComponent implements OnInit {
   }
 
   shareResume(platform: string) {
-    const resumeUrl = encodeURIComponent('https://your-website.com/resume');
+    const resumeUrl = encodeURIComponent(`${environment.baseUrl}/app/resume`);
     const description = encodeURIComponent(
       'Here’s my professional resume, take a look!'
     );
@@ -196,7 +217,6 @@ export class ResumeComponent implements OnInit {
     this.shareModalVisible = true;
   }
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.shareModalVisible = false;
   }
 

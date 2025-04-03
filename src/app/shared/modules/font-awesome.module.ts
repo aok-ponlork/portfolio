@@ -46,6 +46,8 @@ import {
   faGraduationCap,
   faMapMarkedAlt,
   faMapMarker,
+  faBookOpen,
+  faPen,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -95,7 +97,9 @@ export class FontAwesomeShareModule {
       faBriefcase,
       faGraduationCap,
       faMapMarkedAlt,
-      faMapMarker
+      faMapMarker,
+      faBookOpen,
+      faPen
     );
   }
 }

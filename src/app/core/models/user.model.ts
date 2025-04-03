@@ -5,7 +5,7 @@ export class UserModel {
     public location: string,
     public telegram: string,
     public skills: string[],
-    public additional: string[],
+    public additional: { title: string; isProcessing: boolean }[],
     public aboutMe: string,
     public education: { title: string; content: string }[],
     public certificate: string[],

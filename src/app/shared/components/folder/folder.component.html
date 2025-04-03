@@ -16,9 +16,8 @@
       >
         <p
           class="flex items-center justify-center p-2 font-semibold text-gray-900/50 text-ellipsis"
-        >
-          {{ item?.description }}
-        </p>
+          [innerHTML]="item?.description"
+        ></p>
       </div>
       <div class="folder__front"></div>
       <div class="folder__front right"></div>
