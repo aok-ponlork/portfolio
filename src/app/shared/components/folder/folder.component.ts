@@ -2,11 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { Paper } from './paper.interface';
 
-interface Paper {
-  description: string;
-  link: string;
-}
 @Component({
   selector: 'app-folder',
   standalone: true,

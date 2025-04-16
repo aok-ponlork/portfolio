@@ -4,11 +4,18 @@ import { PROJECTS } from '../../../assets/data/project.data';
 import { CommonModule } from '@angular/common';
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { UserPreferenceService } from '../../core/services/common/user-preference.service';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   standalone: true,
   selector: 'app-portfolio',
-  imports: [ProjectCardComponent, CommonModule],
+  imports: [
+    ProjectCardComponent,
+    CommonModule,
+    NzIconModule,
+    FontAwesomeModule,
+  ],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.css',
 })

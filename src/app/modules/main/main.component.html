@@ -52,17 +52,19 @@
         class="justify-center mb-2 text-center theme-transition"
         [ngClass]="themeText"
       >
-        The code you cringe at today is the proof of how far you'll go tomorrow.
-        Keep going!
+        The code you cringe at today is the
+        <span class="font-bold">evidence of progress</span>
+        on your journey. Tomorrow's solutions are built on yesterday's lessons.
       </blockquote>
 
       <div class="flex justify-center gap-3 mt-4">
-        <fa-icon
-          *ngFor="let icon of icons"
-          [icon]="['fab', icon]"
-          [ngClass]="[themeText]"
-          class="text-2xl transition-all duration-500 ease-in-out cursor-pointer"
-        ></fa-icon>
+        <a *ngFor="let item of icons" target="_blank" href="{{ item.link }}">
+          <fa-icon
+            [icon]="['fab', item.icon]"
+            [ngClass]="[themeText]"
+            class="text-2xl transition-all duration-500 ease-in-out cursor-pointer"
+          ></fa-icon>
+        </a>
       </div>
     </div>
 
@@ -192,19 +194,24 @@
         <router-outlet></router-outlet>
       </div>
 
-      <div class="mt-auto">
+      <!-- Footer -->
+      <div class="px-4 py-3 mt-auto">
         <nz-divider
           class="!w-full transition-all duration-500 ease-in-out border-gray-900 dark:border-white"
           [nzDashed]="true"
         ></nz-divider>
-        <div class="flex justify-between">
-          <div [ngClass]="[themeText]">AOK PONLORK ©{{ currentYear }}</div>
+        <div class="flex items-center justify-between">
+          <!-- Left side with copyright -->
+          <div [ngClass]="[themeText]" class="font-medium">
+            AOK PONLORK ©{{ currentYear }}
+          </div>
 
-          <!-- Mouse Glowing Effect Toggle Button -->
+          <!-- Right side with toggle button -->
           <button
             [nz-tooltip]="'Only visible in dark mode'"
             [ngClass]="[themeText]"
             (click)="toggleMosueGlowingEffect()"
+            class="flex items-center gap-x-2"
           >
             <fa-icon
               [icon]="[

@@ -5,16 +5,23 @@ import {
 } from '../../../core/models/projects/project.model';
 import { CommonModule } from '@angular/common';
 import { UserPreferenceService } from '../../../core/services/common/user-preference.service';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzImageService } from 'ng-zorro-antd/image';
 
 @Component({
+  standalone: true,
   selector: 'app-project-card',
-  imports: [CommonModule],
+  imports: [CommonModule, NzIconModule],
   templateUrl: './project-card.component.html',
   styleUrl: './project-card.component.css',
+  providers: [NzImageService],
 })
 export class ProjectCardComponent {
   @Input() project!: Project;
-  constructor(public userPref: UserPreferenceService) {}
+  constructor(
+    public userPref: UserPreferenceService,
+    private imagePreview: NzImageService
+  ) {}
   currentImageIndex = 0;
   showFullDescription = false;
 
@@ -33,15 +40,17 @@ export class ProjectCardComponent {
     }
   }
 
-  nextImage(): void {
+  nextImage(e: Event): void {
     if (this.hasMultipleImages) {
+      e.stopPropagation();
       this.currentImageIndex =
         (this.currentImageIndex + 1) % this.project.images.length;
     }
   }
 
-  prevImage(): void {
+  prevImage(e: Event): void {
     if (this.hasMultipleImages) {
+      e.stopPropagation();
       this.currentImageIndex =
         this.currentImageIndex === 0
           ? this.project.images.length - 1
@@ -49,11 +58,25 @@ export class ProjectCardComponent {
     }
   }
 
-  selectImage(index: number): void {
+  selectImage(index: number, e: Event): void {
+    e.stopPropagation();
     this.currentImageIndex = index;
   }
 
   toggleDescription(): void {
     this.showFullDescription = !this.showFullDescription;
+  }
+
+  onPreviewImage(url: string): void {
+    const images = [
+      {
+        src: url,
+        alt: 'Image preview',
+      },
+    ];
+    this.imagePreview.preview(images, {
+      nzZoom: 0.8,
+      nzRotate: 0,
+    });
   }
 }

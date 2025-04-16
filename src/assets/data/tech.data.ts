@@ -21,10 +21,10 @@ export const techStack = [
     colorClass: 'text-red-600',
   },
   {
-    name: 'Node.js',
-    icon: 'node',
+    name: 'Flutter',
+    icon: 'flutter',
     iconType: 'fab',
-    colorClass: 'text-green-600',
+    colorClass: 'text-[#02569B]',
   },
   {
     name: 'Docker',
@@ -33,10 +33,10 @@ export const techStack = [
     colorClass: 'text-blue-600 dark:text-blue-400',
   },
   {
-    name: 'GraphQL',
-    icon: 'plug',
+    name: '.NET',
+    icon: 'code',
     iconType: 'fas',
-    colorClass: 'text-pink-500',
+    colorClass: 'text-[#512BD4]',
   },
 ];
 export const additionalSkills: Skill[] = [
@@ -46,7 +46,7 @@ export const additionalSkills: Skill[] = [
       'Building scalable and maintainable backend applications with Laravel, leveraging its powerful ecosystem.',
     icon: 'laravel',
     iconType: 'fab',
-    category: 'Backend',
+    category: 'Backend & API',
     projects: [
       { name: 'CRM System', url: '/projects/crm' },
       { name: 'E-commerce API', url: '/projects/ecommerce' },
@@ -59,7 +59,7 @@ export const additionalSkills: Skill[] = [
       'Experienced in building scalable back-end services and APIs with .NET Core, focusing on performance and maintainability.',
     icon: 'code',
     iconType: 'fas',
-    category: 'Backend',
+    category: 'Backend & API',
     projects: [
       { name: 'FCM with .NET', url: '/projects/fcm-integration' },
       { name: 'Coupon System', url: '/projects/coupon-selling' },
@@ -114,39 +114,17 @@ export const additionalSkills: Skill[] = [
     iconColor: 'text-[#DD0031]',
   },
   {
-    title: 'Node.js',
+    title: 'Firebase',
     description:
-      'Developing high-performance, event-driven backend applications with Node.js.',
-    icon: 'node',
-    iconType: 'fab',
-    category: 'Backend',
-    projects: [
-      { name: 'Real-time Dashboard', url: '/projects/dashboard' },
-      { name: 'Chat Application', url: '/projects/chat' },
-    ],
-    iconColor: 'text-green-600',
-  },
-  {
-    title: 'FCM',
-    description:
-      'Implementing real-time messaging and push notifications with Firebase Cloud Messaging.',
-    icon: 'paper-plane',
+      'Implementing Firebase services such as Cloud Messaging (FCM), Authentication, and more for seamless app integration and real-time communication.',
+    icon: 'fire-flame-curved',
     iconType: 'fas',
-    category: 'API',
+    category: 'Backend & API',
     projects: [
+      { name: 'Firebase Auth', url: '/projects/firebase-auth' },
       { name: 'Mobile Notifications', url: '/projects/notifications' },
     ],
-    iconColor: 'text-blue-500',
-  },
-  {
-    title: 'GraphQL',
-    description:
-      'Fetching and managing data efficiently with GraphQL, enabling flexible API queries.',
-    icon: 'plug',
-    iconType: 'fas',
-    category: 'API',
-    projects: [{ name: 'Content Management API', url: '/projects/cms' }],
-    iconColor: 'text-pink-500',
+    iconColor: 'text-orange-500',
   },
   {
     title: 'JWT Auth',
@@ -155,9 +133,7 @@ export const additionalSkills: Skill[] = [
     icon: 'key',
     iconType: 'fas',
     category: 'Security',
-    projects: [
-      { name: 'Authentication System', url: '/projects/auth' },
-    ],
+    projects: [{ name: 'Authentication System', url: '/projects/auth' }],
     iconColor: 'text-blue-400',
   },
   {

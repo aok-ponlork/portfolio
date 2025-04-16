@@ -48,6 +48,8 @@ import {
   faMapMarker,
   faBookOpen,
   faPen,
+  faInfoCircle,
+  faFireFlameCurved,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -99,7 +101,9 @@ export class FontAwesomeShareModule {
       faMapMarkedAlt,
       faMapMarker,
       faBookOpen,
-      faPen
+      faPen,
+      faInfoCircle,
+      faFireFlameCurved
     );
   }
 }

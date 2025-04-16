@@ -33,22 +33,20 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   styleUrl: './resume.component.css',
 })
 export class ResumeComponent implements OnInit {
-  url = environment.baseUrl + 'app/resume';
+  url = environment.baseUrl + '/app/resume';
   me: UserModel = {
-    aboutMe: `A results-driven web developer with a degree from <a class="font-bold roboto-bold" href="https://www.setecu.com/" target="_blank" >SETEC INSTITUTE</a> and over 18 months of hands-on professional experience, sponsored by <a class="font-bold roboto-bold" href="https://www.pse.ngo/" target="_blank" >PSE</a>, I specialize in crafting high-performance web solutions that blend technical expertise with innovation. Passionate about building impactful digital experiences, I thrive on solving complex challenges and driving technological advancement.`,
+    aboutMe: `A results-driven web developer with a degree from <a class="font-bold roboto-bold" href="https://www.setecu.com/" target="_blank" >SETEC INSTITUTE</a> sponsored by <a class="font-bold roboto-bold" href="https://www.pse.ngo/" target="_blank" >PSE</a>, And over 18 months of hands-on professional experience, I specialize in crafting high-performance web solutions that blend technical expertise with innovation. Passionate about building impactful digital experiences, I thrive on solving complex challenges and driving technological advancement.`,
     name: 'AOK PONLORK',
     email: 'aok4ponlork@gmail.com',
     location: 'Phnom Penh, Cambodia',
     telegram: 'https://t.me/aok_ponlork',
     skills: [
-      'Programming Languages: PHP, C#, JavaScript, TypeScript, SQL, Python, Java, Dart',
-      'Web Development: Angular, Node.js, HTML, CSS, Tailwind CSS, Laravel, .NET, Flutter',
+      'Programming Languages: PHP, C#, JavaScript, TypeScript, SQL, Python, Dart',
+      'Frameworks & Tools: Angular, Node.js, HTML, CSS, Tailwind CSS, Laravel, .NET, Flutter',
       'Database Management: MySQL, PostgreSQL, MongoDB, SQL Server, Firebase Firestore, SQLite',
       'Version Control: Git, GitHub',
-      'DevOps & CI/CD: Jenkins, Docker, CI/CD Pipelines',
-      'Cloud Services: AWS, Azure, Google Cloud (CAP)',
       'API Development: RESTful APIs, GraphQL',
-      'Tools & Services: Firebase, FCM',
+      'Tools & Services: Docker, Firebase, Microservices',
     ],
     additional: [
       { title: 'Mikrotik Router Configuration', isProcessing: false },
@@ -95,8 +93,9 @@ export class ResumeComponent implements OnInit {
       },
       {
         title: 'Freelance Developer',
-        content: 'Worked as a freelance developer during my academic year.',
-        date: '',
+        content:
+          'Worked as a freelance developer throughout my academic year, specializing in building web applications using Laravel.',
+        date: 'Jun 2023 - Jan 2024',
       },
     ],
     projects: [
@@ -190,7 +189,7 @@ export class ResumeComponent implements OnInit {
   shareResume(platform: string) {
     const resumeUrl = encodeURIComponent(`${environment.baseUrl}/app/resume`);
     const description = encodeURIComponent(
-      'Here’s my professional resume, take a look!'
+      'Here’s my personal resume, take a look!'
     );
 
     let shareUrl = '';
@@ -203,7 +202,7 @@ export class ResumeComponent implements OnInit {
         shareUrl = `https://t.me/share/url?url=${resumeUrl}&text=${description}`;
         break;
       case 'email':
-        shareUrl = `mailto:?subject=My Resume&body=${resumeUrl}`;
+        shareUrl = `mailto:?subject=Aok Ponlork's Resume&body=${resumeUrl}`;
         break;
       // Add more cases for other platforms.
       default:

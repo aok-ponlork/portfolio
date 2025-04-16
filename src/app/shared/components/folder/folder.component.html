@@ -6,19 +6,39 @@
     (click)="toggleFolder()"
   >
     <div class="folder__back">
-      <div
-        *ngFor="let item of papers; let i = index"
-        class="paper paper-{{ i + 1 }} !shadow-md"
-        (mousemove)="onPaperMouseMove($event, i)"
-        (mouseleave)="onPaperMouseLeave(i)"
-        [style]="open ? getPaperStyle(i) : {}"
-        [routerLink]="item?.link ? item?.link : null"
-      >
-        <p
-          class="flex items-center justify-center p-2 font-semibold text-gray-900/50 text-ellipsis"
-          [innerHTML]="item?.description"
-        ></p>
-      </div>
+      <ng-container *ngFor="let item of papers; let i = index">
+        <!-- External link -->
+        <a
+          *ngIf="item?.isExternal; else internalLink"
+          class="paper paper-{{ i + 1 }} !shadow-md"
+          (mousemove)="onPaperMouseMove($event, i)"
+          (mouseleave)="onPaperMouseLeave(i)"
+          [style]="open ? getPaperStyle(i) : {}"
+          [href]="item?.link"
+          target="_blank"
+        >
+          <p
+            class="flex items-center justify-center p-2 font-semibold text-gray-900/50 text-ellipsis"
+            [innerHTML]="item?.description"
+          ></p>
+        </a>
+
+        <!-- Internal link -->
+        <ng-template #internalLink>
+          <a
+            class="paper paper-{{ i + 1 }} !shadow-md"
+            (mousemove)="onPaperMouseMove($event, i)"
+            (mouseleave)="onPaperMouseLeave(i)"
+            [style]="open ? getPaperStyle(i) : {}"
+            [routerLink]="item?.link"
+          >
+            <p
+              class="flex items-center justify-center p-2 font-semibold text-gray-900/50 text-ellipsis"
+              [innerHTML]="item?.description"
+            ></p>
+          </a>
+        </ng-template>
+      </ng-container>
       <div class="folder__front"></div>
       <div class="folder__front right"></div>
     </div>

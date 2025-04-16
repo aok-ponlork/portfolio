@@ -55,7 +55,14 @@ export class MainComponent implements OnInit {
   isScrolled: boolean = false;
   private listenersAdded = false;
   readonly AppConfigs = AppConfigs;
-  icons = ['telegram', 'facebook-messenger', 'github'];
+  icons = [
+    { icon: 'telegram', link: 'https://t.me/aok_ponlork' },
+    {
+      icon: 'facebook',
+      link: 'https://web.facebook.com/1.Rayleigh/',
+    },
+    { icon: 'github', link: 'https://github.com/aok-ponlork' },
+  ];
   menuItems = [
     {
       label: 'About me',
@@ -65,9 +72,9 @@ export class MainComponent implements OnInit {
       route: 'about-me',
     },
     {
-      label: 'Portfolio',
+      label: 'Work',
       icon: 'laptop-code',
-      tooltip: 'Portfolio',
+      tooltip: 'Works',
       type: 'solid',
       route: 'portfolio',
     },
@@ -79,9 +86,9 @@ export class MainComponent implements OnInit {
       route: 'resume',
     },
     {
-      label: 'Blogs',
+      label: 'Write',
       icon: 'newspaper',
-      tooltip: 'Blogs',
+      tooltip: 'Write',
       type: 'solid',
       route: 'blogs',
     },

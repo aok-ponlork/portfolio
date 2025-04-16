@@ -17,11 +17,8 @@ import {
   techStack,
 } from '../../../assets/data/tech.data';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { Paper } from '../../shared/components/folder/paper.interface';
 
-interface Paper {
-  description: string;
-  link: string;
-}
 @Component({
   standalone: true,
   selector: 'app-about-me',
@@ -46,10 +43,9 @@ export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedCategory: string = 'All';
   skillCategories: string[] = [
     'All',
-    'Backend',
+    'Backend & API',
     'Frontend',
     'DevOps',
-    'API',
     'Security',
   ];
   skills = skills;
@@ -58,58 +54,66 @@ export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
   folder1: Paper[] = [
     {
       description: `
-         <span nz-icon  nzType="kubernetes" class=""></span>
-        Learning the fundamentals of Kubernetes, container orchestration, and deployment.`,
-      link: '',
+          Currently learning CI/CD with Jenkins to automate builds and deployments.`,
+      link: 'https://www.jenkins.io/doc/',
+      isExternal: true,
     },
     {
       description: `
-        <span class="icon"><i class="fab fa-jenkins"></i></span>
-        Exploring Jenkins for continuous integration and delivery automation.`,
-      link: '',
+        Diving into Kubernetes to master container orchestration and scalable app deployments.`,
+      link: 'https://kubernetes.io/docs/home/',
+      isExternal: true,
     },
     {
       description: `
-        <span class="icon"><i class="fab fa-golang"></i></span>
-        Learning GoLang for building efficient and scalable backend systems.`,
-      link: '',
+        Exploring GraphQL in depth, building flexible APIs and understanding advanced queries, mutations, and schema design.`,
+      link: 'https://graphql.org/learn/',
+      isExternal: true,
     },
   ];
 
+  //use routerLink redirect to the write content
   folder2: Paper[] = [
     {
       description:
-        'A comprehensive guide to getting started with Angular development.',
-      link: 'https://angular.io/guide/overview',
+        'Crafting a solution to implement Firebase Cloud Messaging (FCM) with .NET.',
+      link: '/app/blogs',
+      isExternal: false,
     },
     {
       description:
-        'Deep dive into Angular component design and best practices.',
-      link: 'https://angular.io/guide/component-overview',
+        'Crafting a Firebase Authentication integration with .NET.',
+      link: '/app/blogs',
+      isExternal: false,
     },
     {
       description:
-        'Exploring state management techniques in Angular applications.',
-      link: 'https://ngrx.io/guide/store',
+        'Crafting a system to receive FCM notifications on both Web and Flutter apps.',
+      link: '/app/blogs',
+      isExternal: false,
     },
   ];
+
   folder3: Paper[] = [
     {
-      description:
-        'A comprehensive guide to getting started with Angular development.',
-      link: 'https://angular.io/guide/overview',
+      description: 'Integrating Firebase Authentication with a .NET backend.',
+      link: '/app/portfolio',
+      isExternal: false,
     },
     {
       description:
-        'Deep dive into Angular component design and best practices.',
-      link: 'https://angular.io/guide/component-overview',
+        'Building responsive web apps with Angular, Tailwind and ng-zorro',
+      link: '/app/portfolio',
+      isExternal: false,
     },
     {
       description:
-        'Exploring state management techniques in Angular applications.',
-      link: 'https://ngrx.io/guide/store',
+        'Developing cross-platform mobile apps using Flutter and Dart.',
+      link: 'https://flutter.dev/docs',
+      isExternal: true,
     },
   ];
+
   constructor(public userPref: UserPreferenceService) {}
   ngOnInit(): void {}
   ngAfterViewInit(): void {}
