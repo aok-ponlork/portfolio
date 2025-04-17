@@ -4,7 +4,11 @@
   <!-- Image/GIF Section -->
   <div class="relative h-52 overflow-hidden {{ userPref.contentBackground }}">
     <!-- Images carousel -->
-    <div *ngIf="project.images.length > 0" class="w-full h-full group"  (click)="onPreviewImage(currentImage.url)">
+    <div
+      *ngIf="project.images.length > 0"
+      class="w-full h-full cursor-pointer group"
+      (click)="onPreviewImage(currentImage.url)"
+    >
       <img
         [src]="currentImage.url"
         [alt]="currentImage.alt"

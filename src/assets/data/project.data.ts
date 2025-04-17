@@ -24,6 +24,33 @@ export const PROJECTS: Project[] = [
     isInternal: true,
   },
   {
+    id: 'project-6',
+    title: 'Appointment Booking App',
+    shortDescription:
+      'A Flutter mobile app for scheduling appointments and receiving notifications.',
+    description:
+      'A mobile application built with Flutter that allows users to book appointments easily and receive real-time push notifications. Integrated with Firebase Cloud Messaging (FCM) and .NET backend through an admin dashboard for managing notifications.',
+    techStack: ['Flutter', 'Angular'],
+    images: [
+      {
+        url: '/assets/images/projects/mobile-app/1.png',
+        alt: 'Appointment booking screen',
+      },
+      {
+        url: '/assets/images/projects/mobile-app/2.png',
+        alt: 'Appointment booking screen',
+      },
+      {
+        url: '/assets/images/projects/mobile-app/demo.gif',
+        alt: 'Appointment booking screen',
+        isGif: true,
+      },
+    ],
+    githubUrl: '',
+    featured: true,
+    isInternal: true,
+  },
+  {
     id: 'project-3',
     title: 'Firebase Auth with .NET',
     shortDescription:
