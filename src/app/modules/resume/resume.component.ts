@@ -100,6 +100,11 @@ export class ResumeComponent implements OnInit {
     ],
     projects: [
       {
+        title: 'Firebase Authentication with .NET (Project)',
+        content:
+          'Integrated Firebase Authentication (email/password, Google) with a .NET backend, validated Firebase ID tokens, implemented JWT, and used PostgreSQL for data storage.',
+      },
+      {
         title: 'Admin Dashboard for Appointment & CRM Management',
         content:
           'Built a feature-rich admin dashboard with Angular, ng-zorro Ant Design, and Tailwind CSS. Integrated Firebase Cloud Messaging (FCM) for push notifications, allowing admins to manage appointments, CRM data, and coupon sales.',
