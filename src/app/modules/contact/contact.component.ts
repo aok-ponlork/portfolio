@@ -41,7 +41,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class ContactComponent implements OnInit {
   frmGroup!: UntypedFormGroup;
   isLoading: boolean = false;
-
+  icons = [
+    { icon: 'telegram', link: 'https://t.me/aok_ponlork' },
+    {
+      icon: 'facebook',
+      link: 'https://web.facebook.com/1.Rayleigh/',
+    },
+    { icon: 'github', link: 'https://github.com/aok-ponlork' },
+  ];
   constructor(
     private fb: FormBuilder,
     public userPref: UserPreferenceService,

@@ -102,17 +102,50 @@
         </div>
       </form>
     </div>
-    <!-- Lottie Animation Section -->
-    <div class="flex items-center justify-center flex-1 min-h-[200px]">
+
+    <!-- Right Section with Animation and Social Media -->
+    <div
+      class="flex flex-col items-center justify-center flex-1 min-h-[200px] gap-6"
+    >
+      <!-- Lottie Animation -->
       <app-lottie
         [animationName]="'floating-labtop.json'"
         [width]="'w-full'"
         [height]="'h-auto'"
       ></app-lottie>
+
+      <!-- Social Media Links -->
+      <div class="flex justify-center gap-4 my-2">
+        <a *ngFor="let item of icons" target="_blank" href="{{ item.link }}">
+          <fa-icon
+            [icon]="['fab', item.icon]"
+            class="text-2xl transition-all duration-500 ease-in-out cursor-pointer {{
+              userPref.themeText
+            }}"
+          ></fa-icon>
+        </a>
+      </div>
+
+      <!-- Response Time Info -->
+      <!-- <div
+        class="w-4/5 p-4 text-center rounded-lg shadow-md"
+        [ngClass]="userPref.themeBackground"
+      >
+        <fa-icon
+          [icon]="['fas', 'clock']"
+          class="mb-2 text-blue-500"
+          size="lg"
+        ></fa-icon>
+        <p class="font-medium {{ userPref.themeText }}">
+          Typical Response Time
+        </p>
+        <p class="{{ userPref.themeText }}">Within 24-48 hours</p>
+      </div> -->
     </div>
   </div>
+
   <!-- Quote Section -->
-  <div
+  <!-- <div
     class="py-8 mx-4 mt-6 text-center rounded-lg shadow-sm {{
       userPref.themeBackground
     }}"
@@ -120,7 +153,8 @@
     <blockquote class="p-4 text-lg italic sm:p-1">
       "The best way to predict the future is to create it." — Peter Drucker
     </blockquote>
-  </div>
+  </div> -->
+
   <button
     [routerLink]="'/app/about-me'"
     nz-button

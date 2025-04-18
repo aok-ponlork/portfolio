@@ -65,6 +65,7 @@ nz-content {
   overflow-y: auto; /* Enable scroll within the content */
   height: 100vh; /* Make sure content takes up full viewport height */
   position: relative; /* Ensure scroll area behaves correctly */
+  scroll-behavior: smooth;
 }
 /* styles.css or styles.scss */
 .theme-transition {

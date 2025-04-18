@@ -32,7 +32,7 @@
       ></nz-divider>
 
       <a
-        routerLink="/app/about-me"
+        [routerLink]="'/app/about-me'"
         class="flex flex-row items-center justify-center gap-2 px-3"
       >
         <app-lottie
@@ -49,15 +49,13 @@
       [ngClass]="{ 'opacity-100': !isCollapsed, 'opacity-0': isCollapsed }"
     >
       <blockquote
-        class="justify-center mb-2 text-center theme-transition"
+        class="justify-center mb-4 text-center theme-transition"
         [ngClass]="themeText"
       >
-        The code you cringe at today is the
-        <span class="font-bold">evidence of progress</span>
-        on your journey. Tomorrow's solutions are built on yesterday's lessons.
+        Created by a
+        <span class="font-bold">Man United</span> fan.
       </blockquote>
-
-      <div class="flex justify-center gap-3 mt-4">
+      <div class="flex justify-center gap-3">
         <a *ngFor="let item of icons" target="_blank" href="{{ item.link }}">
           <fa-icon
             [icon]="['fab', item.icon]"
@@ -182,11 +180,12 @@
 
     <!-- Content Area -->
     <nz-content
+      #mainContainer
       id="main-container"
       [ngClass]="[
         themeText,
         contentBackground,
-        '!h-full p-4 theme-transition overflow-y-scroll flex flex-col'
+        '!h-full p-4 theme-transition flex flex-col'
       ]"
       (scroll)="isHeaderLayout ? onScroll($event) : refreshAos()"
     >
