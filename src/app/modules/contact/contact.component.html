@@ -7,7 +7,13 @@
     <div
       class="flex flex-col w-full p-8 md:flex-1 md:min-h-screen md:items-center md:justify-center"
     >
-      <h2 class="py-2 mb-4 text-2xl font-bold text-center">Contact</h2>
+      <h2
+        class="py-2 mb-4 text-2xl font-bold text-center {{
+          userPref.themeText
+        }}"
+      >
+        Contact
+      </h2>
 
       <form
         [formGroup]="frmGroup"
@@ -17,9 +23,12 @@
         <div class="flex flex-col gap-2 md:flex-row">
           <!-- Name Field -->
           <nz-form-item class="flex-1">
-            <nz-form-label [nzFor]="'name'" class="hidden md:block" nzRequired
-              >Name</nz-form-label
+            <label
+              class="hidden font-medium md:block {{ userPref.themeText }}"
+              for="name"
             >
+              <span class="text-red-600">*</span> Name:
+            </label>
             <nz-form-control>
               <input
                 nz-input
@@ -27,7 +36,9 @@
                 formControlName="name"
                 placeholder="Your Name"
                 required
-                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 {{
+                  userPref.themeText
+                }}"
                 [ngClass]="userPref.inputColor"
               />
             </nz-form-control>
@@ -35,9 +46,12 @@
 
           <!-- Email Field -->
           <nz-form-item class="flex-1">
-            <nz-form-label [nzFor]="'email'" class="hidden md:block" nzRequired
-              >Email</nz-form-label
+            <label
+              class="hidden font-medium md:block {{ userPref.themeText }}"
+              for="name"
             >
+              <span class="text-red-600">*</span> Email:
+            </label>
             <nz-form-control>
               <input
                 nz-input
@@ -46,7 +60,9 @@
                 type="email"
                 placeholder="Your Email"
                 required
-                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 {{
+                  userPref.themeText
+                }}"
                 [ngClass]="userPref.inputColor"
               />
             </nz-form-control>
@@ -63,7 +79,9 @@
               placeholder="Your Message"
               rows="6"
               required
-              class="w-full p-2 border rounded-lg min-w-12 focus:ring-2 focus:ring-blue-500"
+              class="w-full p-2 border rounded-lg min-w-12 focus:ring-2 focus:ring-blue-500 {{
+                userPref.themeText
+              }}"
               [ngClass]="userPref.inputColor"
             ></textarea>
           </nz-form-control>
@@ -78,8 +96,8 @@
             [disabled]="!frmGroup.valid || isLoading"
             class="!w-full sm:w-1/2 border"
           >
-            <nz-spin *ngIf="isLoading"></nz-spin>
-            <span *ngIf="!isLoading">Submit</span>
+            <span *ngIf="!isLoading">Send Message</span>
+            <span *ngIf="isLoading">Sending...</span>
           </button>
         </div>
       </form>

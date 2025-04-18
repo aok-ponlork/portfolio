@@ -41,9 +41,9 @@ export const PROJECTS: Project[] = [
         alt: 'Appointment booking screen',
       },
       {
-        url: '/assets/images/projects/mobile-app/demo.gif',
+        url: '/assets/images/projects/mobile-app/demo.mp4',
         alt: 'Appointment booking screen',
-        isGif: true,
+        isVod: true,
       },
     ],
     githubUrl: '',
