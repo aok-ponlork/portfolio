@@ -54,11 +54,11 @@ export class ResumeComponent implements OnInit {
       { title: 'Windows Configuration', isProcessing: false },
       { title: 'Microsoft Office Suite', isProcessing: false },
       {
-        title: 'Adobe Tools (Basic Video and Graphic Design Proficiency)',
+        title: 'Adobe Tools',
         isProcessing: false,
       },
       {
-        title: 'Communication and Problem-Solving Abilities',
+        title: 'Communication & Problem-Solving',
         isProcessing: false,
       },
       {
