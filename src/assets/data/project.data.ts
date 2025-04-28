@@ -11,11 +11,11 @@ export const PROJECTS: Project[] = [
     techStack: ['Angular', 'Firebase'],
     images: [
       {
-        url: '/assets/images/projects/project1/1.png',
+        url: '/assets/images/projects/project1/1.webp',
         alt: 'Dashboard view showing push notification interface',
       },
       {
-        url: '/assets/images/projects/project1/2.png',
+        url: '/assets/images/projects/project1/2.webp',
         alt: 'Firebase Dashboard',
       },
     ],
@@ -33,11 +33,11 @@ export const PROJECTS: Project[] = [
     techStack: ['Flutter', 'Angular'],
     images: [
       {
-        url: '/assets/images/projects/mobile-app/1.png',
+        url: '/assets/images/projects/mobile-app/1.webp',
         alt: 'Appointment booking screen',
       },
       {
-        url: '/assets/images/projects/mobile-app/2.png',
+        url: '/assets/images/projects/mobile-app/2.webp',
         alt: 'Appointment booking screen',
       },
       {
@@ -60,11 +60,11 @@ export const PROJECTS: Project[] = [
     techStack: ['.NET', 'Firebase'],
     images: [
       {
-        url: '/assets/images/projects/project3/2.png',
+        url: '/assets/images/projects/project3/2.webp',
         alt: 'Firebase Authentication',
       },
       {
-        url: '/assets/images/projects/project3/1.png',
+        url: '/assets/images/projects/project3/1.webp',
         alt: 'Firebase Authentication',
       },
     ],
@@ -83,11 +83,11 @@ export const PROJECTS: Project[] = [
     techStack: ['Angular'],
     images: [
       {
-        url: '/assets/images/projects/portfolio/2.png',
+        url: '/assets/images/projects/portfolio/2.webp',
         alt: 'Portfolio homepage screenshot',
       },
       {
-        url: '/assets/images/projects/portfolio/1.png',
+        url: '/assets/images/projects/portfolio/1.webp',
         alt: 'Project section displaying multiple project cards',
       },
     ],
