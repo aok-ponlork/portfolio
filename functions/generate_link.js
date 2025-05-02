@@ -5,7 +5,7 @@ export async function onRequestGet(context) {
 
   // Payload containing the image path and expiration time
   const payload = {
-    image: "private-assets/me.webp", // Adjust with your actual image path
+    image: "me.webp", // Adjust with your actual image path
     exp: Math.floor(Date.now() / 1000) + 3600, // 1 hour expiration
   };
 
