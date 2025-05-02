@@ -1,3 +1,5 @@
 export async function onRequestGet(context) {
-  return new Response("Hello from Cloudflare Functions!", { status: 200 });
+  const secret = new TextEncoder().encode(context.env.secret);
+  // Just a quick test response
+  return new Response("Your secret is loaded!", { status: 200 });
 }
