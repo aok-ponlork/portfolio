@@ -10,7 +10,7 @@ export async function onRequestGet(context) {
 
     // Get R2 binding with (personal_data)
     const object = await context.env.personal_data.get(payload.image);
-
+    console.log(object);
     if (!object) return new Response("Image not found", { status: 404 });
 
     return new Response(object.body, {

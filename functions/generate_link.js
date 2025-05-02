@@ -6,7 +6,7 @@ export async function onRequestGet(context) {
   // Payload containing the image path and expiration time
   const payload = {
     image: "me.webp", // Adjust with your actual image path
-    exp: Math.floor(Date.now() / 1000) + 3600, // 1 hour expiration
+    exp: Math.floor(Date.now() / 1000) + 3600 * 24, // 1 day expiration
   };
 
   // Create JWT token with the payload and sign it
