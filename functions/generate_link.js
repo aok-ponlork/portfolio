@@ -1,10 +1,17 @@
 import { SignJWT } from "jose";
 
-export async function onRequestGet(context) {
+export async function onRequestPost(context) {
   const apiKey = context.request.headers.get("Authorization");
 
   if (!apiKey || apiKey !== `Bearer ${context.env.key}`) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response("Unauthorized", {
+      status: 401,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "*",
+      },
+    });
   }
 
   const secret = new TextEncoder().encode(context.env.secret);
@@ -14,14 +21,29 @@ export async function onRequestGet(context) {
     exp: Math.floor(Date.now() / 1000) + 3600, // 1 hour expiration
   };
 
-  // Create JWT token with the payload and sign it
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .sign(secret);
 
-  // Respond with the JWT token,
   return new Response(JSON.stringify({ token }), {
     status: 200,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "http://localhost:4200",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "*",
+    },
+  });
+}
+
+// Handle CORS preflight
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "http://localhost:4200",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "*",
+    },
   });
 }
