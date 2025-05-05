@@ -10,6 +10,8 @@ export class UserModel {
     public education: { title: string; content: string }[],
     public certificate: string[],
     public experiences: { title: string; content: string; date: string }[],
-    public projects: { title: string; content: string; date?: string }[]
-  ) {}
+    public projects: { title: string; content: string; date?: string }[],
+    public image?: any
+  ) {
+  }
 }

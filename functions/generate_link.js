@@ -16,6 +16,7 @@ export async function onRequestPost(context) {
 
   const secret = new TextEncoder().encode(context.env.secret);
 
+  // If I have a dashboard manager, I'll add the user's email in the token payload for better tracking and personalization
   const payload = {
     images: ["me.webp", "2.jpeg", "guts.jpeg"],
     exp: Math.floor(Date.now() / 1000) + 3600, // 1 hour expiration
