@@ -14,16 +14,11 @@ export async function onRequestGet(context) {
       imageNames.map(async (name) => {
         const object = await context.env.personal_data.get(name);
         if (!object) return null;
-
-        // Convert the ReadableStream to a buffer
-        const arrayBuffer = await object.body.arrayBuffer();
-        const base64 = Buffer.from(arrayBuffer).toString("base64"); // Convert to base64
-
+        const buffer = object.body;
         const contentType = object.httpMetadata?.contentType || "image/webp";
-
         return {
           name,
-          data: `data:${contentType};base64,${base64}`,
+          data: `data:${contentType};base64,${buffer}`,
         };
       })
     );
