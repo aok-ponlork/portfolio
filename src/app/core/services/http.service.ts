@@ -8,18 +8,15 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/env.development';
+import { environment } from '../../../environments/env';
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
   public thirdPartySerive: string = '';
-  private baseUrl = environment.apiUrl;
+  private baseUrl = environment.baseUrl;
   private defaultHeaders = new HttpHeaders({
-    Authorization: `Bearer ${
-      localStorage.getItem('access_token') ||
-      'd9385ffb4c9c4532a93c49a8e4ad676bf4f1101d96db89a02cfb1a0c44dc1f36'
-    }`,
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
   });
 
   constructor(private http: HttpClient) {}
