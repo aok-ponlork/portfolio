@@ -15,7 +15,7 @@ export async function onRequestGet(context) {
         const object = await context.env.personal_data.get(name);
         if (!object) return null;
         const buffer = object.body;
-        const base64 = Buffer.from(buffer).toString("base64");
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
         const contentType = object.httpMetadata?.contentType || "image/webp";
         return {
           name,
