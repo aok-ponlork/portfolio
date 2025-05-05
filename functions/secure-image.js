@@ -12,15 +12,28 @@ export async function onRequestGet(context) {
 
     const images = await Promise.all(
       imageNames.map(async (name) => {
-        const object = await context.env.personal_data.get(name);
-        if (!object) return null;
-        const buffer = object.body;
-        const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-        const contentType = object.httpMetadata?.contentType || "image/webp";
-        return {
-          name,
-          data: `data:${contentType};base64,${base64}`,
-        };
+        try {
+          // Get the object from R2
+          const object = await context.env.personal_data.get(name);
+          if (!object) return null;
+
+          const arrayBuffer = await object.arrayBuffer();
+          // Convert to base64 properly
+          const base64 = btoa(
+            new Uint8Array(arrayBuffer).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ""
+            )
+          );
+          const contentType = object.httpMetadata?.contentType || "image/webp";
+          return {
+            name,
+            data: `data:${contentType};base64,${base64}`,
+          };
+        } catch (error) {
+          console.error(`Error processing image ${name}:`, error);
+          return null;
+        }
       })
     );
 
