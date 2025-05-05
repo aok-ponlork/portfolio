@@ -32,6 +32,12 @@ export async function onRequestGet(context) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response("Invalid or expired token", { status: 403 });
+    console.error("JWT Verification Error:", err);
+    return new Response(
+      `Invalid or expired token, Message ${err.message ?? ""}`,
+      {
+        status: 403,
+      }
+    );
   }
 }
