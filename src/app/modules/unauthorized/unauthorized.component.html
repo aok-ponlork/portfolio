@@ -1,8 +1,18 @@
 <div class="flex items-center justify-center w-full h-screen text-center">
-  <app-lottie
-    animationName="403.json"
-    [loop]="true"
-    [height]="'max-h-full'"
-    [width]="'max-w-full'"
-  ></app-lottie>
+  <div class="flex flex-col items-center gap-4">
+    <app-lottie
+      animationName="403.json"
+      [loop]="true"
+      [height]="'max-h-full'"
+      [width]="'max-w-full'"
+    ></app-lottie>
+
+    <button
+      [routerLink]="'/app/contact'"
+      (click)="onReqClick()"
+      class="px-6 py-2 transition-all duration-200 border shadow-lg text-gray-800/80 dark:text-white/80 rounded-xl bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20"
+    >
+      Request access!
+    </button>
+  </div>
 </div>

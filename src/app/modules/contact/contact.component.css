@@ -38,3 +38,7 @@
     opacity: 0;
   }
 }
+
+::ng-deep .ant-select-selector {
+  background-color: transparent !important;
+}

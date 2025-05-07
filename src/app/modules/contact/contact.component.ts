@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -19,6 +19,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { SharedService } from '../../core/services/shared.service';
 @Component({
   standalone: true,
   selector: 'app-contact',
@@ -34,11 +38,18 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     RouterModule,
     FontAwesomeModule,
+    NzSwitchModule,
+    NzSelectModule,
+    NzToolTipModule,
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })
 export class ContactComponent implements OnInit {
+  isReqAccessForm: boolean = false;
+  @ViewChild('animationSection') lottieComponent!: LottieCoreComponent;
+  @ViewChild('messageInput') messageInput!: ElementRef;
+  sources = ['Game', 'Friend', 'Recruiter', 'Anonymous'];
   frmGroup!: UntypedFormGroup;
   isLoading: boolean = false;
   icons = [
@@ -53,20 +64,47 @@ export class ContactComponent implements OnInit {
     private fb: FormBuilder,
     public userPref: UserPreferenceService,
     private message: ActionMessageService,
-    private http: HttpService
+    private http: HttpService,
+    private shared_service: SharedService
   ) {}
 
   ngOnInit(): void {
     this.frmGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
-      message: ['', Validators.required],
+      message: [''],
+      howKnow: [null, this.isReqAccessForm ? [Validators.required] : []],
     });
+    this.shared_service.observe('isReqAccessForm', false).subscribe((value) => {
+      if (value) {
+        this.isReqAccessForm = value;
+        this.animationFileChange();
+      }
+    });
+  }
+
+  onSourceChange(value: string): void {
+    this.frmGroup.get('message')?.updateValueAndValidity();
+    if (value) {
+      if (value == 'Anonymous') {
+        this.frmGroup.get('message')?.setValue(`From Anonymous. \n`);
+      } else {
+        this.frmGroup
+          .get('message')
+          ?.setValue(`Hey! I heard about you through ${value}.\n`);
+      }
+      setTimeout(() => {
+        this.messageInput?.nativeElement?.focus();
+      }, 10);
+    }
   }
 
   onSubmit(): void {
     this.isLoading = true;
-    const model = this.frmGroup.value;
+    var model = this.frmGroup.value;
+    if (this.isReqAccessForm) {
+      model.message += ' Request for more-info page access!';
+    }
     const url = environment.formSpreeUrl;
     this.http.thirdPartySerive = url;
     this.http.post('', model).subscribe({
@@ -89,5 +127,19 @@ export class ContactComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+  onModelChange(): void {
+    this.animationFileChange();
+    this.frmGroup.get('message')?.setValue('');
+    this.frmGroup.reset();
+  }
+
+  animationFileChange(): void {
+    const newAnimation = this.isReqAccessForm
+      ? 'message.json'
+      : 'floating-labtop.json';
+    if (this.lottieComponent) {
+      this.lottieComponent.updateAnimation(newAnimation);
+    }
   }
 }

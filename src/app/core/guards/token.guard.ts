@@ -29,6 +29,7 @@ export class TokenGuard implements CanActivate {
     // If token exists in URL, store it first
     if (token) {
       this.tokenService.storeToken(token);
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     return this.tokenService.verifyToken().pipe(

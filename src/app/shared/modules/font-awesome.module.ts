@@ -55,6 +55,7 @@ import {
   faProjectDiagram,
   faTools,
   faGamepad,
+  faClock,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -113,7 +114,8 @@ export class FontAwesomeShareModule {
       faProjectDiagram,
       faTools,
       faCertificate,
-      faGamepad
+      faGamepad,
+      faClock
     );
   }
 }

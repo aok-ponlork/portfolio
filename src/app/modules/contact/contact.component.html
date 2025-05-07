@@ -7,12 +7,27 @@
     <div
       class="flex flex-col w-full p-8 md:flex-1 md:min-h-screen md:items-center md:justify-center"
     >
+      <div
+        class="flex justify-center mb-2 md:justify-end"
+        [nz-tooltip]="'Turn this on to request more info about me.'"
+      >
+        <label
+          [ngClass]="userPref.themeText"
+          class="mr-2 text-sm font-medium md:text-base"
+          >Request mode</label
+        >
+        <nz-switch
+          [(ngModel)]="isReqAccessForm"
+          (ngModelChange)="onModelChange()"
+        ></nz-switch>
+      </div>
+
       <h2
         class="py-2 mb-4 text-2xl font-bold text-center {{
           userPref.themeText
         }}"
       >
-        Contact
+        {{ isReqAccessForm ? "Submit a request" : "Contact" }}
       </h2>
 
       <form
@@ -68,12 +83,35 @@
             </nz-form-control>
           </nz-form-item>
         </div>
+        <!-- from selection -->
+        <nz-form-item *ngIf="isReqAccessForm" class="flex-1">
+          <label
+            class="hidden font-medium md:block {{ userPref.themeText }}"
+            for="howKnow"
+          >
+            <span class="py-2 text-red-600">*</span>How did you know me? &nbsp;
+          </label>
 
+          <nz-select
+            class="w-full rounded-lg {{ userPref.themeText }}"
+            formControlName="howKnow"
+            (ngModelChange)="onSourceChange($event)"
+            nzPlaceHolder="Select source"
+          >
+            <nz-option
+              class="{{ userPref.themeText }}"
+              *ngFor="let source of sources"
+              [nzValue]="source"
+              [nzLabel]="source"
+            ></nz-option>
+          </nz-select>
+        </nz-form-item>
         <!-- Message Field -->
         <nz-form-item>
           <nz-form-control>
             <textarea
               nz-input
+              #messageInput
               id="message"
               formControlName="message"
               placeholder="Your Message"
@@ -88,7 +126,7 @@
         </nz-form-item>
 
         <!-- Submit Button -->
-        <div class="mt-4 text-center">
+        <div class="my-4 text-center">
           <button
             nz-button
             nzType="primary"
@@ -96,11 +134,26 @@
             [disabled]="!frmGroup.valid || isLoading"
             class="!w-full sm:w-1/2 border"
           >
-            <span *ngIf="!isLoading">Send Message</span>
+            <span *ngIf="!isLoading">{{
+              isReqAccessForm ? "Send request" : "Send Message"
+            }}</span>
             <span *ngIf="isLoading">Sending...</span>
           </button>
         </div>
       </form>
+      <!-- Response Time Info -->
+      <div
+        class="w-4/5 p-4 my-4 text-center transition-all duration-200 border rounded-lg shadow-md text-gray-800/80 dark:text-white/80 bg-white/30 backdrop-blur-lg border-white/20 hover:bg-white/40"
+        [ngClass]="userPref.contentBackground"
+      >
+        <p class="{{ userPref.themeText }}">
+          <fa-icon
+            [icon]="['fas', 'clock']"
+            class="mb-2 {{ userPref.themeText }}"
+          ></fa-icon>
+          Typical response as soon as I see your message.
+        </p>
+      </div>
     </div>
 
     <!-- Right Section with Animation and Social Media -->
@@ -108,11 +161,22 @@
       class="flex flex-col items-center justify-center flex-1 min-h-[200px] gap-6"
     >
       <!-- Lottie Animation -->
-      <app-lottie
-        [animationName]="'floating-labtop.json'"
-        [width]="'w-full'"
-        [height]="'h-auto'"
-      ></app-lottie>
+      <div class="my-1">
+        <app-lottie
+          #animationSection
+          [animationName]="'floating-labtop.json'"
+          [width]="'w-full'"
+          [height]="'h-auto'"
+        ></app-lottie>
+        <p
+          *ngIf="isReqAccessForm"
+          class="justify-center max-w-md mt-2 text-sm text-center text-gray-800/80 dark:text-white/60"
+        >
+          This page lets you request access to my more info about me. If I know
+          you or think you're a good fit, I’ll send a secure link — valid for 1
+          hour only.
+        </p>
+      </div>
 
       <!-- Social Media Links -->
       <div class="flex justify-center gap-4 my-2">
@@ -125,37 +189,22 @@
           ></fa-icon>
         </a>
       </div>
-
-      <!-- Response Time Info -->
-      <!-- <div
-        class="w-4/5 p-4 text-center rounded-lg shadow-md"
-        [ngClass]="userPref.themeBackground"
-      >
-        <fa-icon
-          [icon]="['fas', 'clock']"
-          class="mb-2 text-blue-500"
-          size="lg"
-        ></fa-icon>
-        <p class="font-medium {{ userPref.themeText }}">
-          Typical Response Time
-        </p>
-        <p class="{{ userPref.themeText }}">Within 24-48 hours</p>
-      </div> -->
     </div>
   </div>
 
   <!-- Quote Section -->
-  <!-- <div
-    class="py-8 mx-4 mt-6 text-center rounded-lg shadow-sm {{
-      userPref.themeBackground
-    }}"
+  <div
+    *ngIf="isReqAccessForm"
+    class="py-8 mt-6 text-center border rounded-lg shadow-md text-gray-800/80 dark:text-white/80 bg-white/30 backdrop-blur-lg border-white/20 hover:bg-white/40"
   >
-    <blockquote class="p-4 text-lg italic sm:p-1">
-      "The best way to predict the future is to create it." — Peter Drucker
+    <blockquote class="p-4 text-base italic sm:p-1">
+      "One of the most basic skills on the football field is knowing how to
+      control the ball. Same thing in real life—but the ball’s not always a
+      ball."
     </blockquote>
-  </div> -->
+  </div>
 
-  <button
+  <!-- <button
     [routerLink]="'/app/about-me'"
     nz-button
     [nzSize]="'large'"
@@ -164,5 +213,5 @@
   >
     <fa-icon [icon]="['fas', 'step-forward']"></fa-icon>
     <span class="transition-opacity duration-300">Home</span>
-  </button>
+  </button> -->
 </nz-spin>
