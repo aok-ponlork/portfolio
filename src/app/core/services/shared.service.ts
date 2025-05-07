@@ -29,10 +29,27 @@ export class SharedService {
   }
 
   // One-time flag: Trigger action once and then reset
-  triggerOnce<T>(key: string, value: T): void {
-    const subject = this.getState<T>(key, value);
-    subject.next(value);
+  triggerOnce<T>(key: string, triggerValue: T, resetValue: T): void {
+    const subject = this.getState<T>(key, resetValue);
+    subject.next(triggerValue);
     // Reset after it's been triggered once
-    setTimeout(() => subject.next(value), 0);
+    setTimeout(() => subject.next(resetValue), 0);
+  }
+
+  // Clean up specific state
+  cleanupState(key: string): void {
+    if (this.states.has(key)) {
+      const subject = this.states.get(key);
+      if (subject) {
+        subject.complete();
+      }
+      this.states.delete(key);
+    }
+  }
+
+  // Clean up all states
+  cleanupAllStates(): void {
+    this.states.forEach((subject) => subject.complete());
+    this.states.clear();
   }
 }

@@ -12,6 +12,6 @@ import { RouterLink } from '@angular/router';
 export class UnauthorizedComponent {
   constructor(private shared_service: SharedService) {}
   onReqClick(): void {
-    this.shared_service.triggerOnce('isReqAccessForm', true);
+    this.shared_service.set('isReqAccessForm', true);
   }
 }

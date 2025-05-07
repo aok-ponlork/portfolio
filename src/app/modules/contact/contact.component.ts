@@ -1,4 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -23,6 +30,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { SharedService } from '../../core/services/shared.service';
+import { Subscription } from 'rxjs';
 @Component({
   standalone: true,
   selector: 'app-contact',
@@ -45,7 +53,8 @@ import { SharedService } from '../../core/services/shared.service';
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
+  private subscription!: Subscription;
   isReqAccessForm: boolean = false;
   @ViewChild('animationSection') lottieComponent!: LottieCoreComponent;
   @ViewChild('messageInput') messageInput!: ElementRef;
@@ -75,14 +84,20 @@ export class ContactComponent implements OnInit {
       message: [''],
       howKnow: [null, this.isReqAccessForm ? [Validators.required] : []],
     });
-    this.shared_service.observe('isReqAccessForm', false).subscribe((value) => {
-      if (value) {
-        this.isReqAccessForm = value;
-        this.animationFileChange();
-      }
+  }
+  ngAfterViewInit(): void {
+    // Add a small timeout to push the update to the next change detection cycle
+    setTimeout(() => {
+      this.shared_service
+        .observe('isReqAccessForm', false)
+        .subscribe((value) => {
+          if (value) {
+            this.isReqAccessForm = value;
+            this.animationFileChange();
+          }
+        });
     });
   }
-
   onSourceChange(value: string): void {
     this.frmGroup.get('message')?.updateValueAndValidity();
     if (value) {
@@ -139,7 +154,14 @@ export class ContactComponent implements OnInit {
       ? 'message.json'
       : 'floating-labtop.json';
     if (this.lottieComponent) {
+      console.log(newAnimation);
       this.lottieComponent.updateAnimation(newAnimation);
     }
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.shared_service.cleanupState('isReqAccessForm');
   }
 }

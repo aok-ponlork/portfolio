@@ -12,11 +12,13 @@
         [nz-tooltip]="'Turn this on to request more info about me.'"
       >
         <label
+          for="toggleMode"
           [ngClass]="userPref.themeText"
           class="mr-2 text-sm font-medium md:text-base"
           >Request mode</label
         >
         <nz-switch
+          id="toggleMode"
           [(ngModel)]="isReqAccessForm"
           (ngModelChange)="onModelChange()"
         ></nz-switch>
