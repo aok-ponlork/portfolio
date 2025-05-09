@@ -17,3 +17,137 @@
 ::ng-deep .ant-upload .ant-btn {
   width: 100%;
 }
+
+/* Portfolio Component Styles */
+
+:host {
+  display: block;
+}
+
+/* Glass Morphism Effect */
+.glass-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Custom Tag Styling */
+::ng-deep {
+  .ant-tag {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  .ant-timeline-item-tail {
+    border-left-style: dashed;
+  }
+
+  .ant-card {
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+
+    .ant-card-meta-title {
+      color: inherit;
+    }
+
+    .ant-card-meta-description {
+      color: inherit;
+      opacity: 0.8;
+    }
+
+    .ant-card-actions {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+      li {
+        margin: 8px 0;
+
+        span {
+          transition: all 0.3s ease;
+
+          &:hover {
+            color: #1890ff;
+          }
+        }
+      }
+    }
+  }
+
+  .image-preview-modal {
+    .ant-modal-content {
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(12px);
+    }
+  }
+
+  .ant-tabs-card {
+    > .ant-tabs-nav .ant-tabs-tab {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+
+      &.ant-tabs-tab-active {
+        background-color: rgba(24, 144, 255, 0.1);
+        border-color: rgba(24, 144, 255, 0.2);
+      }
+    }
+  }
+
+  .ant-carousel {
+    .slick-dots {
+      li {
+        button {
+          background: rgba(255, 255, 255, 0.3);
+        }
+
+        &.slick-active button {
+          background: #1890ff;
+        }
+      }
+    }
+  }
+}
+
+/* Animation Keyframes */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float-animation {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  ::ng-deep {
+    .ant-card-actions {
+      li {
+        margin: 4px 0;
+      }
+    }
+  }
+}
+
+/* Dark/Light Mode Transitions */
+.dark-mode-transition {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}

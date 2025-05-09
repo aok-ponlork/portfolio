@@ -1,18 +1,18 @@
 import { UserModel } from '../../app/core/models/user.model';
 
 export const ME: UserModel = {
-  aboutMe: `A results-driven web developer with a degree from <a class="font-bold roboto-bold" href="https://www.setecu.com/" target="_blank" >SETEC INSTITUTE</a> sponsored by <a class="font-bold roboto-bold" href="https://www.pse.ngo/" target="_blank" >PSE</a>, And over 18 months of hands-on professional experience, I specialize in crafting high-performance web solutions that blend technical expertise with innovation. Passionate about building impactful digital experiences, I thrive on solving complex challenges and driving technological advancement.`,
+  aboutMe: `A results-driven web developer with a degree from <a class="font-bold roboto-bold" href="https://www.setecu.com/" target="_blank" >SETEC INSTITUTE</a> sponsored by <a class="font-bold roboto-bold" href="https://www.pse.ngo/" target="_blank" >PSE</a>, I specialize in crafting high-performance web solutions that blend technical expertise with innovation. Passionate about building impactful digital experiences, I thrive on solving complex challenges and driving technological advancement.`,
   name: 'AOK PONLORK',
   email: 'aok4ponlork@gmail.com',
   location: 'Phnom Penh, Cambodia',
   telegram: 'https://t.me/aok_ponlork',
   skills: [
     'Programming Languages: PHP, C#, JavaScript, TypeScript, SQL, Python, Dart',
-    'Frameworks & Tools: Angular, Node.js, HTML, CSS, Tailwind CSS, Laravel, .NET, Flutter',
+    'Frameworks & Tools: Angular, Laravel, Node.js, HTML, CSS, Tailwind CSS,.NET, Flutter',
     'Database Management: MySQL, PostgreSQL, MongoDB, SQL Server, Firebase Firestore, SQLite',
     'Version Control: Git, GitHub',
     'API Development: RESTful APIs, GraphQL',
-    'Tools & Services: Docker, Firebase, Microservices',
+    'Tools & Services: Docker, Firebase, Cloudflare, Microservices',
   ],
   additional: [
     { title: 'Mikrotik Router Configuration', isProcessing: false },

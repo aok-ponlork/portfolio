@@ -2,6 +2,7 @@ import {
   AfterContentInit,
   AfterViewChecked,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -112,7 +113,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     private el: ElementRef,
     private aosService: AosService,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit(): void {
@@ -132,6 +134,7 @@ export class MainComponent implements OnInit, AfterViewInit {
           });
         });
       });
+    this.cdRef.detectChanges();
   }
 
   ngOnInit() {

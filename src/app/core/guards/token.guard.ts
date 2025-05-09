@@ -34,7 +34,6 @@ export class TokenGuard implements CanActivate {
 
     return this.tokenService.verifyToken().pipe(
       tap((isValid) => {
-        console.log(isValid);
         if (!isValid) {
           this.router.navigate(['/app/unauthorized']);
         }

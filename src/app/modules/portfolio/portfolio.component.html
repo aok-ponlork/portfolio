@@ -63,12 +63,12 @@
             data-aos-duration="1000"
             data-aos-delay="500"
           >
-            <span
-              nz-icon
-              nzType="plus-circle"
-              nzTheme="outline"
-              class="text-xl"
-            ></span>
+            <app-lottie
+              #animationSection
+              [animationName]="'contact.json'"
+              [height]="'h-auto'"
+            >
+            </app-lottie>
           </div>
           <p class="text-gray-600 dark:text-gray-300">
             I'm currently working on new ideas and features. Some projects are
@@ -84,7 +84,7 @@
           >
             <fa-icon
               [icon]="['fab', 'telegram']"
-              class="mr-1.5 cursor-pointer"
+              class="mr-2 cursor-pointer"
             ></fa-icon>
             Get in touch
           </a>
