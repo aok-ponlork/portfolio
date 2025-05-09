@@ -25,7 +25,7 @@ export async function onRequestPost(event) {
   const TELEGRAM_API_URL = `https://api.telegram.org/bot${event.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
 
   // Prepare the message to send to the admin
-  const messageTosent = `📥 *New Telegram Contact Request*\n\n👤 Name: ${name}\n💬 Message: ${message}\n📨 Telegram: ${telegram}`;
+  const messageTosent = `📥 *New Telegram Contact Request*\n\n👤 Name: ${name}\n\n📨 From: ${telegram}\n💬 Message: ${message}`;
   const requestBodyAdmin = {
     chat_id: event.env.CHAT_ID, // chat ID
     text: messageTosent, // message content
@@ -40,21 +40,30 @@ export async function onRequestPost(event) {
 
     if (!sendAdminResponse.ok) {
       const errorText = await sendAdminResponse.text();
-      return new Response(`Failed to notify: ${errorText}`, {
-        status: sendAdminResponse.status,
-        headers: getCorsHeaders(),
-      });
+      return new Response(
+        JSON.stringify({ message: `Failed to notify: ${errorText}` }),
+        {
+          status: sendAdminResponse.status,
+          headers: getCorsHeaders(),
+        }
+      );
     }
 
-    return new Response("Message sent!", {
+    return new Response(JSON.stringify({ message: "Message sent!" }), {
       status: 200,
-      headers: getCorsHeaders(),
+      headers: {
+        ...getCorsHeaders(),
+        "Content-Type": "application/json",
+      },
     });
   } catch (err) {
-    return new Response(`Error sending message: ${err.message}`, {
-      status: 500,
-      headers: getCorsHeaders(),
-    });
+    return new Response(
+      JSON.stringify({ message: `Error sending message: ${err.message}` }),
+      {
+        status: 500,
+        headers: getCorsHeaders(),
+      }
+    );
   }
 }
 

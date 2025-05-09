@@ -85,6 +85,7 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
       howKnow: [null],
     });
     this.frmGroup.get('platform')?.setValue(Platform.Email);
+    this.onPlatformChange(Platform.Email);
     if (this.isReqAccessForm) {
       this.frmGroup.get('howKnow')?.setValidators([Validators.required]);
     }
@@ -96,7 +97,7 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
       if (platform === Platform.Telegram) {
         this.frmGroup.get('telegram')?.setValidators([Validators.required]);
         this.frmGroup.get('email')?.clearValidators();
-      } else {
+      } else if (platform === Platform.Telegram) {
         this.frmGroup
           .get('email')
           ?.setValidators([Validators.required, Validators.email]);
@@ -139,39 +140,58 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSubmit(): void {
     this.isLoading = true;
-    var model = this.frmGroup.value;
+    const model = this.frmGroup.value;
+
     if (this.isReqAccessForm) {
       model.message += ' Request for more-info page access!';
     }
-    const url = environment.formSpreeUrl;
-    this.http.thirdPartySerive = url;
-    if (this.selectedPlatform == Platform.Email) {
+
+    const resetForm = () => {
+      this.frmGroup.reset();
+      this.selectedPlatform = Platform.Email;
+      this.frmGroup.get('platform')?.setValue(this.selectedPlatform);
+      this.isLoading = false;
+    };
+
+    const handleError = () => {
+      this.message.handleWarning(
+        'Something went wrong! Please try again later.'
+      );
+      this.isLoading = false;
+    };
+
+    if (this.selectedPlatform === Platform.Email) {
+      const url = environment.formSpreeUrl;
+      this.http.thirdPartySerive = url;
+
       this.http.post('', model).subscribe({
-        next: (rs: any) => {
-          if (rs.ok) {
+        next: (res: any) => {
+          if (res?.ok) {
             this.message.handleSuccess(
               'Your message has been sent successfully!'
             );
-            this.frmGroup.reset();
           }
         },
-        error: (_error: any) => {
-          this.message.handleWarning(
-            'Something went wrong! please try again letter.'
-          );
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.frmGroup.reset();
-          this.selectedPlatform = Platform.Email;
-          this.frmGroup.get('platform')?.setValue(this.selectedPlatform);
-          this.isLoading = false;
-        },
+        error: handleError,
+        complete: resetForm,
       });
-    } else {
-      console.log(model);
+    } else if (this.selectedPlatform === Platform.Telegram) {
+      const { telegram, message, name } = this.frmGroup.value;
+      const data = { telegram, message, name };
+      this.http.post('telegram', data).subscribe({
+        next: (res: any) => {
+          if (res?.message) {
+            this.message.handleSuccess(
+              'Your request has been sent successfully!'
+            );
+          }
+        },
+        error: handleError,
+        complete: resetForm,
+      });
     }
   }
+
   onModelChange(): void {
     this.animationFileChange();
     this.frmGroup.get('message')?.setValue('');
