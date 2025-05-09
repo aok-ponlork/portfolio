@@ -8,7 +8,7 @@ function getCorsHeaders() {
 }
 
 // Telegram handler function for incoming requests
-export async function handler(event) {
+export async function onRequestPost(event) {
   // Parse the POST body to retrieve the form data
   const formData = await event.request.json();
   const { telegram, message, name } = formData;
