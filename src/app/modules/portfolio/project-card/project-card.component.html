@@ -4,13 +4,36 @@
   <!-- Image/GIF Section -->
   <div class="relative h-52 overflow-hidden {{ userPref.contentBackground }}">
     <!-- Images carousel -->
-    <div *ngIf="project.images.length > 0" class="w-full h-full group"  (click)="onPreviewImage(currentImage.url)">
-      <img
-        [src]="currentImage.url"
-        [alt]="currentImage.alt"
-        class="object-cover w-full h-full transition-transform duration-500 cursor-zoom-in group-hover:scale-105"
-        [loading]="'lazy'"
-      />
+    <div
+      *ngIf="project.images.length > 0"
+      class="w-full h-full cursor-pointer group"
+      (click)="onPreviewImage(currentImage.url)"
+    >
+      <ng-container *ngIf="!currentImage.isVod; else videoPreview">
+        <img
+          [ngSrc]="currentImage.url"
+          [alt]="currentImage.alt"
+          class="object-cover w-full h-full transition-transform duration-500 cursor-zoom-in group-hover:scale-105"
+          [loading]="'lazy'"
+          [width]="100"
+          [height]="100"
+        />
+      </ng-container>
+
+      <ng-template #videoPreview>
+        <video
+          class="object-cover w-full h-full transition-transform duration-500 cursor-pointer group-hover:scale-105"
+          [poster]=""
+          autoplay
+          muted
+          loop
+          playsinline
+        >
+          <source [src]="currentImage.url" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </ng-template>
+
       <div
         class="absolute inset-0 transition-opacity duration-300 bg-black opacity-0 group-hover:opacity-20"
       ></div>
@@ -48,10 +71,10 @@
         ></button>
       </div>
       <div
-        *ngIf="currentImage.isGif"
+        *ngIf="currentImage.isVod"
         class="absolute px-3 py-1 text-xs font-medium text-white bg-blue-600 rounded-lg shadow-md top-3 right-3"
       >
-        GIF
+        VOD
       </div>
     </div>
     <div
@@ -172,3 +195,20 @@
     </div>
   </div>
 </div>
+
+<nz-modal
+  [nzWidth]="'70%'"
+  [(nzVisible)]="vodModalVisible"
+  [nzMaskClosable]="true"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="null"
+>
+  <ng-container *nzModalContent>
+    <div class="!w-full">
+      <video width="100%" controls autoplay muted>
+        <source [src]="currentImage.url" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </ng-container>
+</nz-modal>

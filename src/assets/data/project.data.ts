@@ -11,12 +11,39 @@ export const PROJECTS: Project[] = [
     techStack: ['Angular', 'Firebase'],
     images: [
       {
-        url: '/assets/images/projects/project1/1.png',
+        url: '/assets/images/projects/project1/1.webp',
         alt: 'Dashboard view showing push notification interface',
       },
       {
-        url: '/assets/images/projects/project1/2.png',
+        url: '/assets/images/projects/project1/2.webp',
         alt: 'Firebase Dashboard',
+      },
+    ],
+    githubUrl: '',
+    featured: true,
+    isInternal: true,
+  },
+  {
+    id: 'project-6',
+    title: 'Appointment Booking App',
+    shortDescription:
+      'A Flutter mobile app for scheduling appointments and receiving notifications.',
+    description:
+      'A mobile application built with Flutter that allows users to book appointments easily and receive real-time push notifications. Integrated with Firebase Cloud Messaging (FCM) and .NET backend through an admin dashboard for managing notifications.',
+    techStack: ['Flutter', 'Angular'],
+    images: [
+      {
+        url: '/assets/images/projects/mobile-app/1.webp',
+        alt: 'Appointment booking screen',
+      },
+      {
+        url: '/assets/images/projects/mobile-app/2.webp',
+        alt: 'Appointment booking screen',
+      },
+      {
+        url: '/assets/images/projects/mobile-app/demo.mp4',
+        alt: 'Appointment booking screen',
+        isVod: true,
       },
     ],
     githubUrl: '',
@@ -33,11 +60,11 @@ export const PROJECTS: Project[] = [
     techStack: ['.NET', 'Firebase'],
     images: [
       {
-        url: '/assets/images/projects/project3/2.png',
+        url: '/assets/images/projects/project3/2.webp',
         alt: 'Firebase Authentication',
       },
       {
-        url: '/assets/images/projects/project3/1.png',
+        url: '/assets/images/projects/project3/1.webp',
         alt: 'Firebase Authentication',
       },
     ],
@@ -56,11 +83,11 @@ export const PROJECTS: Project[] = [
     techStack: ['Angular'],
     images: [
       {
-        url: '/assets/images/projects/portfolio/2.png',
+        url: '/assets/images/projects/portfolio/2.webp',
         alt: 'Portfolio homepage screenshot',
       },
       {
-        url: '/assets/images/projects/portfolio/1.png',
+        url: '/assets/images/projects/portfolio/1.webp',
         alt: 'Project section displaying multiple project cards',
       },
     ],

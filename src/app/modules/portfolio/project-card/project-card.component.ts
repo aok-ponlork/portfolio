@@ -3,21 +3,23 @@ import {
   Project,
   ProjectImage,
 } from '../../../core/models/projects/project.model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { UserPreferenceService } from '../../../core/services/common/user-preference.service';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzImageService } from 'ng-zorro-antd/image';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   standalone: true,
   selector: 'app-project-card',
-  imports: [CommonModule, NzIconModule],
+  imports: [CommonModule, NzIconModule, NgOptimizedImage, NzModalModule],
   templateUrl: './project-card.component.html',
   styleUrl: './project-card.component.css',
   providers: [NzImageService],
 })
 export class ProjectCardComponent {
   @Input() project!: Project;
+  vodModalVisible: boolean = false;
   constructor(
     public userPref: UserPreferenceService,
     private imagePreview: NzImageService
@@ -68,15 +70,22 @@ export class ProjectCardComponent {
   }
 
   onPreviewImage(url: string): void {
-    const images = [
-      {
-        src: url,
-        alt: 'Image preview',
-      },
-    ];
-    this.imagePreview.preview(images, {
-      nzZoom: 0.8,
-      nzRotate: 0,
-    });
+    if (this.currentImage.isVod) {
+      this.vodModalVisible = true;
+    } else {
+      const images = [
+        {
+          src: url,
+          alt: 'Image preview',
+        },
+      ];
+      this.imagePreview.preview(images, {
+        nzZoom: 0.8,
+        nzRotate: 0,
+      });
+    }
+  }
+  handleCancel(): void {
+    this.vodModalVisible = false;
   }
 }

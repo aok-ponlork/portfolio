@@ -15,5 +15,5 @@ export interface Project {
 export interface ProjectImage {
   url: string;
   alt: string;
-  isGif?: boolean;
+  isVod?: boolean;
 }

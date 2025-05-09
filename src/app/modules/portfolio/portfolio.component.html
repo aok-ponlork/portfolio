@@ -1,22 +1,36 @@
 <section class="px-4 py-8">
   <div class="container mx-auto">
-    <h2 class="mb-2 text-3xl font-bold text-center {{ userPref.themeText }}">
+    <h2
+      class="mb-2 text-3xl font-bold text-center {{ userPref.themeText }}"
+      data-aos="fade-down"
+      data-aos-duration="800"
+    >
       My Projects
     </h2>
-    <p class="mb-10 text-center {{ userPref.themeText }}">
+    <p
+      class="mb-10 text-center {{ userPref.themeText }}"
+      data-aos="fade-up"
+      data-aos-duration="800"
+      data-aos-delay="100"
+    >
       Check out some of my recent work
     </p>
 
     <!-- Filter buttons -->
-    <div class="flex flex-wrap justify-center gap-2 mb-10">
+    <div
+      class="flex flex-wrap justify-center gap-2 mb-10"
+      data-aos="zoom-in"
+      data-aos-duration="800"
+      data-aos-delay="200"
+    >
       <button
-        *ngFor="let tech of techFilters"
+        *ngFor="let tech of techFilters; let i = index"
         (click)="filterProjects(tech)"
         [class.bg-slate-600]="activeFilter === tech"
         [class.text-white]="activeFilter === tech"
         class="px-4 py-2 text-sm font-medium {{
           userPref.themeText
-        }} transition duration-300  rounded-md shadow-md hover:scale-x-105"
+        }} transition duration-300 rounded-md shadow-md hover:scale-x-105"
       >
         {{ tech }}
       </button>
@@ -26,28 +40,36 @@
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       <!-- Regular project cards -->
       <app-project-card
-        *ngFor="let project of filteredProjects"
+        *ngFor="let project of filteredProjects; let i = index"
         [project]="project"
+        [attr.data-aos]="i % 2 === 0 ? 'fade-right' : 'fade-left'"
+        [attr.data-aos-duration]="800"
+        [attr.data-aos-delay]="i * 100"
       ></app-project-card>
 
       <!-- "More Projects" card -->
       <div
+        *ngIf="activeFilter == 'All'"
         class="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border border-gray-100 border-dashed shadow-lg dark:bg-gray-800 rounded-xl hover:-translate-y-1 hover:shadow-xl dark:border-gray-700"
+        data-aos="fade-up"
+        data-aos-duration="800"
       >
         <div
           class="flex flex-col items-center justify-center h-full p-8 text-center"
         >
-          <div class="p-6 mb-4 bg-gray-100 rounded-full dark:bg-gray-700">
-            <span
-              nz-icon
-              nzType="plus-circle"
-              nzTheme="outline"
-              class="text-xl"
-            ></span>
+          <div
+            class="p-6 mb-4 bg-gray-100 rounded-full dark:bg-gray-700"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-delay="500"
+          >
+            <app-lottie
+              #animationSection
+              [animationName]="'contact.json'"
+              [height]="'h-auto'"
+            >
+            </app-lottie>
           </div>
-          <h3 class="mb-2 text-xl font-bold text-gray-800 dark:text-white">
-            More Projects Coming Soon...
-          </h3>
           <p class="text-gray-600 dark:text-gray-300">
             I'm currently working on new ideas and features. Some projects are
             still in progress or haven't been added here yet.
@@ -57,10 +79,12 @@
             target="_blank"
             href="https://t.me/aok_ponlork"
             class="inline-flex items-center px-4 py-2 mt-6 text-sm font-medium text-blue-600 transition-colors rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/40"
+            data-aos="fade-up"
+            data-aos-duration="600"
           >
             <fa-icon
               [icon]="['fab', 'telegram']"
-              class="mr-1.5 cursor-pointer"
+              class="mr-2 cursor-pointer"
             ></fa-icon>
             Get in touch
           </a>
@@ -68,7 +92,12 @@
       </div>
     </div>
     <!-- No projects message -->
-    <div *ngIf="filteredProjects.length === 0" class="py-10 text-center">
+    <div
+      *ngIf="filteredProjects.length === 0"
+      class="py-10 text-center"
+      data-aos="fade-in"
+      data-aos-duration="800"
+    >
       <p class="text-gray-600 dark:text-gray-300">
         No projects found with the selected filter.
       </p>

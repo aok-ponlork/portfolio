@@ -1,7 +1,12 @@
 import {
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
+  NgZone,
   OnInit,
   Renderer2,
   ViewChild,
@@ -19,10 +24,11 @@ import { UserPreferenceService } from '../../core/services/common/user-preferenc
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { FormsModule } from '@angular/forms';
 import { LottieCoreComponent } from '../../shared/components/lottie/lottie.component';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import Aos from 'aos';
 import { AosService } from '../../core/services/common/aos.service';
 import { FontAwesomeShareModule } from '../../shared/modules/font-awesome.module';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -44,7 +50,7 @@ import { FontAwesomeShareModule } from '../../shared/modules/font-awesome.module
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild('themeAnimation') lottieComponent!: LottieCoreComponent;
   isMouseMoving: boolean = false;
   isHeaderLayout: boolean = false;
@@ -105,8 +111,31 @@ export class MainComponent implements OnInit {
     public userPref: UserPreferenceService,
     private renderer: Renderer2,
     private el: ElementRef,
-    private aosService: AosService
+    private aosService: AosService,
+    private router: Router,
+    private zone: NgZone,
+    private cdRef: ChangeDetectorRef
   ) {}
+
+  ngAfterViewInit(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.zone.runOutsideAngular(() => {
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              const el = document.getElementById('main-container');
+              if (el) {
+                el.scrollTo({ top: 0, behavior: 'smooth' });
+              } else {
+                console.warn('main-container not found');
+              }
+            }, 200);
+          });
+        });
+      });
+    this.cdRef.detectChanges();
+  }
 
   ngOnInit() {
     // Subscribe to theme changes and update page style accordingly

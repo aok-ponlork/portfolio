@@ -50,6 +50,13 @@ import {
   faPen,
   faInfoCircle,
   faFireFlameCurved,
+  faCertificate,
+  faUserGraduate,
+  faProjectDiagram,
+  faTools,
+  faGamepad,
+  faClock,
+  faMusic,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -103,7 +110,14 @@ export class FontAwesomeShareModule {
       faBookOpen,
       faPen,
       faInfoCircle,
-      faFireFlameCurved
+      faFireFlameCurved,
+      faUserGraduate,
+      faProjectDiagram,
+      faTools,
+      faCertificate,
+      faGamepad,
+      faClock,
+      faMusic
     );
   }
 }

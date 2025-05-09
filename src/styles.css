@@ -65,11 +65,12 @@ nz-content {
   overflow-y: auto; /* Enable scroll within the content */
   height: 100vh; /* Make sure content takes up full viewport height */
   position: relative; /* Ensure scroll area behaves correctly */
+  scroll-behavior: smooth;
 }
 /* styles.css or styles.scss */
 .theme-transition {
   transition: background-color 0.3s ease, color 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease all;
 }
 :root {
   --selection-bg: #1e90ff;

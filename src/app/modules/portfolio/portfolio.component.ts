@@ -6,6 +6,7 @@ import { ProjectCardComponent } from './project-card/project-card.component';
 import { UserPreferenceService } from '../../core/services/common/user-preference.service';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LottieCoreComponent } from "../../shared/components/lottie/lottie.component";
 
 @Component({
   standalone: true,
@@ -15,7 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     NzIconModule,
     FontAwesomeModule,
-  ],
+    LottieCoreComponent
+],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.css',
 })

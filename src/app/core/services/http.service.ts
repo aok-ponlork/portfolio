@@ -3,20 +3,20 @@ import {
   HttpErrorResponse,
   HttpHeaders,
   HttpParams,
+  HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/env.development';
+import { environment } from '../../../environments/env';
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
   public thirdPartySerive: string = '';
-  private baseUrl = environment.apiUrl;
+  private baseUrl = environment.baseUrl;
   private defaultHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('access_token') || ''}`,
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
   });
 
   constructor(private http: HttpClient) {}
@@ -30,20 +30,26 @@ export class HttpService {
     uri: string,
     params?: HttpParams,
     customHeaders?: HttpHeaders
-  ): Observable<T> {
+  ): Observable<HttpResponse<T>> {
     return this.http
-      .get<T>(`${this.baseUrl}/${uri}`, {
+      .get<T>(`${this.thirdPartySerive || this.baseUrl}/${uri}`, {
         headers: customHeaders || this.defaultHeaders,
+        observe: 'response',
         params,
       })
       .pipe(catchError(this.handleError));
   }
 
-  post<T>(uri: string, data: any, customHeaders?: HttpHeaders): Observable<T> {
+  post<T>(
+    uri: string,
+    data: any,
+    customHeaders?: HttpHeaders
+  ): Observable<HttpResponse<T>> {
     const url = this.thirdPartySerive || `${this.baseUrl}/${uri}`;
     return this.http
       .post<T>(url, data, {
         headers: customHeaders || this.defaultHeaders,
+        observe: 'response',
       })
       .pipe(catchError(this.handleError));
   }

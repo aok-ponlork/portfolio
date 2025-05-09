@@ -5,6 +5,9 @@ import { ResumeComponent } from './resume/resume.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MoreInfoComponent } from './secure/more-info/more-info.component';
+import { TokenGuard } from '../core/guards/token.guard';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 export const MODULE_ROUTES: Routes = [
   { path: 'about-me', component: AboutMeComponent },
@@ -12,5 +15,11 @@ export const MODULE_ROUTES: Routes = [
   { path: 'resume', component: ResumeComponent },
   { path: 'blogs', component: BlogComponent },
   { path: 'contact', component: ContactComponent },
+  {
+    path: 'more-info',
+    component: MoreInfoComponent,
+    canActivate: [TokenGuard],
+  },
+  { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '**', component: NotFoundComponent },
 ];

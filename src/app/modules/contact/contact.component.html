@@ -7,19 +7,69 @@
     <div
       class="flex flex-col w-full p-8 md:flex-1 md:min-h-screen md:items-center md:justify-center"
     >
-      <h2 class="py-2 mb-4 text-2xl font-bold text-center">Contact</h2>
+      <div
+        class="flex justify-center mb-2 md:justify-end"
+        [nz-tooltip]="'Turn this on to request more info about me.'"
+      >
+        <label
+          for="toggleMode"
+          [ngClass]="userPref.themeText"
+          class="mr-2 text-sm font-medium md:text-base"
+          >Request mode</label
+        >
+        <nz-switch
+          id="toggleMode"
+          [(ngModel)]="isReqAccessForm"
+          (ngModelChange)="onModelChange()"
+        ></nz-switch>
+      </div>
+
+      <h2
+        class="py-2 mb-4 text-2xl font-bold text-center {{
+          userPref.themeText
+        }}"
+      >
+        {{ isReqAccessForm ? "Submit a request" : "Contact" }}
+      </h2>
 
       <form
         [formGroup]="frmGroup"
         (ngSubmit)="onSubmit()"
         class="w-full max-w-md mx-auto"
       >
+        <nz-form-item *ngIf="isReqAccessForm" class="flex flex-row">
+          <label
+            class="hidden font-medium md:block {{ userPref.themeText }}"
+            for="howKnow"
+          >
+            <span class="py-2 text-red-600">*</span>How can I contact you back?
+            &nbsp;
+          </label>
+
+          <nz-select
+            class="w-full rounded-lg {{ userPref.themeText }}"
+            formControlName="platform"
+            nzPlaceHolder="Select contact method"
+            (ngModelChange)="onPlatformChange($event)"
+          >
+            <nz-option
+              class="{{ userPref.themeText }}"
+              *ngFor="let item of platform"
+              [nzValue]="item"
+              [nzLabel]="item"
+            ></nz-option>
+          </nz-select>
+        </nz-form-item>
+
         <div class="flex flex-col gap-2 md:flex-row">
           <!-- Name Field -->
           <nz-form-item class="flex-1">
-            <nz-form-label [nzFor]="'name'" class="hidden md:block" nzRequired
-              >Name</nz-form-label
+            <label
+              class="hidden font-medium md:block {{ userPref.themeText }}"
+              for="name"
             >
+              <span class="text-red-600">*</span> Name:
+            </label>
             <nz-form-control>
               <input
                 nz-input
@@ -27,17 +77,25 @@
                 formControlName="name"
                 placeholder="Your Name"
                 required
-                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 {{
+                  userPref.themeText
+                }}"
                 [ngClass]="userPref.inputColor"
               />
             </nz-form-control>
           </nz-form-item>
 
           <!-- Email Field -->
-          <nz-form-item class="flex-1">
-            <nz-form-label [nzFor]="'email'" class="hidden md:block" nzRequired
-              >Email</nz-form-label
+          <nz-form-item
+            class="flex-1"
+            *ngIf="selectedPlatform === Platform.Email"
+          >
+            <label
+              class="hidden font-medium md:block {{ userPref.themeText }}"
+              for="email"
             >
+              <span class="text-red-600">*</span> Email:
+            </label>
             <nz-form-control>
               <input
                 nz-input
@@ -46,31 +104,84 @@
                 type="email"
                 placeholder="Your Email"
                 required
-                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 {{
+                  userPref.themeText
+                }}"
+                [ngClass]="userPref.inputColor"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Telegram Field -->
+          <nz-form-item
+            class="flex-1"
+            *ngIf="selectedPlatform === Platform.Telegram"
+          >
+            <label
+              class="hidden font-medium md:block {{ userPref.themeText }}"
+              for="telegram"
+            >
+              <span class="text-red-600">*</span> Telegram Contact:
+            </label>
+            <nz-form-control>
+              <input
+                nz-input
+                id="telegram"
+                formControlName="telegram"
+                placeholder="URL or @handle"
+                required
+                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 {{
+                  userPref.themeText
+                }}"
                 [ngClass]="userPref.inputColor"
               />
             </nz-form-control>
           </nz-form-item>
         </div>
+        <!-- from selection -->
+        <nz-form-item *ngIf="isReqAccessForm" class="flex-1">
+          <label
+            class="hidden font-medium md:block {{ userPref.themeText }}"
+            for="howKnow"
+          >
+            <span class="py-2 text-red-600">*</span>How did you know me? &nbsp;
+          </label>
 
+          <nz-select
+            class="w-full rounded-lg {{ userPref.themeText }}"
+            formControlName="howKnow"
+            (ngModelChange)="onSourceChange($event)"
+            nzPlaceHolder="Select source"
+          >
+            <nz-option
+              class="{{ userPref.themeText }}"
+              *ngFor="let source of sources"
+              [nzValue]="source"
+              [nzLabel]="source"
+            ></nz-option>
+          </nz-select>
+        </nz-form-item>
         <!-- Message Field -->
         <nz-form-item>
           <nz-form-control>
             <textarea
               nz-input
+              #messageInput
               id="message"
               formControlName="message"
               placeholder="Your Message"
               rows="6"
               required
-              class="w-full p-2 border rounded-lg min-w-12 focus:ring-2 focus:ring-blue-500"
+              class="w-full p-2 border rounded-lg min-w-12 focus:ring-2 focus:ring-blue-500 {{
+                userPref.themeText
+              }}"
               [ngClass]="userPref.inputColor"
             ></textarea>
           </nz-form-control>
         </nz-form-item>
 
         <!-- Submit Button -->
-        <div class="mt-4 text-center">
+        <div class="my-4 text-center">
           <button
             nz-button
             nzType="primary"
@@ -78,32 +189,77 @@
             [disabled]="!frmGroup.valid || isLoading"
             class="!w-full sm:w-1/2 border"
           >
-            <nz-spin *ngIf="isLoading"></nz-spin>
-            <span *ngIf="!isLoading">Submit</span>
+            <span *ngIf="!isLoading">{{
+              isReqAccessForm ? "Send request" : "Send Message"
+            }}</span>
+            <span *ngIf="isLoading">Sending...</span>
           </button>
         </div>
       </form>
+      <!-- Response Time Info -->
+      <div
+        class="p-4 my-4 text-center transition-all duration-200 border rounded-lg shadow-md text-gray-800/80 dark:text-white/80 bg-white/30 backdrop-blur-lg border-white/20 hover:bg-white/40"
+        [ngClass]="userPref.contentBackground"
+      >
+        <p class="{{ userPref.themeText }}">
+          <fa-icon
+            [icon]="['fas', 'clock']"
+            class="mb-2 {{ userPref.themeText }}"
+          ></fa-icon>
+          Typical response as soon as I see your message.
+        </p>
+      </div>
     </div>
-    <!-- Lottie Animation Section -->
-    <div class="flex items-center justify-center flex-1 min-h-[200px]">
-      <app-lottie
-        [animationName]="'floating-labtop.json'"
-        [width]="'w-full'"
-        [height]="'h-auto'"
-      ></app-lottie>
+
+    <!-- Right Section with Animation and Social Media -->
+    <div
+      class="flex flex-col items-center justify-center flex-1 min-h-[200px] gap-6"
+    >
+      <!-- Lottie Animation -->
+      <div class="my-1">
+        <app-lottie
+          #animationSection
+          [animationName]="'floating-labtop.json'"
+          [width]="'w-full'"
+          [height]="'h-auto'"
+        ></app-lottie>
+        <p
+          *ngIf="isReqAccessForm"
+          class="justify-center max-w-md mt-2 text-sm text-center text-gray-800/80 dark:text-white/60"
+        >
+          This page lets you request access to my more info about me. If I know
+          you or think you're a good fit, I’ll send a secure link — valid for 1
+          hour only.
+        </p>
+      </div>
+
+      <!-- Social Media Links -->
+      <div class="flex justify-center gap-4 my-2">
+        <a *ngFor="let item of icons" target="_blank" href="{{ item.link }}">
+          <fa-icon
+            [icon]="['fab', item.icon]"
+            class="text-2xl transition-all duration-500 ease-in-out cursor-pointer {{
+              userPref.themeText
+            }}"
+          ></fa-icon>
+        </a>
+      </div>
     </div>
   </div>
+
   <!-- Quote Section -->
-  <div
-    class="py-8 mx-4 mt-6 text-center rounded-lg shadow-sm {{
-      userPref.themeBackground
-    }}"
+  <!-- <div
+    *ngIf="isReqAccessForm"
+    class="py-8 mt-6 text-center border rounded-lg shadow-md text-gray-800/80 dark:text-white/80 bg-white/30 backdrop-blur-lg border-white/20 hover:bg-white/40"
   >
-    <blockquote class="p-4 text-lg italic sm:p-1">
-      "The best way to predict the future is to create it." — Peter Drucker
+    <blockquote class="p-4 text-base italic sm:p-1">
+      "One of the most basic skills on the football field is knowing how to
+      control the ball. Same thing in real life—but the ball’s not always a
+      ball."
     </blockquote>
-  </div>
-  <button
+  </div> -->
+
+  <!-- <button
     [routerLink]="'/app/about-me'"
     nz-button
     [nzSize]="'large'"
@@ -112,5 +268,5 @@
   >
     <fa-icon [icon]="['fas', 'step-forward']"></fa-icon>
     <span class="transition-opacity duration-300">Home</span>
-  </button>
+  </button> -->
 </nz-spin>
