@@ -102,7 +102,6 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
           .get('email')
           ?.setValidators([Validators.required, Validators.email]);
         this.frmGroup.get('telegram')?.clearValidators();
-        console.log('Jol telegram!');
       }
 
       this.frmGroup.get('email')?.updateValueAndValidity();
@@ -143,7 +142,8 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
     const model = this.frmGroup.value;
 
     if (this.isReqAccessForm) {
-      model.message += ' Request for more-info page access!';
+      model.message =
+        model.message.trim() + ' Request for more-info page access!';
     }
 
     const resetForm = () => {
