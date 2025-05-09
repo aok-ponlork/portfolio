@@ -31,6 +31,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { SharedService } from '../../core/services/shared.service';
 import { Subscription } from 'rxjs';
+import { Platform, platformList, social, sources } from './data/contact.data';
 @Component({
   standalone: true,
   selector: 'app-contact',
@@ -49,26 +50,23 @@ import { Subscription } from 'rxjs';
     NzSwitchModule,
     NzSelectModule,
     NzToolTipModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })
 export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   private subscription!: Subscription;
+  selectedPlatform: Platform = Platform.Email;
   isReqAccessForm: boolean = false;
   @ViewChild('animationSection') lottieComponent!: LottieCoreComponent;
   @ViewChild('messageInput') messageInput!: ElementRef;
-  sources = ['Game', 'Friend', 'Recruiter', 'Anonymous'];
+  sources = sources;
+  icons = social;
+  platform = platformList;
   frmGroup!: UntypedFormGroup;
   isLoading: boolean = false;
-  icons = [
-    { icon: 'telegram', link: 'https://t.me/aok_ponlork' },
-    {
-      icon: 'facebook',
-      link: 'https://web.facebook.com/1.Rayleigh/',
-    },
-    { icon: 'github', link: 'https://github.com/aok-ponlork' },
-  ];
+  Platform = Platform;
   constructor(
     private fb: FormBuilder,
     public userPref: UserPreferenceService,
@@ -79,10 +77,35 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.frmGroup = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      platform: [Platform.Email, Validators.required],
+      email: ['', [Validators.email]],
+      telegram: [''],
       name: ['', Validators.required],
       message: [''],
-      howKnow: [null, this.isReqAccessForm ? [Validators.required] : []],
+      howKnow: [null],
+    });
+    this.frmGroup.get('platform')?.setValue(Platform.Email);
+    if (this.isReqAccessForm) {
+      this.frmGroup.get('howKnow')?.setValidators([Validators.required]);
+    }
+  }
+
+  onPlatformChange(value: Platform) {
+    this.selectedPlatform = value;
+    this.frmGroup.get('platform')?.valueChanges.subscribe((platform) => {
+      if (platform === Platform.Telegram) {
+        this.frmGroup.get('telegram')?.setValidators([Validators.required]);
+        this.frmGroup.get('email')?.clearValidators();
+      } else {
+        this.frmGroup
+          .get('email')
+          ?.setValidators([Validators.required, Validators.email]);
+        this.frmGroup.get('telegram')?.clearValidators();
+        console.log('Jol telegram!');
+      }
+
+      this.frmGroup.get('email')?.updateValueAndValidity();
+      this.frmGroup.get('telegram')?.updateValueAndValidity();
     });
   }
   ngAfterViewInit(): void {
@@ -96,7 +119,7 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
             this.animationFileChange();
           }
         });
-    });
+    }, 100);
   }
   onSourceChange(value: string): void {
     this.frmGroup.get('message')?.updateValueAndValidity();
@@ -122,31 +145,38 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     const url = environment.formSpreeUrl;
     this.http.thirdPartySerive = url;
-    this.http.post('', model).subscribe({
-      next: (rs: any) => {
-        if (rs.ok) {
-          this.message.handleSuccess(
-            'Your message has been sent successfully!'
+    if (this.selectedPlatform == Platform.Email) {
+      this.http.post('', model).subscribe({
+        next: (rs: any) => {
+          if (rs.ok) {
+            this.message.handleSuccess(
+              'Your message has been sent successfully!'
+            );
+            this.frmGroup.reset();
+          }
+        },
+        error: (_error: any) => {
+          this.message.handleWarning(
+            'Something went wrong! please try again letter.'
           );
+          this.isLoading = false;
+        },
+        complete: () => {
           this.frmGroup.reset();
-        }
-      },
-      error: (_error: any) => {
-        this.message.handleWarning(
-          'Something went wrong! please try again letter.'
-        );
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.frmGroup.reset();
-        this.isLoading = false;
-      },
-    });
+          this.selectedPlatform = Platform.Email;
+          this.frmGroup.get('platform')?.setValue(this.selectedPlatform);
+          this.isLoading = false;
+        },
+      });
+    } else {
+      console.log(model);
+    }
   }
   onModelChange(): void {
     this.animationFileChange();
     this.frmGroup.get('message')?.setValue('');
-    this.frmGroup.reset();
+    this.selectedPlatform = Platform.Email;
+    this.frmGroup.get('platform')?.setValue(this.selectedPlatform);
   }
 
   animationFileChange(): void {
@@ -154,7 +184,6 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
       ? 'message.json'
       : 'floating-labtop.json';
     if (this.lottieComponent) {
-      console.log(newAnimation);
       this.lottieComponent.updateAnimation(newAnimation);
     }
   }

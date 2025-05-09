@@ -37,6 +37,30 @@
         (ngSubmit)="onSubmit()"
         class="w-full max-w-md mx-auto"
       >
+        <nz-form-item *ngIf="isReqAccessForm" class="flex flex-row">
+          <label
+            class="hidden font-medium md:block {{ userPref.themeText }}"
+            for="howKnow"
+          >
+            <span class="py-2 text-red-600">*</span>How can I contact you back?
+            &nbsp;
+          </label>
+
+          <nz-select
+            class="w-full rounded-lg {{ userPref.themeText }}"
+            formControlName="platform"
+            nzPlaceHolder="Select contact method"
+            (ngModelChange)="onPlatformChange($event)"
+          >
+            <nz-option
+              class="{{ userPref.themeText }}"
+              *ngFor="let item of platform"
+              [nzValue]="item"
+              [nzLabel]="item"
+            ></nz-option>
+          </nz-select>
+        </nz-form-item>
+
         <div class="flex flex-col gap-2 md:flex-row">
           <!-- Name Field -->
           <nz-form-item class="flex-1">
@@ -62,10 +86,13 @@
           </nz-form-item>
 
           <!-- Email Field -->
-          <nz-form-item class="flex-1">
+          <nz-form-item
+            class="flex-1"
+            *ngIf="selectedPlatform === Platform.Email"
+          >
             <label
               class="hidden font-medium md:block {{ userPref.themeText }}"
-              for="name"
+              for="email"
             >
               <span class="text-red-600">*</span> Email:
             </label>
@@ -76,6 +103,32 @@
                 formControlName="email"
                 type="email"
                 placeholder="Your Email"
+                required
+                class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 {{
+                  userPref.themeText
+                }}"
+                [ngClass]="userPref.inputColor"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Telegram Field -->
+          <nz-form-item
+            class="flex-1"
+            *ngIf="selectedPlatform === Platform.Telegram"
+          >
+            <label
+              class="hidden font-medium md:block {{ userPref.themeText }}"
+              for="telegram"
+            >
+              <span class="text-red-600">*</span> Telegram Contact:
+            </label>
+            <nz-form-control>
+              <input
+                nz-input
+                id="telegram"
+                formControlName="telegram"
+                placeholder="URL or @handle"
                 required
                 class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 {{
                   userPref.themeText

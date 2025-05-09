@@ -22,6 +22,8 @@
     "@fortawesome/angular-fontawesome": "^1.0.0",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@zxing/browser": "^0.1.5",
+    "@zxing/library": "^0.21.3",
     "aos": "^2.3.4",
     "jose": "^6.0.10",
     "lottie-web": "^5.12.2",
