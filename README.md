@@ -1,27 +1,55 @@
-# Portfolio
+# 🧠 Portfolio
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.2.
+This is the project of my portfolio. It includes features like token-based route protection, secure access, and serverless cloud functions to show the stack I've worked with and the skills I’ve built.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🛠 Tech Stack
 
-## Code scaffolding
+- **Frontend**: Angular + TailwindCSS + Ant Design + Lottie Animation
+- **Backend Logic**: Cloudflare Functions (Serverless)
+- **Authentication**: JWT 
+- **Deployment**: Cloudflare Pages + Cloudflare Runtime Environment
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## 🔐 Protected Route (`/app/more-info`)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Some parts of this portfolio — like the "More Info" section — are protected to demonstrate my expertise in:
 
-## Running unit tests
+- Token-based route protection
+- Stateless authentication with JWT
+- Serverless validation using Cloudflare Functions
+- Secure, time-limited link generation
+- Cloudflare runtime environment configuration
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+This simulates a real-world SaaS platform where access to certain resources is restricted.
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### ⚠️ Why is the Token in the URL?
 
-## Further help
+The access token is passed in the URL (e.g. `?token=yourJWT`) for the sake of simplicity and demonstration. 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Here’s why:
+- It allows easy access for users (even non-technical) to access the content directly
+- The token **expires after 1 hour**
+- The data is non-sensitive — this is a technical demonstration
+
+> **Note:** In a production environment, passing sensitive tokens via the URL is discouraged due to security concerns.
+
+---
+
+## 📨 Request Access Flow
+
+1. **User enables “Request Mode”** and fills out the form on the contact page — sending the request via email or Telegram (bot).
+2. **I manually review** the request. If the user looks legit, I approve it.
+3. **I generate a secure, short-lived access link** containing a JWT token.
+4. The token is created through an internal API — **only I have access to this**, and the secret key **rotates regularly** for added security.
+5. I **send the access link back** to the user (via email or Telegram).
+6. The link looks like:  `https://ponlork.pages.dev/app/more-info?token=ey...`
+7. Cloudflare Function validates the token and **grants access** if it’s valid and not expired.
+
+
+---
+
