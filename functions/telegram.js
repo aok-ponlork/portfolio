@@ -29,29 +29,33 @@ export async function onRequestPost(event) {
   const requestBodyAdmin = {
     chat_id: event.env.CHAT_ID, // chat ID
     text: messageTosent, // message content
-    parse_mode: "Markdown",
   };
 
-  // Send the message to the admin first
-  const sendAdminResponse = await fetch(TELEGRAM_API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(requestBodyAdmin),
-  });
+  try {
+    const sendAdminResponse = await fetch(TELEGRAM_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBodyAdmin),
+    });
 
-  // If the admin message fails, return an error response
-  if (!sendAdminResponse.ok) {
-    return new Response("Failed to notify", {
+    if (!sendAdminResponse.ok) {
+      const errorText = await sendAdminResponse.text();
+      return new Response(`Failed to notify: ${errorText}`, {
+        status: sendAdminResponse.status,
+        headers: getCorsHeaders(),
+      });
+    }
+
+    return new Response("Message sent!", {
+      status: 200,
+      headers: getCorsHeaders(),
+    });
+  } catch (err) {
+    return new Response(`Error sending message: ${err.message}`, {
       status: 500,
       headers: getCorsHeaders(),
     });
   }
-
-  // Return a success message
-  return new Response("Message sent!", {
-    status: 200,
-    headers: getCorsHeaders(),
-  });
 }
 
 // Handle CORS preflight request
