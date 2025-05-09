@@ -25,10 +25,11 @@ export async function onRequestPost(event) {
   const TELEGRAM_API_URL = `https://api.telegram.org/bot${event.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
 
   // Prepare the message to send to the admin
-  const messageTosent = `New Telegram contact: ${telegram} with message: ${message} from: ${name}`;
+  const messageTosent = `📥 *New Telegram Contact Request*\n\n👤 Name: ${name}\n💬 Message: ${message}\n📨 Telegram: ${telegram}`;
   const requestBodyAdmin = {
     chat_id: event.env.CHAT_ID, // chat ID
     text: messageTosent, // message content
+    parse_mode: "Markdown",
   };
 
   // Send the message to the admin first
