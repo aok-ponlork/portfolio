@@ -196,42 +196,101 @@
       </div>
 
       <!-- Footer -->
-      <div class="px-4 py-3 mt-auto">
-        <nz-divider
-          class="!w-full transition-all duration-500 ease-in-out border-gray-900 dark:border-white"
-          [nzDashed]="true"
-        ></nz-divider>
+      <div
+        class="px-6 py-4 mt-auto border-t border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm"
+        id="main-footer"
+      >
         <div class="flex items-center justify-between">
-          <!-- Left side with copyright -->
-          <div [ngClass]="[themeText]" class="font-medium">
-            AOK PONLORK ©{{ currentYear }}
+          <div class="flex flex-col items-start gap-1">
+            <div class="flex items-center gap-3">
+              <div
+                [ngClass]="[themeText]"
+                class="text-sm font-semibold tracking-wide"
+              >
+                AOK PONLORK
+              </div>
+              <div
+                class="w-1 h-1 bg-gray-400 rounded-full dark:bg-gray-500"
+              ></div>
+              <div [ngClass]="[themeText]" class="text-sm opacity-70">
+                ©{{ currentYear }}
+              </div>
+            </div>
+
+            <!-- New navigation buttons -->
+            <div class="flex gap-3 mt-1">
+              <button
+                class="text-xs text-blue-500 hover:underline"
+                [routerLink]="'/app/generate-qr'"
+              >
+                QR generator
+              </button>
+              <span class="w-px h-6 bg-gray-300 dark:bg-gray-600"></span>
+
+              <button
+                class="text-xs text-blue-500 hover:underline"
+                [routerLink]="'/app/favorite-artist'"
+              >
+                Music
+              </button>
+            </div>
           </div>
 
-          <!-- Right side with toggle button -->
           <button
-            [nz-tooltip]="'Only visible in dark mode'"
+            [nz-tooltip]="'Toggle mouse glow effect (Dark mode only)'"
+            nzTooltipPlacement="topLeft"
             [ngClass]="[themeText]"
             (click)="toggleMosueGlowingEffect()"
-            class="flex items-center gap-x-2"
+            class="flex items-center gap-2 px-3 py-2 transition-all duration-300 rounded-lg group hover:bg-gray-100/50 dark:hover:bg-gray-800/50 hover:scale-105 active:scale-95"
           >
-            <fa-icon
-              [icon]="[
-                'fas',
-                userPref.isMouseGlowingEffect.value
-                  ? 'wand-magic-sparkles'
-                  : 'wand-magic'
-              ]"
-              class="transition-all duration-200"
-            ></fa-icon>
-            <span class="text-sm font-medium">
+            <div class="relative">
+              <fa-icon
+                [icon]="[
+                  'fas',
+                  userPref.isMouseGlowingEffect.value
+                    ? 'wand-magic-sparkles'
+                    : 'wand-magic'
+                ]"
+                class="transition-all duration-300 group-hover:rotate-12"
+                [ngClass]="{
+                  'text-purple-500 dark:text-purple-400':
+                    userPref.isMouseGlowingEffect.value,
+                  'text-gray-500 dark:text-gray-400':
+                    !userPref.isMouseGlowingEffect.value
+                }"
+              ></fa-icon>
+              <div
+                *ngIf="userPref.isMouseGlowingEffect.value"
+                class="absolute w-2 h-2 bg-purple-400 rounded-full opacity-75 -top-1 -right-1 animate-ping"
+              ></div>
+            </div>
+
+            <span
+              class="text-sm font-medium transition-colors duration-300 group-hover:text-purple-600 dark:group-hover:text-purple-400"
+            >
               {{
                 userPref.isMouseGlowingEffect.value
-                  ? "Disable Light Effect"
-                  : "Enable Light Effect"
+                  ? "Light Effect ON"
+                  : "Light Effect OFF"
               }}
             </span>
+            <div class="flex items-center">
+              <div
+                class="w-2 h-2 transition-all duration-300 rounded-full"
+                [ngClass]="{
+                  'bg-green-500 shadow-green-500/50 shadow-sm':
+                    userPref.isMouseGlowingEffect.value,
+                  'bg-gray-300 dark:bg-gray-600':
+                    !userPref.isMouseGlowingEffect.value
+                }"
+              ></div>
+            </div>
           </button>
         </div>
+
+        <div
+          class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent"
+        ></div>
       </div>
     </nz-content>
   </nz-layout>

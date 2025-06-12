@@ -19,7 +19,7 @@ export const ME: UserModel = {
 
   additional: [
     { title: 'CI/CD with Jenkins', isProcessing: true },
-    { title: 'Container Orchestration with Kubernetes', isProcessing: true },
+    { title: 'Kubernetes', isProcessing: true },
     { title: 'Ubuntu Server Management', isProcessing: false },
     { title: 'Mikrotik Router Configuration', isProcessing: false },
     { title: 'Communication & Problem-Solving', isProcessing: false },
@@ -73,11 +73,6 @@ export const ME: UserModel = {
       title: 'Full-Stack E-Commerce System (Academic Project)',
       content:
         'Developed a complete e-commerce platform featuring a Flutter mobile app and a Laravel backend, with PayPal integration for payments. Built with: Flutter, Laravel, MySQL, PayPal API, and Laravel Sanctum.',
-    },
-    {
-      title: 'Online Football Ticket Marketplace',
-      content:
-        'Created a secure web platform for buying and selling event tickets, featuring payment integration and user management. Built with: Laravel, PHP, MySQL, Bootstrap, and PayPal API.',
     },
     {
       title: 'Flutter Appointment & CMS App',

@@ -67,3 +67,14 @@
     opacity: 0;
   }
 }
+
+.fullscreen {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  overflow-y: auto;
+  padding-bottom: 25px;
+}

@@ -8,4 +8,5 @@ export interface Artist {
   gradient: string;
   color: string;
   scope?: string;
+  track?: string;
 }

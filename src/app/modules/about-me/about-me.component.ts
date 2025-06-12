@@ -34,7 +34,7 @@ import { Paper } from '../../shared/components/folder/paper.interface';
     FolderComponent,
     NzToolTipModule,
     NzModalModule,
-],
+  ],
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.css',
 })
@@ -81,7 +81,8 @@ export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
       isExternal: false,
     },
     {
-      description: 'Crafting a Firebase Authentication integration with .NET.',
+      description:
+        'Crafting a Firebase Authentication integration with .NET.',
       link: '/app/blogs',
       isExternal: false,
     },
@@ -153,19 +154,5 @@ export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleCancel(): void {
     this.vodModalVisible = false;
-  }
-
-  hoveringPlaylist = false;
-  timeout: any;
-
-  onMouseEnter() {
-    clearTimeout(this.timeout);
-    this.hoveringPlaylist = true;
-  }
-
-  onMouseLeave() {
-    this.timeout = setTimeout(() => {
-      this.hoveringPlaylist = false;
-    }, 200);
   }
 }

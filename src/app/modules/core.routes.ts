@@ -9,6 +9,7 @@ import { MoreInfoComponent } from './secure/more-info/more-info.component';
 import { TokenGuard } from '../core/guards/token.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { PlaylistComponent } from './secure/playlist/playlist.component';
+import { QrGeneratorComponent } from '../shared/components/qr-generator/qr-generator.component';
 
 export const MODULE_ROUTES: Routes = [
   { path: 'about-me', component: AboutMeComponent },
@@ -23,5 +24,6 @@ export const MODULE_ROUTES: Routes = [
   },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'favorite-artist', component: PlaylistComponent },
+  { path: 'generate-qr', component: QrGeneratorComponent },
   { path: '**', component: NotFoundComponent },
 ];

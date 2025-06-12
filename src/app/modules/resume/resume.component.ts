@@ -49,42 +49,27 @@ export class ResumeComponent implements OnInit {
     this.aosService.updateAosOptions({ once: true });
   }
   toggleFullScreen() {
-    // const elem = document.getElementById('element-name') as HTMLElement;
-    // elem.classList.add('overflow-y-auto');
     const elem = document.getElementById('main-container') as HTMLElement;
-    if (!document.fullscreenElement) {
-      this.isFullScreen = true;
-      // Enter fullscreen
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if ((elem as any).webkitRequestFullscreen) {
-        // Safari
-        (elem as any).webkitRequestFullscreen();
-      } else if ((elem as any).mozRequestFullScreen) {
-        // Firefox
-        (elem as any).mozRequestFullScreen();
-      } else if ((elem as any).msRequestFullscreen) {
-        // IE/Edge
-        (elem as any).msRequestFullscreen();
+    if (!elem) return;
+
+    this.isFullScreen = !this.isFullScreen;
+
+    if (this.isFullScreen) {
+      elem.classList.add('fullscreen');
+
+      const footerEle = document.getElementById('main-footer') as HTMLElement;
+      if (footerEle) {
+        footerEle.style.display = 'none';
       }
     } else {
-      this.isFullScreen = false;
-      // Exit fullscreen
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if ((document as any).webkitExitFullscreen) {
-        // Safari
-        (document as any).webkitExitFullscreen();
-      } else if ((document as any).mozCancelFullScreen) {
-        // Firefox
-        (document as any).mozCancelFullScreen();
-      } else if ((document as any).msExitFullscreen) {
-        // IE/Edge
-        (document as any).msExitFullscreen();
+      elem.classList.remove('fullscreen');
+      const footer = document.getElementById('main-footer') as HTMLElement;
+      if (footer) {
+        footer.style.display = '';
       }
-      // Reset overflow after exiting fullscreen
     }
   }
+
   isDisableAos: boolean = false;
   playOrPauseAos() {
     this.isDisableAos = !this.isDisableAos;

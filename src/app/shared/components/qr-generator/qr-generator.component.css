@@ -1,0 +1,120 @@
+/* app.component.css */
+:host {
+  display: block;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full dark:bg-gray-600;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* Canvas styling */
+canvas {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Color input styling */
+input[type="color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 8px;
+  border: none;
+}
+
+input[type="color"]::-moz-color-swatch {
+  border-radius: 8px;
+  border: none;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition-property: background-color, border-color, color, fill, stroke,
+    opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Focus styles */
+.focus-visible:focus {
+  outline: 2px solid rgb(59 130 246);
+  outline-offset: 2px;
+}
+
+/* Hover effects */
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Angular Material and ng-zorro overrides */
+::ng-deep .ant-input {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+::ng-deep .ant-input:focus {
+  border-color: rgb(59 130 246) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+::ng-deep .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: rgb(59 130 246) !important;
+}
+
+::ng-deep .ant-select-focused .ant-select-selector {
+  border-color: rgb(59 130 246) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+::ng-deep .ant-btn-primary {
+  border-color: rgb(59 130 246) !important;
+  background: rgb(59 130 246) !important;
+}
+
+::ng-deep .ant-btn-primary:hover {
+  border-color: rgb(37 99 235) !important;
+  background: rgb(37 99 235) !important;
+}
+::ng-deep .ant-select-selector {
+  background-color: transparent !important;
+}

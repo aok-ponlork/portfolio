@@ -35,8 +35,24 @@ export class UserPreferenceService {
   get inputColor(): string {
     return this.currentColors.inputBackground;
   }
+
   get buttonColor(): string {
     return this.currentColors.buttonBackground;
+  }
+
+  get cardBackground(): string {
+    return this.isDarkTheme.value ? 'bg-gray-800' : 'bg-white';
+  }
+  get textPrimary(): string {
+    return this.isDarkTheme.value ? 'text-white' : 'text-gray-900';
+  }
+
+  get textSecondary(): string {
+    return this.isDarkTheme.value ? 'text-gray-300' : 'text-gray-600';
+  }
+
+  get borderColor(): string {
+    return this.isDarkTheme.value ? 'border-gray-700' : 'border-gray-200';
   }
   toggleTheme() {
     const newTheme = !this.isDarkTheme.value;

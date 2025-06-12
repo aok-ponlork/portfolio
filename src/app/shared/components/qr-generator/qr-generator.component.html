@@ -1,0 +1,380 @@
+<div
+  [ngClass]="userPref.contentBackground"
+  class="min-h-screen transition-colors duration-300"
+>
+  <!-- Header -->
+  <header
+    [ngClass]="userPref.themeBackground"
+    class="transition-colors duration-300 border-b backdrop-blur-sm bg-opacity-90 !w-full"
+  >
+    <div class="container px-4 py-4 mx-auto">
+      <div class="flex items-center justify-between">
+        <!-- Logo and Title -->
+        <div class="flex items-center gap-3">
+          <div
+            class="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl"
+          >
+            <fa-icon
+              [icon]="['fas', 'qrcode']"
+              class="text-lg text-white"
+            ></fa-icon>
+          </div>
+          <div>
+            <h1
+              [ngClass]="userPref.textPrimary"
+              class="text-xl font-bold transition-colors duration-300"
+            >
+              QR Generator
+            </h1>
+            <p
+              [ngClass]="userPref.textSecondary"
+              class="text-sm transition-colors duration-300"
+            >
+              Create beautiful QR codes instantly
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container px-4 py-8 mx-auto">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <!-- Generator Card -->
+        <div
+          [ngClass]="userPref.cardBackground"
+          class="transition-all duration-300 border border-gray-200 shadow-xl rounded-2xl dark:border-gray-700 hover:shadow-2xl"
+        >
+          <div class="p-8">
+            <div class="flex items-center gap-3 mb-6">
+              <div
+                class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg dark:bg-blue-900"
+              >
+                <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+              </div>
+              <h2
+                [ngClass]="userPref.textPrimary"
+                class="text-xl font-semibold transition-colors duration-300"
+              >
+                Generate QR Code
+              </h2>
+            </div>
+
+            <!-- Input Field -->
+            <div class="space-y-6">
+              <div>
+                <label
+                  [ngClass]="userPref.textSecondary"
+                  class="block mb-2 text-sm font-medium"
+                >
+                  Text or URL
+                </label>
+                <nz-input-group nzSize="large">
+                  <input
+                    nz-input
+                    [(ngModel)]="inputText"
+                    (ngModelChange)="onInputChange()"
+                    placeholder="Enter text or URL to generate QR code"
+                    [ngClass]="[userPref.inputColor, userPref.themeText]"
+                    class="transition-colors duration-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </nz-input-group>
+              </div>
+
+              <!-- Logo Upload -->
+              <div>
+                <label
+                  [ngClass]="userPref.textSecondary"
+                  class="block mb-2 text-sm font-medium"
+                >
+                  Your Logo (Optional)
+                </label>
+                <div class="flex items-center gap-4">
+                  <nz-upload
+                    nzAccept="image/*"
+                    [nzBeforeUpload]="beforeUpload"
+                    [nzShowUploadList]="false"
+                  >
+                    <button
+                      nz-button
+                      nzType="default"
+                      nzSize="large"
+                      [ngClass]="userPref.buttonColor"
+                      class="transition-colors duration-300"
+                    >
+                      <i class="mr-2 fas fa-upload"></i>
+                      Upload Logo
+                    </button>
+                  </nz-upload>
+
+                  <div *ngIf="uploadedLogo" class="flex items-center gap-2">
+                    <img
+                      [src]="uploadedLogo"
+                      alt="Logo preview"
+                      class="object-cover w-8 h-8 rounded"
+                    />
+                    <button
+                      (click)="removeLogo()"
+                      class="text-red-500 transition-colors duration-300 hover:text-red-700"
+                    >
+                      <fa-icon [icon]="['fas', 'times']"></fa-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Style Selector -->
+              <div>
+                <label
+                  [ngClass]="userPref.textSecondary"
+                  class="block mb-2 text-sm font-medium"
+                >
+                  QR Style
+                </label>
+                <nz-select
+                  [(ngModel)]="selectedQRStyle"
+                  nzSize="large"
+                  class="w-full bg-transparent rounded-lg {{
+                    userPref.themeText
+                  }}"
+                  nzPlaceHolder="Select QR style"
+                >
+                  <nz-option
+                    class="{{ userPref.themeText }}"
+                    *ngFor="let style of qrStyles"
+                    [nzValue]="style.value"
+                    [nzLabel]="style.label"
+                  >
+                  </nz-option>
+                </nz-select>
+              </div>
+
+              <!-- Color Pickers -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    [ngClass]="userPref.textSecondary"
+                    class="block mb-2 text-sm font-medium"
+                  >
+                    Foreground Color
+                  </label>
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="color"
+                      [(ngModel)]="foregroundColor"
+                      (ngModelChange)="onColorChange()"
+                      class="w-12 h-10 transition-all duration-300 border-2 border-gray-300 rounded-lg cursor-pointer dark:border-gray-600 hover:scale-105"
+                    />
+                    <span
+                      [ngClass]="userPref.textSecondary"
+                      class="font-mono text-sm"
+                    >
+                      {{ foregroundColor }}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    [ngClass]="userPref.textSecondary"
+                    class="block mb-2 text-sm font-medium"
+                  >
+                    Background Color
+                  </label>
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="color"
+                      [(ngModel)]="backgroundColor"
+                      (ngModelChange)="onColorChange()"
+                      class="w-12 h-10 transition-all duration-300 border-2 border-gray-300 rounded-lg cursor-pointer dark:border-gray-600 hover:scale-105"
+                    />
+                    <span
+                      [ngClass]="userPref.textSecondary"
+                      class="font-mono text-sm"
+                    >
+                      {{ backgroundColor }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Generate Button -->
+              <button
+                (click)="generateQR()"
+                [disabled]="!inputText.trim() || isGenerating"
+                [ngClass]="userPref.buttonColor"
+                class="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold text-white transition-all duration-300 rounded-xl hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                <nz-spin *ngIf="isGenerating" nzSize="small"></nz-spin>
+                <fa-icon
+                  [icon]="['fas', 'magic']"
+                  *ngIf="!isGenerating"
+                ></fa-icon>
+                {{ isGenerating ? "Generating..." : "Generate QR Code" }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview Card -->
+        <div
+          [ngClass]="userPref.cardBackground"
+          class="transition-all duration-300 border border-gray-200 shadow-xl rounded-2xl dark:border-gray-700 hover:shadow-2xl"
+        >
+          <div class="p-8">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex items-center justify-center w-8 h-8 bg-green-100 rounded-lg dark:bg-green-900"
+                >
+                  <fa-icon [icon]="['fas', 'eye']"></fa-icon>
+                </div>
+                <h2
+                  [ngClass]="userPref.textPrimary"
+                  class="text-xl font-semibold transition-colors duration-300"
+                >
+                  Preview
+                </h2>
+              </div>
+
+              <button
+                *ngIf="generatedQRDataUrl"
+                (click)="downloadQR()"
+                nz-tooltip="Download QR Code"
+                class="flex items-center justify-center w-10 h-10 text-green-600 transition-all duration-300 bg-green-100 rounded-lg dark:bg-green-900 dark:text-green-400 hover:scale-110 hover:bg-green-200 dark:hover:bg-green-800"
+              >
+                <fa-icon [icon]="['fas', 'download']"></fa-icon>
+              </button>
+            </div>
+
+            <!-- QR Code Display -->
+            <div
+              class="flex flex-col items-center justify-center min-h-[300px] space-y-4"
+            >
+              <div
+                class="p-6 transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-xl"
+              >
+                <div #qrCanvas class="h-auto max-w-full rounded-lg"></div>
+              </div>
+
+              <div
+                *ngIf="!generatedQRDataUrl"
+                [ngClass]="userPref.textSecondary"
+                class="py-12 text-center transition-colors duration-300"
+              >
+                <div
+                  class="flex items-center justify-center w-16 h-16 mx-auto mb-4 transition-colors duration-300 bg-gray-100 rounded-full dark:bg-gray-700"
+                >
+                  <fa-icon [icon]="['fas', 'qrcode']"></fa-icon>
+                </div>
+                <p class="text-lg">Enter text to generate QR code</p>
+                <p class="text-sm opacity-75">Your QR code will appear here</p>
+              </div>
+            </div>
+
+            <!-- QR Info -->
+            <div
+              *ngIf="generatedQRDataUrl"
+              [ngClass]="
+                userPref.secondaryBackground + ' ' + userPref.borderColor
+              "
+              class="p-4 mt-6 transition-colors duration-300 border rounded-xl"
+            >
+              <div class="flex items-center justify-between text-sm">
+                <span [ngClass]="userPref.textSecondary">Size:</span>
+                <span [ngClass]="userPref.textPrimary">300x300px</span>
+              </div>
+              <div class="flex items-center justify-between mt-2 text-sm">
+                <span [ngClass]="userPref.textSecondary">Format:</span>
+                <span [ngClass]="userPref.textPrimary">PNG</span>
+              </div>
+              <div class="flex items-center justify-between mt-2 text-sm">
+                <span [ngClass]="userPref.textSecondary"
+                  >Error Correction:</span
+                >
+                <span [ngClass]="userPref.textPrimary">Medium</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="grid grid-cols-1 gap-6 mt-12 md:grid-cols-3">
+        <div
+          [ngClass]="userPref.cardBackground"
+          class="p-6 transition-all duration-300 border border-gray-200 rounded-xl dark:border-gray-700 hover:shadow-lg"
+        >
+          <div
+            class="flex items-center justify-center w-12 h-12 mb-4 bg-blue-100 rounded-lg dark:bg-blue-900"
+          >
+            <fa-icon
+              [icon]="['fas', 'bolt']"
+              class="text-xl text-blue-600 dark:text-blue-400"
+            ></fa-icon>
+          </div>
+          <h3
+            [ngClass]="userPref.textPrimary"
+            class="mb-2 text-lg font-semibold"
+          >
+            Lightning Fast
+          </h3>
+          <p [ngClass]="userPref.textSecondary" class="text-sm">
+            Generate QR codes instantly with real-time preview and instant
+            downloads.
+          </p>
+        </div>
+
+        <div
+          [ngClass]="userPref.cardBackground"
+          class="p-6 transition-all duration-300 border border-gray-200 rounded-xl dark:border-gray-700 hover:shadow-lg"
+        >
+          <div
+            class="flex items-center justify-center w-12 h-12 mb-4 bg-purple-100 rounded-lg dark:bg-purple-900"
+          >
+            <fa-icon
+              [icon]="['fas', 'palette']"
+              class="text-xl text-purple-600 dark:text-purple-400"
+            ></fa-icon>
+          </div>
+          <h3
+            [ngClass]="userPref.textPrimary"
+            class="mb-2 text-lg font-semibold"
+          >
+            Customizable
+          </h3>
+          <p [ngClass]="userPref.textSecondary" class="text-sm">
+            Choose colors, add logos, and customize the style to match your
+            brand.
+          </p>
+        </div>
+
+        <div
+          [ngClass]="userPref.cardBackground"
+          class="p-6 transition-all duration-300 border border-gray-200 rounded-xl dark:border-gray-700 hover:shadow-lg"
+        >
+          <div
+            class="flex items-center justify-center w-12 h-12 mb-4 bg-green-100 rounded-lg dark:bg-green-900"
+          >
+            <fa-icon
+              [icon]="['fas', 'mobile-alt']"
+              class="text-xl text-green-600 dark:text-green-400"
+            ></fa-icon>
+          </div>
+          <h3
+            [ngClass]="userPref.textPrimary"
+            class="mb-2 text-lg font-semibold"
+          >
+            Mobile Ready
+          </h3>
+          <p [ngClass]="userPref.textSecondary" class="text-sm">
+            Fully responsive design that works perfectly on all devices and
+            screen sizes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

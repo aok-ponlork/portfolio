@@ -59,6 +59,13 @@ import {
   faMusic,
   faThLarge,
   faCheck,
+  faQrcode,
+  faEdit,
+  faEye,
+  faDownload,
+  faBolt,
+  faPalette,
+  faMobileAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -121,7 +128,14 @@ export class FontAwesomeShareModule {
       faClock,
       faMusic,
       faThLarge,
-      faCheck
+      faCheck,
+      faQrcode,
+      faEdit,
+      faEye,
+      faDownload,
+      faBolt,
+      faPalette,
+      faMobileAlt
     );
   }
 }
