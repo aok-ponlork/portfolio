@@ -1,0 +1,440 @@
+<div class="min-h-screen !bg-transparent backdrop-blur-0">
+  <div class="p-6 mx-auto max-w-7xl">
+    <div class="flex flex-col gap-8 lg:flex-row">
+      <!-- Artist Grid/List -->
+
+      <div class="relative lg:w-[70%] w-full">
+        <app-background
+          class="absolute inset-0 -z-10"
+          [squareSize]="40"
+          [direction]="'diagonal'"
+          [speed]="0.2"
+        ></app-background>
+
+        <div
+          class="transition-all duration-500 shadow-md backdrop-blur-[2px] rounded-xl hover:shadow-lg"
+          data-aos="fade-right"
+          data-aos-duration="600"
+        >
+          <div class="p-8">
+            <!-- Header -->
+            <div class="mb-8" data-aos="fade-up" data-aos-delay="100">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2
+                    class="mb-2 text-2xl font-semibold {{ userPref.themeText }}"
+                  >
+                    Featured Artists
+                  </h2>
+                  <p>{{ artists.length }} artists available</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <button
+                    class="p-2 transition-all duration-200 rounded-lg {{
+                      userPref.contentBackground
+                    }} shadow-md"
+                    [ngClass]="{
+                      'bg-gray-200 text-gray-800 dark:bg-white/20 dark:text-white':
+                        currentView === 'list',
+                      'bg-white text-gray-400 hover:text-gray-600 dark:bg-transparent dark:text-gray-400 dark:hover:text-white':
+                        currentView !== 'list'
+                    }"
+                    (click)="switchView('list')"
+                  >
+                    <fa-icon [icon]="'bars'" class="w-5 h-5"></fa-icon>
+                  </button>
+
+                  <button
+                    class="p-2 transition-all duration-200 border rounded-lg shadow-md hover:bg-gray-100 dark:border-white/10 dark:hover:bg-white/10"
+                    [ngClass]="{
+                      'bg-gray-200 text-gray-800 dark:bg-white/20 dark:text-white':
+                        currentView === 'grid',
+                      'bg-white text-gray-400 hover:text-gray-600 dark:bg-transparent dark:text-gray-400 dark:hover:text-white':
+                        currentView !== 'grid'
+                    }"
+                    (click)="switchView('grid')"
+                  >
+                    <fa-icon [icon]="'th-large'" class="w-5 h-5"></fa-icon>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="w-16 h-1 mt-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
+              ></div>
+            </div>
+
+            <div
+              *ngIf="currentView === 'grid'"
+              class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              <div
+                *ngFor="
+                  let item of artists;
+                  trackBy: trackByArtistId;
+                  let i = index
+                "
+                (click)="selectArtist(item)"
+                class="group relative overflow-hidden cursor-pointer rounded-2xl border dark:border-gray-100/80 border-gray-400/80 hover:border-gray-200/80 shadow-sm hover:shadow-xl transition-all duration-500 ease-out transform hover:-translate-y-1 hover:scale-[1.02]"
+                [attr.data-aos]="'fade-up'"
+                [attr.data-aos-delay]="i * 60"
+                [attr.data-aos-duration]="500"
+              >
+                <!-- Loading Overlay -->
+                <div
+                  *ngIf="loadingStates[item.id]"
+                  class="absolute inset-0 z-20 flex items-center justify-center backdrop-blur-sm rounded-2xl bg-white/30 dark:bg-black/20"
+                >
+                  <div class="relative">
+                    <div
+                      class="w-8 h-8 border-2 border-gray-300 rounded-full dark:border-gray-600"
+                    ></div>
+
+                    <div
+                      class="absolute top-0 left-0 w-8 h-8 border-2 border-gray-700 rounded-full dark:border-white border-t-transparent animate-spin"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-t-2xl h-44">
+                  <img
+                    [src]="item.image"
+                    (load)="onImageLoad(item.id)"
+                    (error)="onImageError(item.id)"
+                    class="object-contain w-full h-full transition-all duration-700 ease-out group-hover:scale-105"
+                  />
+
+                  <!-- Gradient Overlay -->
+                  <div
+                    class="absolute inset-0 transition-opacity duration-300 bg-gradient-to-t from-black/40 via-black/5 to-transparent opacity-60 group-hover:opacity-80"
+                  ></div>
+
+                  <div
+                    class="absolute inset-0 flex items-center justify-center transition-all duration-300 transform scale-75 opacity-0 group-hover:opacity-100 group-hover:scale-100"
+                  >
+                    <div
+                      class="flex items-center justify-center border rounded-full shadow-lg w-14 h-14 bg-white/90 backdrop-blur-md border-white/20"
+                    >
+                      <fa-icon
+                        [icon]="
+                          selectedArtist?.id === item.id &&
+                          !currentAudio?.paused
+                            ? 'pause'
+                            : 'play'
+                        "
+                        class="text-gray-800"
+                      ></fa-icon>
+                    </div>
+                  </div>
+
+                  <div
+                    *ngIf="selectedArtist?.id === item.id"
+                    class="absolute flex items-center justify-center bg-white border border-gray-300 rounded-full shadow-md w-7 h-7 top-3 right-3 dark:bg-gray-800 dark:border-white/30"
+                  >
+                    <fa-icon
+                      [icon]="'check'"
+                      class="text-gray-800 dark:text-white"
+                    ></fa-icon>
+                  </div>
+                </div>
+
+                <!-- Content -->
+                <div class="p-5 space-y-3">
+                  <div class="space-y-2">
+                    <h3
+                      class="text-lg font-semibold {{
+                        userPref.themeText
+                      }} transition-colors duration-300 group-hover:text-gray-600 dark:group-hover:text-white line-clamp-1"
+                    >
+                      {{ item.name }}
+                    </h3>
+
+                    <div class="flex items-center space-x-2">
+                      <span
+                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 group-hover:bg-gray-200 group-hover:text-black dark:bg-white/10 dark:text-gray-200 dark:group-hover:bg-white/20 dark:group-hover:text-white transition-colors duration-300"
+                      >
+                        {{ item.genre }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Animated Progress Bar -->
+                  <div class="relative">
+                    <div
+                      class="w-full h-0.5 {{
+                        userPref.secondaryBackground
+                      }} rounded-full overflow-hidden"
+                    >
+                      <div
+                        class="h-full transition-transform duration-700 ease-out transform -translate-x-full rounded-full bg-gradient-to-r from-gray-400 to-white group-hover:translate-x-0 dark:from-gray-700 dark:to-gray-300"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- List view -->
+            <div *ngIf="currentView === 'list'" class="space-y-4">
+              <div
+                *ngFor="
+                  let item of artists;
+                  trackBy: trackByArtistId;
+                  let i = index
+                "
+                (click)="selectArtist(item)"
+                class="p-4 transition-all duration-300 border cursor-pointer dark:border-white/80 border-gray-700/80 group rounded-xl hover:shadow-lg hover:border-gray-500 hover:bg-gray-900/5 dark:hover:border-white dark:hover:bg-white/10"
+                [attr.data-aos]="'fade-up'"
+                [attr.data-aos-delay]="i * 60"
+                [attr.data-aos-duration]="400"
+              >
+                <div class="flex items-center space-x-4">
+                  <div class="relative flex-shrink-0">
+                    <div
+                      *ngIf="loadingStates[item.id]"
+                      class="absolute inset-0 z-20 flex items-center justify-center bg-gray-100/90 backdrop-blur-sm rounded-xl"
+                    >
+                      <div class="relative">
+                        <div
+                          class="w-4 h-4 border border-gray-300 rounded-full"
+                        ></div>
+                        <div
+                          class="absolute top-0 left-0 w-4 h-4 border border-blue-500 rounded-full border-t-transparent animate-spin"
+                        ></div>
+                      </div>
+                    </div>
+
+                    <img
+                      [src]="item.image"
+                      (load)="onImageLoad(item.id)"
+                      (error)="onImageError(item.id)"
+                      class="object-contain w-16 h-16 transition-all duration-300 rounded-xl group-hover:scale-105 group-hover:shadow-lg"
+                      [alt]="item.name"
+                    />
+
+                    <div
+                      class="absolute inset-0 flex items-center justify-center transition-all duration-300 opacity-0 rounded-xl bg-black/40 group-hover:opacity-100"
+                    >
+                      <div
+                        class="flex items-center justify-center w-12 h-12 border rounded-full shadow-lg bg-white/90 backdrop-blur-md border-white/20"
+                      >
+                        <fa-icon
+                          [icon]="
+                            selectedArtist?.id === item.id &&
+                            !currentAudio?.paused
+                              ? 'pause'
+                              : 'play'
+                          "
+                          class="text-gray-800"
+                        ></fa-icon>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="selectedArtist?.id === item.id"
+                      class="absolute flex items-center justify-center w-6 h-6 bg-blue-500 rounded-full shadow-lg -top-2 -right-2"
+                    >
+                      <svg
+                        class="w-3 h-3 {{ userPref.themeText }}"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Artist Info -->
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between">
+                      <div class="flex-1 min-w-0">
+                        <h3
+                          class="text-lg font-semibold {{
+                            userPref.themeText
+                          }} transition-colors duration-300 group-hover:text-gray-600 dark:group-hover:text-white line-clamp-1"
+                        >
+                          {{ item.name }}
+                        </h3>
+
+                        <div class="flex items-center mt-1 space-x-3">
+                          <span
+                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 group-hover:bg-gray-200 group-hover:text-black dark:bg-white/10 dark:text-gray-200 dark:group-hover:bg-white/20 dark:group-hover:text-white transition-colors duration-300"
+                          >
+                            {{ item.genre }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="relative mt-3">
+                      <div
+                        class="w-full h-0.5 {{
+                          userPref.secondaryBackground
+                        }} rounded-full overflow-hidden"
+                      >
+                        <div
+                          class="h-full transition-transform duration-700 ease-out transform -translate-x-full rounded-full bg-gradient-to-r from-gray-400 to-white group-hover:translate-x-0 dark:from-gray-700 dark:to-gray-300"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:w-[30%] w-full lg:sticky lg:top-24 lg:self-start">
+        <div
+          *ngIf="selectedArtist"
+          class="transition-all duration-700 ease-out"
+          [@artistChange]="animationState"
+        >
+          <div
+            class="relative overflow-hidden transition-all duration-500 border shadow-sm backdrop-blur-sm dark:border-gray-100/80 border-gray-400/80 rounded-2xl hover:shadow-lg"
+          >
+            <app-lottie
+              class="absolute flex justify-center w-full h-full"
+              [height]="'120px'"
+              [width]="'120px'"
+              [animationName]="'music-background.json'"
+            ></app-lottie>
+            <div class="relative">
+              <div class="absolute inset-0 z-0">
+                <img
+                  [src]="selectedArtist.image"
+                  class="object-contain w-full h-full scale-110 opacity-20 blur-xl"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-white/20 via-white/60 to-white/90 dark:from-gray-900/20 dark:via-gray-800/60 dark:to-gray-700/90"
+                ></div>
+              </div>
+
+              <div class="relative z-10 p-8 space-y-6 text-center">
+                <div
+                  class="relative mx-auto w-fit"
+                  data-aos="zoom-in"
+                  data-aos-delay="100"
+                >
+                  <div class="relative">
+                    <img
+                      [src]="selectedArtist.image"
+                      class="object-contain border-4 shadow-2xl w-36 h-36 rounded-2xl border-white/80"
+                    />
+                    <div
+                      class="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/10 to-transparent"
+                    ></div>
+                  </div>
+                  <div
+                    (click)="PlayOrPauseMusic()"
+                    class="absolute flex items-center justify-center w-10 h-10 bg-white border-2 border-gray-300 rounded-full shadow-lg cursor-pointer -bottom-3 -right-3 dark:bg-gray-800 dark:border-white/30"
+                  >
+                    <fa-icon
+                      [icon]="
+                        selectedArtist.id && !currentAudio?.paused
+                          ? 'pause'
+                          : 'play'
+                      "
+                      class="text-gray-800 dark:text-white"
+                    ></fa-icon>
+                  </div>
+                </div>
+
+                <div class="space-y-3" data-aos="fade-up" data-aos-delay="200">
+                  <h2
+                    class="text-2xl font-bold tracking-tight  {{
+                      userPref.themeText
+                    }}"
+                  >
+                    {{ selectedArtist.name }}
+                  </h2>
+                  <div
+                    class="inline-flex items-center px-4 py-2 border rounded-full bg-gradient-to-r from-blue-50 to-purple-50 border-blue-100/50"
+                  >
+                    <div class="w-2 h-2 mr-2 bg-blue-500 rounded-full"></div>
+                    <span class="text-sm font-medium text-gray-700">{{
+                      selectedArtist.genre
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 mt-4 space-y-6">
+              <div
+                class="bg-transparent backdrop-blur-md"
+                data-aos="fade-up"
+                data-aos-delay="300"
+              >
+                <p class="text-sm leading-relaxed">
+                  {{ selectedArtist.bio }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="!selectedArtist"
+          class="h-full min-h-[400px] flex items-center justify-center"
+          data-aos="fade-left"
+          data-aos-duration="600"
+        >
+          <div
+            class="max-w-sm p-12 text-center border shadow-sm backdrop-blur-sm dark:border-gray-100/80 border-gray-400/80 rounded-2xl"
+          >
+            <div class="space-y-6">
+              <div
+                class="flex items-center justify-center w-16 h-16 mx-auto shadow-md bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl"
+              >
+                <svg
+                  class="w-8 h-8 {{ userPref.themeText }}"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                  />
+                </svg>
+              </div>
+
+              <div class="space-y-2">
+                <h3 class="text-lg font-semibold {{ userPref.themeText }}">
+                  Choose an Artist
+                </h3>
+                <p class="text-sm leading-relaxed {{ userPref.themeText }}">
+                  Click on any artist card to explore their music, biography,
+                  and audio samples.
+                </p>
+              </div>
+
+              <app-lottie
+                class="flex justify-center w-full h-full"
+                [height]="'120px'"
+                [width]="'120px'"
+                [animationName]="'music.json'"
+              ></app-lottie>
+
+              <div class="flex justify-center space-x-1">
+                <div
+                  class="w-2 h-2 bg-blue-200 rounded-full animate-pulse"
+                ></div>
+                <div
+                  class="w-2 h-2 bg-purple-200 rounded-full animate-pulse"
+                  style="animation-delay: 0.2s"
+                ></div>
+                <div
+                  class="w-2 h-2 bg-pink-200 rounded-full animate-pulse"
+                  style="animation-delay: 0.4s"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

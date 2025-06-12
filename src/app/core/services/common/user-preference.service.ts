@@ -13,7 +13,7 @@ export class UserPreferenceService {
   );
 
   constructor() {}
-  
+
   get theme() {
     return this.isDarkTheme.asObservable();
   }
@@ -27,6 +27,9 @@ export class UserPreferenceService {
     return this.currentColors.text;
   }
   get contentBackground(): string {
+    return this.currentColors.contentBackground;
+  }
+  get secondaryBackground(): string {
     return this.currentColors.secondaryBackground;
   }
   get inputColor(): string {

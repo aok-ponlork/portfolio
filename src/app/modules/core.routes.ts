@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { MoreInfoComponent } from './secure/more-info/more-info.component';
 import { TokenGuard } from '../core/guards/token.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { PlaylistComponent } from './secure/playlist/playlist.component';
 
 export const MODULE_ROUTES: Routes = [
   { path: 'about-me', component: AboutMeComponent },
@@ -21,5 +22,6 @@ export const MODULE_ROUTES: Routes = [
     canActivate: [TokenGuard],
   },
   { path: 'unauthorized', component: UnauthorizedComponent },
+  { path: 'favorite-artist', component: PlaylistComponent },
   { path: '**', component: NotFoundComponent },
 ];

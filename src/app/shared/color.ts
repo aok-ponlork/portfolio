@@ -4,8 +4,8 @@ export const Colors = {
     text: 'text-gray-800',
     accent: 'text-blue-600',
     contentBackground: 'bg-indigo-50',
-    secondaryBackground: 'bg-indigo-50',
-    inputBackground: 'bg-white', 
+    secondaryBackground: 'bg-gray-50',
+    inputBackground: 'bg-white',
     buttonBackground: 'bg-blue-600',
   },
   dark: {

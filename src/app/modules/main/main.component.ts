@@ -1,6 +1,4 @@
 import {
-  AfterContentInit,
-  AfterViewChecked,
   AfterViewInit,
   ChangeDetectorRef,
   Component,
@@ -141,7 +139,6 @@ export class MainComponent implements OnInit, AfterViewInit {
     // Subscribe to theme changes and update page style accordingly
     this.userPref.theme.subscribe((isDark) => {
       document.documentElement.classList.toggle('dark', isDark);
-      // Update Lottie animation based on the theme
       const newAnimation = this.userPref.isDarkTheme.value
         ? 'light.json'
         : 'dark.json';

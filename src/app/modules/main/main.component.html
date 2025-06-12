@@ -1,4 +1,7 @@
-<nz-layout class="w-full h-full theme-transition">
+<nz-layout
+  class="w-full h-full theme-transition"
+  [ngClass]="userPref.themeBackground"
+>
   <!-- Sidebar -->
   <nz-sider
     *ngIf="!isHeaderLayout"
