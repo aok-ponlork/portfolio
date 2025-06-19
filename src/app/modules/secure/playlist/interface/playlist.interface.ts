@@ -5,8 +5,6 @@ export interface Artist {
   image: string;
   audioUrl: string;
   genre: string;
-  gradient: string;
-  color: string;
   scope?: string;
   track?: string;
 }

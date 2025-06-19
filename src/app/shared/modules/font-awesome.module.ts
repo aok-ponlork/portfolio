@@ -66,6 +66,7 @@ import {
   faBolt,
   faPalette,
   faMobileAlt,
+  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -135,7 +136,8 @@ export class FontAwesomeShareModule {
       faDownload,
       faBolt,
       faPalette,
-      faMobileAlt
+      faMobileAlt,
+      faArrowLeft
     );
   }
 }

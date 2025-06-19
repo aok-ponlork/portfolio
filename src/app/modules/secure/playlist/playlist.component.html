@@ -2,8 +2,10 @@
   <div class="p-6 mx-auto max-w-7xl">
     <div class="flex flex-col gap-8 lg:flex-row">
       <!-- Artist Grid/List -->
-
-      <div class="relative lg:w-[70%] w-full">
+      <div
+        class="relative lg:w-[70%] w-full"
+        [class.hidden]="selectedArtist && isMobile"
+      >
         <app-background
           class="absolute inset-0 -z-10"
           [squareSize]="40"
@@ -151,12 +153,6 @@
 
                     <!-- Genre & Track Badges -->
                     <div class="flex flex-wrap gap-2">
-                      <!-- <span
-                        class="px-3 py-1 text-xs font-semibold text-gray-800 transition-colors duration-300 bg-gray-200 rounded-full group-hover:bg-gray-300 group-hover:text-black dark:bg-white/10 dark:text-gray-300 dark:group-hover:bg-white/20 dark:group-hover:text-white"
-                      >
-                        {{ item.genre }}
-                      </span> -->
-
                       <span
                         class="px-3 py-1 text-xs font-semibold text-gray-800 transition-colors duration-300 bg-gray-100 rounded-full group-hover:bg-gray-200 group-hover:text-black dark:bg-white/10 dark:text-gray-300 dark:group-hover:bg-white/20 dark:group-hover:text-white"
                       >
@@ -291,7 +287,113 @@
         </div>
       </div>
 
-      <div class="lg:w-[30%] w-full lg:sticky lg:top-24 lg:self-start">
+      <div
+        *ngIf="selectedArtist && isMobile"
+        class="fixed inset-0 z-50 flex flex-col bg-white dark:bg-gray-900 lg:hidden"
+        [@slideIn]="'in'"
+      >
+        <!-- Mobile Header with Back Button -->
+        <div
+          class="relative top-0 z-10 px-4 py-4 border-b border-gray-200 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm dark:border-gray-700"
+        >
+          <div class="flex items-center justify-between">
+            <button
+              (click)="goBackToArtists()"
+              class="flex items-center justify-center w-10 h-10 transition-all duration-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+            >
+              <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon>
+            </button>
+            <h1
+              class="text-lg font-semibold {{
+                userPref.themeText
+              }} truncate max-w-[200px]"
+            >
+              {{ selectedArtist.name }}
+            </h1>
+            <div class="w-10 h-10"></div>
+            <!-- Spacer for centering -->
+          </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1">
+          <div class="p-8">
+            <!-- Artist Image Section -->
+            <div class="relative mb-2">
+              <div class="relative mx-auto w-fit">
+                <div class="relative">
+                  <img
+                    [src]="selectedArtist.image"
+                    class="object-contain border-4 shadow-2xl w-36 h-36 rounded-2xl border-white/80"
+                  />
+                  <div
+                    class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/50 to-white/90 dark:from-gray-900/20 dark:via-gray-800/60 dark:to-gray-700/90"
+                  ></div>
+                </div>
+
+                <!-- Play Button -->
+                <div
+                  (click)="PlayOrPauseMusic()"
+                  class="absolute flex items-center justify-center w-16 h-16 transition-transform duration-200 bg-white border-2 border-gray-300 rounded-full shadow-xl cursor-pointer -bottom-4 -right-4 dark:bg-gray-800 dark:border-white/30 hover:scale-105"
+                >
+                  <fa-icon
+                    [icon]="
+                      selectedArtist.id && !currentAudio?.paused
+                        ? 'pause'
+                        : 'play'
+                    "
+                    class="text-gray-800 dark:text-white"
+                  ></fa-icon>
+                </div>
+              </div>
+            </div>
+
+            <!-- Artist Info -->
+            <div class="space-y-6 text-center">
+              <div class="space-y-3">
+                <h2
+                  class="text-3xl font-bold tracking-tight {{
+                    userPref.themeText
+                  }}"
+                >
+                  {{ selectedArtist.name }}
+                </h2>
+
+                <div
+                  class="inline-flex items-center px-6 py-3 border rounded-full bg-gradient-to-r from-blue-50 to-purple-50 border-blue-100/50 dark:from-blue-900/20 dark:to-purple-900/20 dark:border-blue-400/30"
+                >
+                  <div
+                    class="w-3 h-3 mr-3 bg-blue-500 rounded-full animate-pulse"
+                  ></div>
+                  <span
+                    class="text-base font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    {{ selectedArtist.track }}
+                  </span>
+                </div>
+              </div>
+              <div
+                class="p-6 text-left shadow-sm bg-gray-100/50 dark:bg-gray-800/50 rounded-2xl backdrop-blur-sm"
+              >
+                <h3 class="mb-4 text-lg font-semibold {{ userPref.themeText }}">
+                  About
+                </h3>
+                <p
+                  class="text-sm leading-relaxed {{
+                    userPref.themeText
+                  }} opacity-80"
+                >
+                  {{ selectedArtist.bio }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="lg:w-[30%] w-full lg:sticky lg:top-24 lg:self-start hidden lg:block"
+      >
         <div
           *ngIf="selectedArtist"
           class="transition-all duration-700 ease-out"

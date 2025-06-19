@@ -17,14 +17,14 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
-import QRCode from 'qrcode';
 import { FontAwesomeShareModule } from '../../modules/font-awesome.module';
 import { environment } from '../../../../environments/env';
 import QRCodeStyling from 'qr-code-styling';
 import type { DotType } from 'qr-code-styling';
-interface QRStyle {
-  label: string;
-  value: string;
+interface QRLogo {
+  url: string;
+  scale?: number;
+  size?: number;
 }
 @Component({
   selector: 'app-qr-generator',
@@ -56,7 +56,7 @@ export class QrGeneratorComponent implements OnInit, AfterViewInit {
   inputText = '';
   foregroundColor = '#000000';
   backgroundColor = '#ffffff';
-  uploadedLogo: string | null = null;
+  uploadedLogo: QRLogo | null = null;
 
   // QR Code data
   generatedQRDataUrl = '';
@@ -84,9 +84,18 @@ export class QrGeneratorComponent implements OnInit, AfterViewInit {
 
   beforeUpload = (file: NzUploadFile): boolean => {
     const reader = new FileReader();
+
     reader.onload = (e: any) => {
-      this.uploadedLogo = e.target.result;
-      this.generateQR();
+      const img = new Image();
+      img.onload = () => {
+        this.uploadedLogo = {
+          url: e.target.result,
+          size: file.size,
+        };
+        console.log(this.uploadedLogo);
+        this.generateQR();
+      };
+      img.src = e.target.result;
     };
     reader.readAsDataURL(file as any);
     return false;
@@ -117,7 +126,7 @@ export class QrGeneratorComponent implements OnInit, AfterViewInit {
         backgroundOptions: {
           color: this.backgroundColor,
         },
-        image: this.uploadedLogo || undefined,
+        image: this.uploadedLogo?.url || undefined,
         imageOptions: {
           crossOrigin: 'anonymous',
           margin: 5,

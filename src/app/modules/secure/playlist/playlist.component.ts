@@ -27,7 +27,7 @@ import { favArtists } from './interface/playlist.data';
 import { AosService } from '../../../core/services/common/aos.service';
 import { FontAwesomeShareModule } from '../../../shared/modules/font-awesome.module';
 import { SquaresComponent } from './background/background.component';
-import { LottieCoreComponent } from "../../../shared/components/lottie/lottie.component";
+import { LottieCoreComponent } from '../../../shared/components/lottie/lottie.component';
 @Component({
   selector: 'app-playlist',
   standalone: true,
@@ -43,8 +43,8 @@ import { LottieCoreComponent } from "../../../shared/components/lottie/lottie.co
     NzToolTipModule,
     FontAwesomeShareModule,
     SquaresComponent,
-    LottieCoreComponent
-],
+    LottieCoreComponent,
+  ],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.css',
   animations: [
@@ -53,6 +53,12 @@ import { LottieCoreComponent } from "../../../shared/components/lottie/lottie.co
       transition('* => show', [
         style({ opacity: 0, transform: 'translateX(20px)' }),
         animate('500ms ease-out'),
+      ]),
+    ]),
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)' }),
+        animate('300ms ease-out', style({ transform: 'translateX(0%)' })),
       ]),
     ]),
   ],
@@ -64,6 +70,7 @@ export class PlaylistComponent implements OnInit, AfterViewInit, OnDestroy {
   currentAudio: HTMLAudioElement | null = null;
   currentView: 'grid' | 'list' = 'grid';
   animationState: string = '';
+  isMobile: boolean = false;
   constructor(
     private cdr: ChangeDetectorRef,
     public userPref: UserPreferenceService,
@@ -72,9 +79,11 @@ export class PlaylistComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.artists.forEach((a) => (this.loadingStates[a.id] = true));
-    //this.selectedArtist = this.artists[0];
   }
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.checkMobile();
+    window.addEventListener('resize', () => this.checkMobile());
+  }
   ngOnDestroy(): void {}
 
   selectArtist(artist: any) {
@@ -117,7 +126,7 @@ export class PlaylistComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       this.currentAudio.onended = () => {
-        this.cdr.detectChanges(); 
+        this.cdr.detectChanges();
       };
     }
   }
@@ -134,16 +143,28 @@ export class PlaylistComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  trackByArtistId(index: number, item: Artist) {
+  trackByArtistId(_: number, item: Artist) {
     return item.id;
   }
+
   onImageLoad(id: number) {
     this.loadingStates[id] = false;
   }
+
   onImageError(id: number) {
     this.loadingStates[id] = false;
   }
+
   switchView(view: any) {
     this.currentView = view;
+  }
+
+  checkMobile() {
+    this.isMobile = window.innerWidth < 1024;
+  }
+
+  goBackToArtists() {
+    this.PlayOrPauseMusic();
+    this.selectedArtist = null;
   }
 }

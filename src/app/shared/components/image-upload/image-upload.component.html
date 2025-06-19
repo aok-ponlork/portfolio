@@ -1,0 +1,26 @@
+<div class="flex flex-col space-y-2 w-full">
+  <button
+    nz-button
+    type="button"
+    nzType="dashed"
+    (click)="onPreviewImage()"
+    *ngIf="previewImage"
+  >
+    <span nz-icon nzType="eye"></span>
+    បើករូបភាពចាស់
+  </button>
+
+  <nz-upload
+    [nzFileList]="uploadType === 'single' ? (image ? [image] : []) : fileList"
+    [nzBeforeUpload]="beforeUpload"
+    [nzMultiple]="!(uploadType === 'single')"
+    [nzAccept]="fileType"
+    nzListType="text"
+    (nzChange)="handleChange($event)"
+  >
+    <button nz-button type="button" [disabled]="disabled">
+      <span nz-icon nzType="upload"></span>
+      {{ uploadType === "single" ? "ជ្រើសរើសរូបភាព" : "ជ្រើសរើសបណ្តុំរូបភាព" }}
+    </button>
+  </nz-upload>
+</div>
