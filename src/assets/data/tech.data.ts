@@ -43,7 +43,7 @@ export const additionalSkills: Skill[] = [
   {
     title: 'Laravel',
     description:
-      'Building scalable and maintainable backend applications with Laravel, leveraging its powerful ecosystem.',
+      'Building clean, scalable APIs with Laravel’s powerful ecosystem.',
     icon: 'laravel',
     iconType: 'fab',
     category: 'Backend & API',
@@ -56,57 +56,40 @@ export const additionalSkills: Skill[] = [
   {
     title: '.NET',
     description:
-      'Experienced in building scalable back-end services and APIs with .NET Core, focusing on performance and maintainability.',
+      'Creating fast, maintainable backends and APIs with .NET Core.',
     icon: 'code',
     iconType: 'fas',
     category: 'Backend & API',
     projects: [
       { name: 'FCM with .NET', url: '/projects/fcm-integration' },
       { name: 'Coupon System', url: '/projects/coupon-selling' },
-      {
-        name: 'Appointment System',
-        url: '/projects/appointment-scheduling',
-      },
+      { name: 'Appointment System', url: '/projects/appointment-scheduling' },
     ],
-
     iconColor: 'text-[#512BD4]',
   },
   {
     title: 'Flutter',
     description:
-      'Building smooth, responsive cross-platform mobile apps with Flutter, ensuring a native-like experience on both iOS and Android.',
+      'Building smooth, cross-platform mobile apps with native-like UX.',
     icon: 'flutter',
     iconType: 'fab',
     category: 'Frontend',
     projects: [
-      {
-        name: 'FCM with Flutter',
-        url: '/projects/fcm-integration',
-      },
-      {
-        name: 'Flutter with Firebase',
-        url: '/projects/fcm-firebase',
-      },
+      { name: 'FCM with Flutter', url: '/projects/fcm-integration' },
+      { name: 'Flutter with Firebase', url: '/projects/fcm-firebase' },
       { name: 'Coupon Selling System', url: '/projects/coupon-selling' },
-      {
-        name: 'Appointment System',
-        url: '/projects/appointment-scheduling',
-      },
+      { name: 'Appointment System', url: '/projects/appointment-scheduling' },
     ],
     iconColor: 'text-[#02569B]',
   },
   {
     title: 'Angular CLI',
-    description:
-      'Developing high-performance SPAs with Angular, using modular architecture and best practices for scalability.',
+    description: 'Building modular SPAs using Angular and best practices.',
     icon: 'angular',
     iconType: 'fab',
     category: 'Frontend',
     projects: [
-      {
-        name: 'Notification',
-        url: '/projects/push-notification-dashboard',
-      },
+      { name: 'Notification', url: '/projects/push-notification-dashboard' },
       { name: 'CRM System', url: '/projects/crm' },
       { name: 'My Portfolio', url: '/app/about-me' },
       { name: 'Coupon Management System', url: '/projects/coupon-management' },
@@ -116,7 +99,7 @@ export const additionalSkills: Skill[] = [
   {
     title: 'Firebase',
     description:
-      'Implementing Firebase services such as Cloud Messaging (FCM), Authentication, and more for seamless app integration and real-time communication.',
+      'Using Firebase for real-time features, auth, and push notifications.',
     icon: 'fire-flame-curved',
     iconType: 'fas',
     category: 'Backend & API',
@@ -128,8 +111,7 @@ export const additionalSkills: Skill[] = [
   },
   {
     title: 'JWT Auth',
-    description:
-      'Implementing secure and stateless authentication using JSON Web Tokens (JWT).',
+    description: 'Securing APIs with stateless JWT-based authentication.',
     icon: 'key',
     iconType: 'fas',
     category: 'Security',
@@ -139,7 +121,7 @@ export const additionalSkills: Skill[] = [
   {
     title: 'Docker',
     description:
-      'Containerizing applications with Docker to ensure consistency and easy deployment across environments.',
+      'Containerizing apps with Docker and writing efficient Dockerfiles.',
     icon: 'docker',
     iconType: 'fab',
     category: 'DevOps',
@@ -149,53 +131,54 @@ export const additionalSkills: Skill[] = [
     iconColor: 'text-blue-600 dark:text-blue-400',
   },
 ];
+
 export const skills = [
   {
     icon: 'code',
     iconType: 'fas',
     title: '.NET',
     description:
-      'Experienced in building scalable back-end services and APIs with .NET Core, focusing on performance and maintainability.',
-    color: '#512BD4', // .NET color
+      'Building fast, scalable APIs with .NET Core, focused on clean architecture.',
+    color: '#512BD4',
   },
   {
     icon: 'angular',
     title: 'Angular',
     iconType: 'fab',
     description:
-      'Developing high-performance SPAs with Angular, using modular architecture and best practices for scalability.',
-    color: '#DD0031', // Angular color
+      'Developing dynamic SPAs using modular, scalable Angular architecture.',
+    color: '#DD0031',
   },
   {
     icon: 'flutter',
     iconType: 'fab',
     title: 'Flutter',
     description:
-      'Building smooth, responsive cross-platform mobile apps with Flutter, ensuring a native-like experience on both iOS and Android.',
-    color: '#02569B', // Flutter color
+      'Creating smooth, native-like apps for iOS and Android with Flutter.',
+    color: '#02569B',
   },
   {
     icon: 'css3',
     iconType: 'fab',
     title: 'Tailwind CSS',
     description:
-      'Crafting modern, responsive UIs with Tailwind CSS, leveraging its utility-first approach for clean and efficient styling.',
-    color: '#06B6D4', // Tailwind color
+      'Designing responsive UIs fast with Tailwind’s utility-first approach.',
+    color: '#06B6D4',
   },
   {
     icon: 'ant-design',
     iconType: 'ant-icon',
     title: 'Ant Design',
     description:
-      'Creating polished, Experienced with UIs Ant Design, focusing on consistency, accessibility, and user experience.',
-    color: '#1890FF', // Ant Design color
+      'Building clean, consistent UIs with Ant Design’s rich components.',
+    color: '#1890FF',
   },
   {
     icon: 'database',
     iconType: 'ant-icon',
     title: 'Databases',
     description:
-      'Proficient in PostgreSQL, MongoDB, and SQL, optimizing data structures for efficiency and scalability. Also experienced in Firebase for real-time applications.',
-    color: '#336791', // PostgreSQL color
+      'Skilled in PostgreSQL, MongoDB, SQL & Firebase for scalable data handling.',
+    color: '#336791',
   },
 ];
