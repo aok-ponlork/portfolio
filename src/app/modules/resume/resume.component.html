@@ -331,3 +331,73 @@
     </div>
   </ng-container>
 </nz-modal>
+
+<!-- Floating button -->
+<button
+  (click)="onModalStateChange()"
+  class="fixed z-50 flex items-center justify-center w-6 h-6 transition-all duration-300 rounded-full shadow-lg top-24 right-10 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 hover:scale-110 hover:shadow-2xl hover:shadow-red-500/25 animate-pulse hover:animate-none ring-2 ring-white/30 hover:ring-white/50 before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r before:from-red-400 before:to-pink-500 before:animate-ping before:opacity-20 active:scale-95 transform-gpu"
+>
+  <fa-icon
+    [icon]="['fas', 'circle-info']"
+    class="text-[13px] text-white transition-all duration-200"
+  ></fa-icon>
+</button>
+
+<!-- Modal -->
+<div *ngIf="modalState">
+  <div
+    class="relative z-10"
+    aria-labelledby="dialog-title"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      class="fixed inset-0 transition-opacity duration-300 ease-in-out bg-black bg-opacity-50"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Modal Container -->
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
+      <div
+        class="relative w-full max-w-sm px-6 py-5 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl dark:bg-zinc-800 rounded-xl sm:my-8 sm:p-6"
+      >
+        <div
+          class="flex items-center justify-center mx-auto bg-blue-100 rounded-full size-12"
+        >
+          <button
+            (click)="onModalStateChange()"
+            class="flex items-center justify-center w-6 h-6 transition-all duration-300 rounded-full shadow-lg top-24 right-10 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 hover:scale-110 hover:shadow-2xl hover:shadow-red-500/25 animate-pulse hover:animate-none ring-2 ring-white/30 hover:ring-white/50 before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r before:from-red-400 before:to-pink-500 before:animate-ping before:opacity-20 active:scale-95 transform-gpu"
+          >
+            <fa-icon
+              [icon]="['fas', 'circle-info']"
+              class="text-[13px] text-white transition-all duration-200"
+            ></fa-icon>
+          </button>
+        </div>
+
+        <div class="mt-4 text-center">
+          <h3
+            class="text-lg font-semibold text-gray-900 dark:text-white"
+            id="dialog-title"
+          >
+            Public Info Notice
+          </h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            This is a public page — some details like my workplace or projects
+            may also appear in job applications or my physical CV.
+          </p>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="mt-6">
+          <button
+            (click)="onModalStateChange()"
+            class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition-all duration-200 bg-red-500 rounded-md shadow-sm hover:bg-red-600"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

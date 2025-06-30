@@ -37,6 +37,7 @@ export class ResumeComponent implements OnInit {
   url = environment.baseUrl + '/app/resume';
   me: UserModel = ME;
   shareModalVisible: boolean = false;
+  modalState: boolean = false;
   isFullScreen: boolean = false;
   constructor(
     public userPref: UserPreferenceService,
@@ -115,5 +116,8 @@ export class ResumeComponent implements OnInit {
     } else {
       this.message.error('Failed to copy text.');
     }
+  }
+  onModalStateChange(): void {
+    this.modalState = !this.modalState;
   }
 }
