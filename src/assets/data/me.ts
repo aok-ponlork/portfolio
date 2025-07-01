@@ -1,7 +1,7 @@
 import { UserModel } from '../../app/core/models/user.model';
 
 export const ME: UserModel = {
-  aboutMe: `Web developer and graduate of the <a class="font-bold roboto-bold" href="https://www.pse.ngo/" target="_blank">PSE</a>-sponsored program at <a class="font-bold roboto-bold" href="https://www.setecu.com/" target="_blank">SETEC INSTITUTE</a>. I build robust web apps using Angular & .NET for enterprise systems and Laravel for freelance work. I turn complex problems into scalable solutions and Exploring cloud and DevOps to level up my stack. I turn complex problems into scalable solutions and am exploring cloud and DevOps to level up my stack.`,
+  aboutMe: `Web developer and graduate of the <a class="font-bold roboto-bold" href="https://www.pse.ngo/" target="_blank">PSE</a>-sponsored program at <a class="font-bold roboto-bold" href="https://www.setecu.com/" target="_blank">SETEC INSTITUTE</a>. I build robust web apps using Angular & .NET for enterprise systems and Laravel for freelance work. I turn complex problems into scalable solutions and Exploring cloud and DevOps to level up my stack.`,
   name: 'AOK PONLORK',
   email: 'aok4ponlork@gmail.com',
   location: 'Phnom Penh, Cambodia',
