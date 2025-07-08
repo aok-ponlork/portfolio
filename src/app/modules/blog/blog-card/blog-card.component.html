@@ -1,0 +1,51 @@
+<div
+  class="relative flex flex-col justify-end px-8 pb-8 overflow-hidden bg-gray-900 isolate rounded-2xl pt-80 sm:pt-48 lg:pt-80"
+>
+  <img
+    [src]="article.images[0].url"
+    [alt]="article.shortDescription"
+    class="absolute inset-0 object-cover -z-10 size-full"
+  />
+  <div
+    class="absolute inset-0 -z-10 bg-linear-to-t from-gray-900 via-gray-900/40"
+  ></div>
+  <div
+    class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-gray-900/10 ring-inset"
+  ></div>
+
+  <div
+    class="flex flex-wrap items-center overflow-hidden text-gray-300 gap-y-1 text-sm/6"
+  >
+    <time
+      [attr.datetime]="article.createdAt | date : 'yyyy-MM-ddTHH:mm:ssZ'"
+      class="mr-8"
+    >
+      {{ article.createdAt | date : "MMM d, y" }}
+    </time>
+
+    <div class="flex items-center -ml-4 gap-x-4">
+      <svg viewBox="0 0 2 2" class="-ml-0.5 size-0.5 flex-none fill-white/50">
+        <circle cx="1" cy="1" r="1" />
+      </svg>
+      <div class="flex gap-x-2.5">Aok Ponlork</div>
+    </div>
+  </div>
+  <h3 class="mt-3 font-semibold text-white text-lg/6">
+    <p class="mb-4 leading-relaxed text-gray-600 dark:text-gray-300">
+      <ng-container *ngIf="!showFullDescription">
+        {{
+          article.shortDescription ||
+            (article.description | slice : 0 : 100) +
+              (article.description.length > 100 ? "..." : "")
+        }}
+        <button
+          *ngIf="article.description.length > 100"
+          (click)="onReadMoreClick(article)"
+          class="ml-1 text-sm font-medium text-blue-600 transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+        >
+          Read more
+        </button>
+      </ng-container>
+    </p>
+  </h3>
+</div>
