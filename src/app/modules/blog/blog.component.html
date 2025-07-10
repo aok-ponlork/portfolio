@@ -16,7 +16,25 @@
     >
       Stuff I thought was worth writing down.
     </p>
-    <div
+    <div class="flex items-center justify-center w-full h-screen text-center">
+      <app-lottie
+        [animationName]="'empty.json'"
+        [loop]="false"
+        [height]="'h-screen'"
+        [width]="'500ox'"
+      ></app-lottie>
+    </div>
+    <button
+      nz-tooltip="I'm currently crafting interesting articles about web development and design.
+  Check back soon for updates!"
+      class="fixed z-50 flex items-center justify-center w-12 h-12 transition-all rounded-full shadow-md top-24 right-10 hover:scale-105 hover:shadow-xl dark:bg-gray-600/50 bg-gray-200/50"
+    >
+      <fa-icon
+        [icon]="['fas', 'circle-info']"
+        class="text-2xl transition-all duration-200"
+      ></fa-icon>
+    </button>
+    <!-- <div
       class="flex flex-wrap justify-center gap-2 mb-10"
       data-aos="zoom-in"
       data-aos-duration="800"
@@ -33,10 +51,10 @@
       >
         {{ item }}
       </button>
-    </div>
+    </div> -->
     <!-- Projects grid -->
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-      <!-- Regular project cards -->
+    <!-- <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+     
       <app-blog-card
         *ngFor="let project of filteredArticles; let i = index"
         [article]="project"
@@ -45,7 +63,7 @@
         [attr.data-aos-delay]="i * 100"
       ></app-blog-card>
 
-      <!-- "More Projects" card -->
+    
       <div
         *ngIf="activeFilter == 'All'"
         class="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border border-gray-100 border-dashed shadow-lg dark:bg-gray-800 rounded-xl hover:-translate-y-1 hover:shadow-xl dark:border-gray-700"
@@ -88,6 +106,6 @@
           </a>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
