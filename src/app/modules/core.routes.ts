@@ -10,20 +10,36 @@ import { TokenGuard } from '../core/guards/token.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { PlaylistComponent } from './secure/playlist/playlist.component';
 import { QrGeneratorComponent } from '../shared/components/qr-generator/qr-generator.component';
+import { BlogDetailComponent } from './blog/blog-detail/blog-detail.component';
 
 export const MODULE_ROUTES: Routes = [
-  { path: 'about-me', component: AboutMeComponent },
-  { path: 'portfolio', component: PortfolioComponent },
-  { path: 'resume', component: ResumeComponent },
-  { path: 'blogs', component: BlogComponent },
-  { path: 'contact', component: ContactComponent },
+  { path: 'about-me', component: AboutMeComponent, title: 'Home' },
+  { path: 'portfolio', component: PortfolioComponent, title: 'Work' },
+  { path: 'resume', component: ResumeComponent, title: 'Resume' },
+  {
+    path: 'blogs',
+    component: BlogComponent,
+    pathMatch: 'full',
+    title: 'Write',
+  },
+  { path: 'blogs/:slug', component: BlogDetailComponent },
+  { path: 'contact', component: ContactComponent, title: 'Contact' },
   {
     path: 'more-info',
     component: MoreInfoComponent,
     canActivate: [TokenGuard],
+    title: 'More',
   },
-  { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: 'favorite-artist', component: PlaylistComponent },
-  { path: 'generate-qr', component: QrGeneratorComponent },
-  { path: '**', component: NotFoundComponent },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent,
+    title: 'Unauthorized',
+  },
+  {
+    path: 'favorite-artist',
+    component: PlaylistComponent,
+    title: 'Favorite Artist',
+  },
+  { path: 'generate-qr', component: QrGeneratorComponent, title: 'QR' },
+  { path: '**', component: NotFoundComponent, title: 'Not found' },
 ];
