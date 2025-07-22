@@ -1,0 +1,43 @@
+<div
+  *ngIf="show"
+  class="fixed z-10 inset-0 flex items-center justify-center {{
+    contentBackground
+  }}"
+>
+  <div class="w-full max-w-2xl px-6">
+    <div
+      class="h-4 {{ themeBackground }} rounded-full mb-8 animate-pulse"
+      style="width: 40%"
+    ></div>
+
+    <ul class="space-y-4">
+      <li
+        *ngFor="let i of [1, 2, 3, 4, 5, 6]"
+        class="h-4 {{ themeBackground }} rounded-full animate-pulse"
+        [style.width]="i % 2 === 0 ? '85%' : i % 3 === 0 ? '92%' : '78%'"
+      ></li>
+    </ul>
+
+    <div class="mt-8 space-y-6">
+      <div *ngFor="let block of [1, 2, 3]" class="space-y-3">
+        <div
+          class="h-3 {{ themeBackground }} rounded-full animate-pulse"
+          style="width: 30%"
+        ></div>
+        <li
+          *ngFor="let line of [1, 2, 3, 4]"
+          class="h-3 {{ themeBackground }} rounded-full animate-pulse list-none"
+          [style.width]="
+            line === 1
+              ? '100%'
+              : line === 2
+              ? '85%'
+              : line === 3
+              ? '92%'
+              : '78%'
+          "
+        ></li>
+      </div>
+    </div>
+  </div>
+</div>

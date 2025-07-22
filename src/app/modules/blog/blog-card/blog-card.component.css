@@ -1,0 +1,16 @@
+.line-clamp-3 {
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group:hover img {
+    transform: none;
+  }
+
+  .group:hover .transform {
+    transform: none;
+  }
+}

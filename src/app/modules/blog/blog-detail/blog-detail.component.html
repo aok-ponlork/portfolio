@@ -1,0 +1,7 @@
+<app-loading-skeleton
+  [show]="loading"
+  [contentBackground]="userPref.contentBackground"
+  [themeBackground]="userPref.themeBackground"
+/>
+<div *ngIf="error" class="error">{{ error }}</div>
+<markdown *ngIf="htmlContent" [data]="htmlContent"></markdown>

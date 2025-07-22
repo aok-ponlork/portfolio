@@ -7,15 +7,24 @@ import { UserPreferenceService } from '../../core/services/common/user-preferenc
 import { BlogCardComponent } from './blog-card/blog-card.component';
 import { Article } from '../../core/models/blogs/blog.model';
 import { ARTICLES } from '../../../assets/data/blog.data';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 @Component({
   selector: 'app-blog',
   standalone: true,
-  imports: [CommonModule, FontAwesomeShareModule, NzToolTipModule, LottieCoreComponent, BlogCardComponent],
+  imports: [
+    CommonModule,
+    FontAwesomeShareModule,
+    NzToolTipModule,
+    LottieCoreComponent,
+    BlogCardComponent,
+    NzCardModule,
+  ],
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.css',
 })
 export class BlogComponent implements OnInit {
+  cards = ['A', 'B', 'C'];
   articles: Article[] = [];
   filteredArticles: Article[] = [];
   activeFilter: string = 'All';

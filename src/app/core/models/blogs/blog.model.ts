@@ -6,6 +6,7 @@ export interface Article {
   type: string[];
   images: ArticleImage[];
   createdAt: string;
+  filePath: string;
 }
 
 export interface ArticleImage {
