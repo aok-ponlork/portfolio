@@ -20,6 +20,7 @@ export const ME: UserModel = {
   additional: [
     { title: 'CI/CD with Jenkins', isProcessing: true },
     { title: 'Kubernetes', isProcessing: true },
+    { title: 'Redis', isProcessing: false },
     { title: 'Ubuntu Server Management', isProcessing: false },
     { title: 'Mikrotik Router Configuration', isProcessing: false },
     { title: 'Communication & Problem-Solving', isProcessing: false },
