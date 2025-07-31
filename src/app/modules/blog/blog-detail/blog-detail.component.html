@@ -4,4 +4,4 @@
   [themeBackground]="userPref.themeBackground"
 />
 <div *ngIf="error" class="error">{{ error }}</div>
-<markdown *ngIf="htmlContent" [data]="htmlContent"></markdown>
+<div *ngIf="htmlContent" [innerHTML]="htmlContent"></div>

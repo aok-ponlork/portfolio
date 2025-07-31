@@ -1,20 +1,19 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LoadFileService } from '../../../core/services/load-file.service';
 import { UserPreferenceService } from '../../../core/services/common/user-preference.service';
 import { FontAwesomeShareModule } from '../../../shared/modules/font-awesome.module';
-import { MarkdownModule } from 'ngx-markdown';
 import { CustomTitleStrategy } from '../../../core/services/title.service';
 import { LoadingSkeletonComponent } from '../../../shared/components/loading-skeleton/loading-skeleton.component';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-csharp';
+import 'prismjs/themes/prism-tomorrow.css';
+import { SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-blog-detail',
-  imports: [
-    CommonModule,
-    FontAwesomeShareModule,
-    MarkdownModule,
-    LoadingSkeletonComponent,
-  ],
+  imports: [CommonModule, FontAwesomeShareModule, LoadingSkeletonComponent],
   templateUrl: './blog-detail.component.html',
   styleUrl: './blog-detail.component.css',
   standalone: true,
@@ -25,25 +24,25 @@ export class BlogDetailComponent implements OnInit {
   private location = inject(Location);
   private titleService = inject(CustomTitleStrategy);
   public userPref = inject(UserPreferenceService);
-  htmlContent: string = '';
+  htmlContent: SafeHtml | null = null;
   loading: boolean = true;
   error: string = '';
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug');
     if (slug) {
-      this.loadMarkdownFile(slug);
+      this.loadContent(slug);
     } else {
       this.error = 'No blog post specified';
       this.loading = false;
     }
   }
-
-  async loadMarkdownFile(slug: string) {
+  async loadContent(slug: string) {
     try {
       this.loading = true;
       const filePath = `assets/articles/${slug}.html`;
-      this.htmlContent = await this.loadFile.loadMarkdownFileAsync(filePath);
+      this.htmlContent = await this.loadFile.loadFileAsync(filePath);
+      setTimeout(() => Prism.highlightAll(), 0);
       const title = this.fromSlug(slug);
       this.titleService.setTitle(title);
     } catch (error) {

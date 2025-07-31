@@ -8,12 +8,12 @@ import { firstValueFrom } from 'rxjs';
 export class LoadFileService {
   constructor(private http: HttpClient) {}
 
-  async loadMarkdownFileAsync(filePath: string): Promise<string> {
+  async loadFileAsync(filePath: string): Promise<string> {
     try {
-      const markdown = await firstValueFrom(
+      const content = await firstValueFrom(
         this.http.get(filePath, { responseType: 'text' })
       );
-      return markdown;
+      return content;
     } catch (error) {
       console.error('Error loading markdown file:', error);
       throw error;
