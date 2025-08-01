@@ -1,0 +1,273 @@
+<div class="max-w-4xl px-6 py-12 mx-auto">
+  <h1
+    class="mb-10 text-3xl font-bold text-center text-gray-900 sm:text-4xl md:text-5xl dark:text-white"
+  >
+    How to Create Custom Middleware in .NET and Laravel
+  </h1>
+
+  <p
+    class="max-w-3xl mx-auto mb-10 text-gray-700 text-start dark:text-gray-300 sm:text-base md:text-lg"
+  >
+    Middleware is an essential part of modern web development. It acts as a
+    filter for HTTP requests entering your application. Whether you want to
+    check authentication, log user activity, or modify requests/responses,
+    middleware has your back. In this post, I’ll show you how to create custom
+    middleware in both .NET (ASP.NET Core) and Laravel, step-by-step.
+  </p>
+
+  <!-- .NET Section -->
+  <section class="mb-16">
+    <h2
+      class="pb-2 mb-4 text-xl font-semibold text-gray-900 border-b-2 border-blue-400 sm:text-2xl md:text-3xl dark:text-white"
+    >
+      .NET: Creating Custom Middleware
+    </h2>
+
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      ASP.NET Core uses a pipeline to process requests. Middleware components
+      are added to this pipeline in Startup.cs (or Program.cs in .NET 6+).
+    </p>
+
+    <h4
+      class="mt-6 mb-2 text-lg font-semibold text-gray-900 md:text-xl dark:text-white"
+    >
+      Step 1: Create the Middleware Class
+    </h4>
+    <pre
+      class="p-4 overflow-auto text-sm bg-gray-100 rounded-md dark:bg-gray-900/50"
+    >
+<code class="language-csharp">
+public class MyCustomMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public MyCustomMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // Your custom logic here
+        Console.WriteLine("Before Request");
+
+        await _next(context);
+
+        Console.WriteLine("After Request");
+    }
+}
+</code></pre>
+
+    <h4
+      class="mt-6 mb-2 text-lg font-semibold text-gray-900 md:text-xl dark:text-white"
+    >
+      Step 2: Register Middleware in the Pipeline
+    </h4>
+
+    <p class="mb-2 text-sm text-gray-700 dark:text-gray-300">
+      For .NET 6+, go to Program.cs and add:
+    </p>
+    <pre
+      class="p-2 overflow-auto text-sm bg-gray-100 rounded-md dark:bg-gray-900/50"
+    >
+<code class="language-csharp">app.UseMiddleware&lt;MyCustomMiddleware&gt;();</code>
+</pre>
+
+    <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">
+      If you’re using .NET 5 or below, register it inside Startup.cs:
+    </p>
+    <pre
+      class="p-2 overflow-auto text-sm bg-gray-100 rounded-md dark:bg-gray-900/50"
+    >
+<code class="language-csharp">
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseMiddleware&lt;MyCustomMiddleware&gt;();
+}
+</code></pre>
+
+    <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">
+      And now you have a custom middleware in the request pipeline.
+    </p>
+  </section>
+
+  <!-- Laravel Section -->
+  <section class="mb-16">
+    <h2
+      class="pb-2 mb-4 text-xl font-semibold text-gray-900 border-b-2 border-blue-400 sm:text-2xl md:text-3xl dark:text-white"
+    >
+      Laravel: Creating Custom Middleware
+    </h2>
+
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      Laravel makes middleware clean and expressive. Artisan even gives you a
+      shortcut to generate one.
+    </p>
+
+    <h4
+      class="mt-6 mb-2 text-lg font-semibold text-gray-900 md:text-xl dark:text-white"
+    >
+      Step 1: Generate Middleware
+    </h4>
+
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      Run this in the terminal:
+    </p>
+    <pre
+      class="p-4 overflow-auto text-sm bg-gray-100 rounded-md dark:bg-gray-900/50"
+    >
+<code class="language-bash">php artisan make:middleware MyCustomMiddleware</code>
+</pre>
+
+    <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">
+      This creates a file at:
+      <span class="bg-gray-400/50 px-1 py-0.5 rounded"
+        >app/Http/Middleware/MyCustomMiddleware.php</span
+      >
+    </p>
+
+    <h4
+      class="mt-6 mb-2 text-lg font-semibold text-gray-900 md:text-xl dark:text-white"
+    >
+      Step 2: Add Logic
+    </h4>
+
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      Open the file and add your logic in the
+      <span class="bg-gray-400/50 px-1 py-0.5 rounded">handle()</span> method:
+    </p>
+
+    <pre
+      class="p-2 overflow-auto text-sm bg-gray-100 rounded-md dark:bg-gray-900/50"
+    >
+<code class="language-php">
+public function handle($request, Closure $next)
+{
+    // Custom logic before request hits controller
+    logger('Before Request');
+
+    $response = $next($request);
+
+    // Custom logic after controller returns response
+    logger('After Request');
+
+    return $response;
+}
+</code>
+</pre>
+
+    <h4
+      class="mt-6 mb-2 text-lg font-semibold text-gray-900 md:text-xl dark:text-white"
+    >
+      Step 3: Register Middleware
+    </h4>
+
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      You can register it globally or assign it to a route.
+    </p>
+
+    <p class="mt-4 text-sm font-bold text-gray-900 dark:text-white">
+      Option 1: Global Middleware
+    </p>
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      Add it to
+      <span class="bg-gray-400/50 px-1 py-0.5 rounded">$middleware</span> in
+      <span class="bg-gray-400/50 px-1 py-0.5 rounded">app/Http/Kernel.php</span
+      >:
+    </p>
+
+    <pre
+      class="p-2 overflow-auto text-sm bg-gray-100 rounded-md dark:bg-gray-900/50"
+    >
+<code class="language-php">
+protected $middleware = [
+    \App\Http\Middleware\MyCustomMiddleware::class,
+];
+</code></pre>
+
+    <p class="mt-4 text-sm font-bold text-gray-900 dark:text-white">
+      Option 2: Route Middleware
+    </p>
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      Register it under
+      <span class="bg-gray-400/50 px-1 py-0.5 rounded">$routeMiddleware</span>:
+    </p>
+
+    <pre
+      class="p-2 overflow-auto text-sm bg-gray-100 rounded-md dark:bg-gray-900/50"
+    >
+<code class="language-php">
+protected $routeMiddleware = [
+    'mycustom' => \App\Http\Middleware\MyCustomMiddleware::class,
+];
+</code></pre>
+
+    <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+      Then, use it in a route like:
+    </p>
+
+    <pre
+      class="p-2 overflow-auto text-sm bg-gray-100 rounded-md dark:bg-gray-900/50"
+    >
+<code class="language-php">
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('mycustom');
+</code></pre>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="mb-16">
+    <h2
+      class="pb-2 mb-4 text-xl font-semibold text-gray-900 border-b-2 border-blue-400 sm:text-2xl md:text-3xl dark:text-white"
+    >
+      Wrap-Up
+    </h2>
+
+    <p class="mb-4 text-sm text-gray-700 dark:text-gray-300">
+      Both .NET and Laravel give you flexibility to plug in custom logic during
+      the request lifecycle. The concepts are similar:
+    </p>
+
+    <div class="overflow-x-auto rounded-lg shadow-md">
+      <table
+        class="min-w-full text-sm text-left text-gray-700 dark:text-gray-200"
+      >
+        <thead
+          class="text-xs text-gray-800 uppercase bg-gray-200 dark:bg-gray-800 dark:text-gray-100"
+        >
+          <tr>
+            <th class="px-6 py-3">Concept</th>
+            <th class="px-6 py-3">.NET</th>
+            <th class="px-6 py-3">Laravel</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white dark:bg-gray-900">
+          <tr class="border-b border-gray-300 dark:border-gray-700">
+            <td class="px-6 py-4 font-medium">Middleware File</td>
+            <td class="px-6 py-4"><code>InvokeAsync()</code> in a C# class</td>
+            <td class="px-6 py-4"><code>handle()</code> in a PHP class</td>
+          </tr>
+          <tr class="border-b border-gray-300 dark:border-gray-700">
+            <td class="px-6 py-4 font-medium">Register</td>
+            <td class="px-6 py-4">
+              <code>UseMiddleware()</code> in the pipeline
+            </td>
+            <td class="px-6 py-4">Global or route middleware</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium">Use Cases</td>
+            <td class="px-6 py-4">Logging, Auth, CORS, etc.</td>
+            <td class="px-6 py-4">Logging, Auth, CORS, etc.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">
+      Knowing how to create custom middleware is super useful when building
+      reusable, clean logic across your app. Whether you’re .NET-ing or
+      Laravel-ing, you now know how to make it happen.
+    </p>
+  </section>
+</div>

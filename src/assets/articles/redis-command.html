@@ -1,0 +1,221 @@
+<div class="max-w-4xl px-6 py-12 mx-auto">
+  <h1
+    class="mb-10 text-3xl font-bold text-center text-gray-900 sm:text-4xl md:text-5xl dark:text-white"
+  >
+    Redis Commands
+  </h1>
+  <p
+    class="max-w-3xl mx-auto mb-10 text-center text-gray-700 roboto-regular dark:text-gray-300 sm:text-base md:text-lg"
+  >
+    Redis is a blazing-fast in-memory database used for caching, messaging, and
+    real-time data processing. This cheat sheet covers the most essential Redis
+    commands so you can boost your app’s performance and scale with ease.
+  </p>
+  <section class="mb-12">
+    <h2
+      class="pb-2 mb-4 text-xl font-semibold text-gray-900 border-b-2 border-red-400 sm:text-2xl md:text-3xl dark:text-white"
+    >
+      1. Strings (Basic Key-Value)
+    </h2>
+    <ul class="space-y-2 text-sm list-disc list-inside sm:text-base md:text-lg">
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >SET key value</code
+        >
+        — Set key to hold string value
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >GET key</code
+        >
+        — Get value of key
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >DEL key</code
+        >
+        — Delete key
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >EXPIRE key seconds</code
+        >
+        — Set TTL for key
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >TTL key</code
+        >
+        — Check remaining TTL
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >INCR key</code
+        >
+        — Increment integer value by 1
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >APPEND key value</code
+        >
+        — Append to existing string
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-12">
+    <h2
+      class="pb-2 mb-4 text-xl font-semibold text-gray-900 border-b-2 border-blue-400 sm:text-2xl md:text-3xl dark:text-white"
+    >
+      2. Lists (Ordered Collections)
+    </h2>
+    <ul class="space-y-2 text-sm list-disc list-inside sm:text-base md:text-lg">
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >LPUSH key value</code
+        >
+        — Push value to the start
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >RPUSH key value</code
+        >
+        — Push value to the end
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >LRANGE key start stop</code
+        >
+        — Get elements from index
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >LPOP key</code
+        >
+        — Remove and get first element
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >RPOP key</code
+        >
+        — Remove and get last element
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >LLEN key</code
+        >
+        — Get length of list
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >LREM key count value</code
+        >
+        — Remove occurrences of value
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-12">
+    <h2
+      class="pb-2 mb-4 text-xl font-semibold text-gray-900 border-b-2 border-teal-400 sm:text-2xl md:text-3xl dark:text-white"
+    >
+      7. RedisJSON (if module installed)
+    </h2>
+    <ul class="space-y-2 text-sm list-disc list-inside sm:text-base md:text-lg">
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >JSON.SET key path json</code
+        >
+        — Set JSON value
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >JSON.GET key [path]</code
+        >
+        — Get JSON value
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >JSON.DEL key [path]</code
+        >
+        — Delete JSON path
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >JSON.MGET key [path]</code
+        >
+        — Get JSON values
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >JSON.TYPE key [path]</code
+        >
+        — Get JSON type
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-12">
+    <h2
+      class="pb-2 mb-4 text-xl font-semibold text-gray-900 border-b-2 border-yellow-400 sm:text-2xl md:text-3xl dark:text-white"
+    >
+      Bonus: Transactions & Atomicity
+    </h2>
+    <ul class="space-y-2 text-sm list-disc list-inside sm:text-base md:text-lg">
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >MULTI</code
+        >
+        — Start transaction
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >EXEC</code
+        >
+        — Execute transaction
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >DISCARD</code
+        >
+        — Cancel transaction
+      </li>
+      <li>
+        <code
+          class="px-2 py-1 font-mono text-xs bg-gray-200 rounded sm:text-sm dark:bg-gray-800/50"
+          >WATCH key</code
+        >
+        — Watch key for changes
+      </li>
+    </ul>
+  </section>
+
+  <footer
+    class="mt-10 text-xs text-center text-gray-600 sm:text-sm md:text-base dark:text-gray-300"
+  >
+    Redis is simple once you know your data types and matching commands. Master
+    these and you can build almost anything.
+  </footer>
+</div>

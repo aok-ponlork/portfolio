@@ -9,6 +9,8 @@ import { LoadingSkeletonComponent } from '../../../shared/components/loading-ske
 import Prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-markup-templating';
+import 'prismjs/components/prism-php';
 import 'prismjs/themes/prism-tomorrow.css';
 import { SafeHtml } from '@angular/platform-browser';
 @Component({
@@ -42,7 +44,12 @@ export class BlogDetailComponent implements OnInit {
       this.loading = true;
       const filePath = `assets/articles/${slug}.html`;
       this.htmlContent = await this.loadFile.loadFileAsync(filePath);
-      setTimeout(() => Prism.highlightAll(), 0);
+      setTimeout(() => {
+        if (typeof Prism !== 'undefined' && Prism.highlightAll) {
+          Prism.highlightAll();
+        }
+      }, 0);
+
       const title = this.fromSlug(slug);
       this.titleService.setTitle(title);
     } catch (error) {
