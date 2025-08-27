@@ -32,7 +32,7 @@ export const ME: UserModel = {
   education: [
     {
       title: 'Bachelor of Science in Management Information Systems (MIS)',
-      content: 'SETEC INSTITUTE, 2021 - 2025',
+      content: 'SETEC INSTITUTE, 2021 - 2024',
     },
   ],
 
